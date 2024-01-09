@@ -1,4 +1,9 @@
-<h3>{{login}}</h3>
-<h3>{{register}}</h3>
+<div class="navbar">
+  <a class="link" href="/login">{{ login }}</a>
+  <h3>{{ register }}</h3>
+</div>
 <br><br>
-<h1>{{title}}</h1>
+<h1 class="caption">{{ title }}</h1>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
