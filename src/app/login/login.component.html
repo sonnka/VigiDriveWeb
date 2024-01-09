@@ -1,3 +1,14 @@
 <div>
-  <h3>login works!</h3>
+  <h2>Login</h2>
+</div>
+<div>
+  <div>
+    <label for="email">Email: </label>
+    <input #email id="email" type="email">
+  </div>
+  <div>
+    <label for="password">Password: </label>
+    <input #password id="password" type="password">
+  </div>
+  <button (click)="login(email.value, password.value)" type="button">Login</button>
 </div>
