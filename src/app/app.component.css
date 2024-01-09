@@ -14,15 +14,12 @@
   font-family: sans-serif;
 }
 
-.link:first-of-type {
-  margin-right: 32px;
-}
-
 .link {
   color: white;
   text-decoration: none;
   font-size: 14pt;
   font-weight: bold;
+  margin-right: 32px;
 }
 
 .caption {
