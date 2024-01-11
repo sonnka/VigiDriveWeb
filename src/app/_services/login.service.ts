@@ -9,15 +9,16 @@ import {LoginRequest} from "../_models/login.request";
 export class LoginService {
 
   private baseUrl = 'http://localhost:8080';
-  private httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
-  };
 
   constructor(private http: HttpClient) {
   }
 
   login(data: LoginRequest): Observable<string> {
-
-    return this.http.post<string>(this.baseUrl + '/login', data, this.httpOptions);
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
+      })
+    };
+    return this.http.post<string>(this.baseUrl + '/login', httpOptions);
   }
 }
