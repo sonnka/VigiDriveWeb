@@ -51,3 +51,21 @@ input[type=button] {
     color: #fff;
   }
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  appearance: none;
+  margin-top: 15px;
+  font-size: 17px;
+  border: .1em solid darkslategray;
+  padding: .85em 1.5em;
+  color: #000000;
+  border-radius: 2em;
+  transition: 1s;
+  background: #ffffff;
+}

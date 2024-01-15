@@ -20,4 +20,34 @@ export class DriverService {
     };
     return this.http.post(this.baseUrl + '/register/driver', data, httpOptions);
   }
+
+  getDriver(driverId: bigint) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '
+      })
+    };
+    return this.http.post(this.baseUrl + '/drivers/' + driverId, '', httpOptions);
+  }
+
+  getHealthInfo(driverId: bigint) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '
+      })
+    };
+    return this.http.post(this.baseUrl + '/drivers/' + driverId + "/health-info", '', httpOptions);
+  }
+
+  getSituationInfo(driverId: bigint) {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '
+      })
+    };
+    return this.http.post(this.baseUrl + '/drivers/' + driverId + "situations/week", '', httpOptions);
+  }
 }
