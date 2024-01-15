@@ -31,4 +31,10 @@ input[type=button] {
   border-radius: 2em;
   transition: 1s;
   background: darkslategray;
+
+  &:hover, &:focus, &:active {
+    background: #93afaf;
+    border: .2em solid #93afaf;
+    color: #fff;
+  }
 }
