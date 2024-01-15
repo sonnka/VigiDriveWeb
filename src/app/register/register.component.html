@@ -24,7 +24,9 @@
     <h3>Register as</h3>
   </div>
   <div>
-    <input type="button" value="Driver">
-    <input type="button" value="Manager">
+    <input (click)="registerDriver(firstName.value, lastName.value, email.value, password.value, avatar.value)"
+           type="button" value="Driver">
+    <input (click)="registerManager(firstName.value, lastName.value, email.value, password.value, avatar.value)"
+           type="button" value="Manager">
   </div>
 </div>
