@@ -1,0 +1,34 @@
+input[type=email] {
+  appearance: none;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  border-bottom: .2em solid darkslategray;
+  border-radius: .2em .2em 0 0;
+  padding: .4em;
+  color: darkslategray;
+}
+
+input[type=password] {
+  appearance: none;
+  font-size: 17px;
+  border: none;
+  outline: none;
+  border-bottom: .2em solid darkslategray;
+  border-radius: .2em .2em 0 0;
+  padding: .4em;
+  color: darkslategray;
+  margin-top: 35px;
+}
+
+input[type=button] {
+  appearance: none;
+  margin-top: 75px;
+  font-size: 17px;
+  border: .2em solid darkslategray;
+  padding: .85em 1.5em;
+  color: #ffffff;
+  border-radius: 2em;
+  transition: 1s;
+  background: darkslategray;
+}

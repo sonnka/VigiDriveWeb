@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {LoginRequest} from "../_models/login.request";
+import {LoginResponse} from "../_models/login.response";
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,12 @@ export class LoginService {
   constructor(private http: HttpClient) {
   }
 
-  login(data: LoginRequest): Observable<string> {
+  login(data: LoginRequest): Observable<LoginResponse> {
     let httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
       })
     };
-    return this.http.post<string>(this.baseUrl + '/login', httpOptions);
+    return this.http.post<LoginResponse>(this.baseUrl + '/login', '', httpOptions);
   }
 }

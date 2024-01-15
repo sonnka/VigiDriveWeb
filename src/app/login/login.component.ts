@@ -13,10 +13,8 @@ export class LoginComponent {
 
   login(email: string, password: string): void {
     let data = new LoginRequest(email, password);
-    let token = '';
     this.loginService.login(data).subscribe(response => {
-      token = response;
+      console.log(response);
     });
-    console.log(token);
   }
 }

@@ -1,14 +1,17 @@
 <div>
-  <h2>Login</h2>
+  <h1 style="text-align: center;">Login</h1>
 </div>
+<br>
+<br>
 <div>
   <div>
-    <label for="email">Email: </label>
-    <input #email id="email" type="email">
+    <input #email id="email" placeholder="Email" type="email">
   </div>
   <div>
-    <label for="password">Password: </label>
-    <input #password id="password" type="password">
+    <input #password id="password" placeholder="Password" type="password">
   </div>
-  <button (click)="login(email.value, password.value)" type="button">Login</button>
 </div>
+<div style="text-align: center;">
+  <input (click)="login(email.value, password.value)" type="button" value="Login">
+</div>
+
