@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {DriverService} from "../_services/driver.service";
+import {DriverResponse} from "../_models/driver.response";
 
 @Component({
   selector: 'app-driver-profile',
@@ -9,8 +10,9 @@ import {DriverService} from "../_services/driver.service";
 })
 export class DriverProfileComponent implements OnInit {
 
-  private driverId = -1n;
-  private token = '';
+  driverId: bigint | undefined;
+  token: string | undefined;
+  driverResponse: DriverResponse | undefined;
 
   constructor(private driverService: DriverService, private router: Router) {
   }
@@ -29,8 +31,10 @@ export class DriverProfileComponent implements OnInit {
 
   private getDriver() {
     this.driverService.getDriver(this.driverId, this.token)
-      .subscribe(response =>
-        console.log('Response: ' + JSON.stringify(response)));
+      .subscribe(response => {
+        this.driverResponse = response;
+        console.log('Response: ' + JSON.stringify(response));
+      });
   }
 
   private getHealthInfo() {

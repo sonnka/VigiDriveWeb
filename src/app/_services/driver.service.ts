@@ -22,7 +22,7 @@ export class DriverService {
     return this.http.post(this.baseUrl + '/register/driver', data, httpOptions);
   }
 
-  getDriver(driverId: bigint, token: string) {
+  getDriver(driverId: bigint | undefined, token: string | undefined) {
     console.log("Id: " + driverId + " | token: " + token);
 
     let httpOptions = {
@@ -35,7 +35,7 @@ export class DriverService {
     return this.http.get<DriverResponse>(this.baseUrl + '/drivers/' + driverId, httpOptions);
   }
 
-  getHealthInfo(driverId: bigint, token: string) {
+  getHealthInfo(driverId: bigint | undefined, token: string | undefined) {
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export class DriverService {
     return this.http.post(this.baseUrl + '/drivers/' + driverId + "/health-info", '', httpOptions);
   }
 
-  getSituationInfo(driverId: bigint, token: string) {
+  getSituationInfo(driverId: bigint | undefined, token: string | undefined) {
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

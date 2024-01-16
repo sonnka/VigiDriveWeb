@@ -25,15 +25,12 @@
     <div class="col-6">
       <div class="row">
         <div class="col">
-          <p>First name</p>
-        </div>
-        <div class="col">
-          <p>Last name</p>
+          <p>{{ driverResponse?.firstName + ' ' + driverResponse?.lastName }}</p>
         </div>
       </div>
-      <p>Email</p>
+      <p style="color: #99a2a2; font-size: 13px">{{ driverResponse?.email }}</p>
       <br>
-      <p>Date of birth</p>
+      <p>{{ driverResponse?.dateOfBirth }}</p>
     </div>
     <div class="col-3">
       <div class="license-container">
@@ -51,9 +48,9 @@
             </div>
             <div class="visa_crinfo col-7">
               <div>
-                <p>Name Surname</p>
-                <p>0000000000</p>
-                <p>00/00</p>
+                <p>{{ driverResponse?.firstName + ' ' + driverResponse?.lastName }}</p>
+                <p>{{ driverResponse?.license?.number }}</p>
+                <p>{{ driverResponse?.license?.dateTo }}</p>
               </div>
             </div>
           </div>
@@ -70,9 +67,9 @@
         width="80px">
     </div>
     <div class="col-10">
-      <p>Location</p>
+      <p>{{ driverResponse?.currentLocation }}</p>
       <p>-------------------------</p>
-      <p>Destination</p>
+      <p>{{ driverResponse?.destination }}</p>
     </div>
   </div>
 
