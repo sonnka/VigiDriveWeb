@@ -14,9 +14,13 @@ export class LoginComponent {
 
   login(email: string, password: string): void {
     let data = new LoginRequest(email, password);
+
     this.loginService.login(data).subscribe(response => {
-      console.log(response);
+      let id = response.id;
+      let token = response.token;
+
+      this.router.navigate(['/driver-profile'], {state: {id: id, token: token}});
     });
-    this.router.navigate(['/driver-profile']);
+
   }
 }

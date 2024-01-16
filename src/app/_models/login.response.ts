@@ -12,9 +12,4 @@ export class LoginResponse {
     this.surname = surname;
     this.avatar = avatar;
   }
-
-  toString(): string {
-    return 'id=' + this.id + '\ntoken=' + this.token + '\nname=' + this.name
-      + '\nsurname=' + this.surname + '\navatar=' + this.avatar;
-  }
 }
