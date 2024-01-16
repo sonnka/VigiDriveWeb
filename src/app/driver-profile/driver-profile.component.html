@@ -1,10 +1,107 @@
-<p>driver-profile works!</p>
-<p>First name</p>
-<p>Last name</p>
-<p>Email</p>
-<p>Avatar</p>
-<p>Date of birth</p>
-<p>License</p>
-<p>Location -> Destination</p>
-<p>Health info</p>
-<p>Situation (week)</p>
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+  <script crossorigin="anonymous"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script crossorigin="anonymous"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+  <script crossorigin="anonymous"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+</head>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <div>
+        <img alt="avatar" class="rounded-circle" height="150" id="thumbnail"
+             src="https://cc-prod.scene7.com/is/image/CCProdAuthor/d-03-4?$pjpeg$&jpegSize=200&wid=720"
+             width="150"/>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col">
+          <p>First name</p>
+        </div>
+        <div class="col">
+          <p>Last name</p>
+        </div>
+      </div>
+      <p>Email</p>
+      <br>
+      <p>Date of birth</p>
+    </div>
+    <div class="col-3">
+      <div class="license-container">
+        <div class="license-card container">
+          <div class="row">
+            <div class="col license-title">
+              <p>Driver license</p>
+            </div>
+          </div>
+          <div class="row info-license">
+            <div class="visa_info col-5">
+              <img
+                alt=""
+                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png">
+            </div>
+            <div class="visa_crinfo col-7">
+              <div>
+                <p>Name Surname</p>
+                <p>0000000000</p>
+                <p>00/00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-2">
+      <img
+        height="80px"
+        src="https://png.pngtree.com/png-vector/20220705/ourmid/pngtree-destinations-holidays-travel-tour-vacations-png-image_5683178.png"
+        width="80px">
+    </div>
+    <div class="col-10">
+      <p>Location</p>
+      <p>-------------------------</p>
+      <p>Destination</p>
+    </div>
+  </div>
+
+  <br><br>
+  <div style="text-align: center;">
+    <div class="row">
+      <div class="col-12">
+        <p>Health info</p>
+        <div class="pie animate" style="--p:90;--c:lightgreen"> 90%</div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <div class="pie animate" style="--p:90;--c:lightgreen"> 90%</div>
+        <p>Stress level</p>
+      </div>
+      <div class="col">
+        <div class="pie animate col" style="--p:90;--c:lightgreen"> 90%</div>
+        <p>Concentration level</p>
+      </div>
+      <div class="col">
+        <div class="pie animate col" style="--p:90;--c:lightgreen"> 90%</div>
+        <p>Sleepness level</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <p>Situation (week)</p>
+  </div>
+</div>
