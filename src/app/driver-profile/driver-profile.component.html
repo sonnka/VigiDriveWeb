@@ -78,22 +78,31 @@
     <div class="row">
       <div class="col-12">
         <p>Health info</p>
-        <div class="pie animate" style="--p:90;--c:lightgreen"> 90%</div>
+        <div [ngStyle]="{'--p': healthInfo?.generalStatus}" class="pie animate"
+             id="generalLevel"
+             style="--c:lightgreen">{{ healthInfo?.generalStatus + '%' }}
+        </div>
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col">
-        <div class="pie animate" style="--p:90;--c:lightgreen"> 90%</div>
+        <div [ngStyle]="{'--p': healthInfo?.stressLevel}" class="pie animate"
+             style="--c:lightgreen">{{ healthInfo?.stressLevel + '%' }}
+        </div>
         <p>Stress level</p>
       </div>
       <div class="col">
-        <div class="pie animate col" style="--p:90;--c:lightgreen"> 90%</div>
+        <div [ngStyle]="{'--p': healthInfo?.concentrationLevel}" class="pie animate col"
+             style="--c:lightgreen">{{ healthInfo?.concentrationLevel + '%' }}
+        </div>
         <p>Concentration level</p>
       </div>
       <div class="col">
-        <div class="pie animate col" style="--p:90;--c:lightgreen"> 90%</div>
-        <p>Sleepness level</p>
+        <div [ngStyle]="{'--p': healthInfo?.sleepinessLevel}" class="pie animate col"
+             style="--c:lightgreen">{{ healthInfo?.sleepinessLevel + '%' }}
+        </div>
+        <p>Sleepiness level</p>
       </div>
     </div>
   </div>
