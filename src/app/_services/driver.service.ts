@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {RegisterRequest} from "../_models/register.request";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
+import {SituationResponse} from "../_models/situation.response";
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,7 @@ export class DriverService {
         'Authorization': 'Bearer ' + token
       })
     };
-    return this.http.post(this.baseUrl + '/drivers/' + driverId + "situations/week", '', httpOptions);
+    return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + driverId + "/situations/week",
+      httpOptions);
   }
 }

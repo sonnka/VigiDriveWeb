@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {DriverService} from "../_services/driver.service";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
+import {SituationResponse} from "../_models/situation.response";
 
 @Component({
   selector: 'app-driver-profile',
@@ -15,6 +16,7 @@ export class DriverProfileComponent implements OnInit {
   token: string | undefined;
   driverResponse: DriverResponse | undefined;
   healthInfo: HealthInfoResponse | undefined;
+  situations: SituationResponse[] | undefined;
 
   constructor(private driverService: DriverService, private router: Router) {
   }
@@ -48,6 +50,10 @@ export class DriverProfileComponent implements OnInit {
   }
 
   private getSituationInfo() {
-    this.driverService.getSituationInfo(this.driverId, this.token);
+    this.driverService.getSituationInfo(this.driverId, this.token)
+      .subscribe(response => {
+        this.situations = response;
+        console.log('Situations: ' + JSON.stringify(response));
+      });
   }
 }
