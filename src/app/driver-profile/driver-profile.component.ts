@@ -4,6 +4,7 @@ import {DriverService} from "../_services/driver.service";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-driver-profile',
@@ -17,6 +18,7 @@ export class DriverProfileComponent implements OnInit {
   driverResponse: DriverResponse | undefined;
   healthInfo: HealthInfoResponse | undefined;
   situations: SituationResponse[] | undefined;
+  situationPeriod: string | undefined;
 
   constructor(private driverService: DriverService, private router: Router) {
   }
@@ -31,6 +33,14 @@ export class DriverProfileComponent implements OnInit {
     this.getDriver();
     this.getHealthInfo();
     this.getSituationInfo();
+  }
+
+  public formatDate(date: Date): string {
+    return formatDate(date, 'dd.MM.YYYY', 'en-US');
+  }
+
+  public formatDateTime(date: Date): string {
+    return formatDate(date, 'dd.MM.YYYY hh:mm', 'en-US');
   }
 
   private getDriver() {
@@ -53,7 +63,19 @@ export class DriverProfileComponent implements OnInit {
     this.driverService.getSituationInfo(this.driverId, this.token)
       .subscribe(response => {
         this.situations = response;
+        let monday = this.getMonday();
+        let sunday = new Date();
+        let day = sunday.getDay();
+        sunday.setDate(sunday.getDate() + (7 - day));
+        this.situationPeriod = this.formatDate(monday) + ' - ' + this.formatDate(sunday);
         console.log('Situations: ' + JSON.stringify(response));
       });
+  }
+
+  private getMonday() {
+    let today = new Date();
+    let day = today.getDay();
+    today.setDate(today.getDate() - day + 1)
+    return today;
   }
 }
