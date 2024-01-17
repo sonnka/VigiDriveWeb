@@ -1,7 +1,9 @@
-<div class="my-navbar">
+<div class="my-navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
   <a class="link" href="/">{{ home }}</a>
-  <a class="link" href="/login">{{ login }}</a>
-  <a class="link" href="/register">{{ register }}</a>
+  <a class="link" href="/login" sec:authorize="isAnonymous()">{{ login }}</a>
+  <a class="link" href="/register" sec:authorize="isAnonymous()">{{ register }}</a>
+  <a class="link" href="/driver-profile" sec:authorize="isAuthenticated()">Profile</a>
+  <a class="link" href="/health-info" sec:authorize="isAuthenticated()">Health</a>
 </div>
 <br><br>
 <!--<h1 class="caption">{{ title }}</h1>-->

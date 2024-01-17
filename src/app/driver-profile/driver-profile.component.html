@@ -34,7 +34,7 @@
             </div>
             <div class="visa_crinfo col-7">
               <div>
-                <p>{{ driverResponse?.firstName + ' ' + driverResponse?.lastName || 'Name Surname' }}</p>
+                <p>{{ (driverResponse?.firstName + ' ' + driverResponse?.lastName) || 'Name Surname' }}</p>
                 <p>{{ driverResponse?.license?.number || '0000000000' }}</p>
                 <p>{{ driverResponse?.license?.dateTo || '00/00' }}</p>
               </div>
@@ -99,9 +99,10 @@
       </div>
     </div>
   </div>
-  <hr>
+
   <div class="row">
-    <p>{{ situationPeriod || '00.00.0000 - 00.00.0000' }}</p>
+    <p
+      style="margin-top: 90px; margin-bottom: 20px ; font-style: italic">{{ situationPeriod || '00.00.0000 - 00.00.0000' }}</p>
     <table border="1" class="table table-condensed table-responsive-md" id="ordersTable">
       <thead>
       <tr>

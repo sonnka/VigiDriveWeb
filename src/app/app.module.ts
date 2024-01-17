@@ -8,6 +8,7 @@ import {RegisterComponent} from './register/register.component';
 import {HttpClientModule} from "@angular/common/http";
 import {HomeComponent} from './home/home.component';
 import {DriverProfileComponent} from './driver-profile/driver-profile.component';
+import { HealthInfoComponent } from './health-info/health-info.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {DriverProfileComponent} from './driver-profile/driver-profile.component'
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    DriverProfileComponent
+    DriverProfileComponent,
+    HealthInfoComponent
   ],
   imports: [
     BrowserModule,
