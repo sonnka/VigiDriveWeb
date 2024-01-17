@@ -1,1 +1,34 @@
-<p>health-info works!</p>
+<p>Last update: {{ healthInfo?.time }} </p>
+<br><br>
+<div style="text-align: center;">
+  <div class="row">
+    <div class="col-12">
+      <div [ngStyle]="{'--p': healthInfo?.generalStatus}" class="pie animate"
+           id="generalLevel"
+           style="--c:lightgreen">{{ healthInfo?.generalStatus + '%' }}
+      </div>
+      <p style="font-size: 13px">General health level</p>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col">
+      <div [ngStyle]="{'--p': healthInfo?.stressLevel}" class="pie animate"
+           style="--c:lightgreen">{{ healthInfo?.stressLevel + '%' }}
+      </div>
+      <p style="font-size: 13px">Stress level</p>
+    </div>
+    <div class="col">
+      <div [ngStyle]="{'--p': healthInfo?.concentrationLevel}" class="pie animate col"
+           style="--c:lightgreen">{{ healthInfo?.concentrationLevel + '%' }}
+      </div>
+      <p style="font-size: 13px">Concentration level</p>
+    </div>
+    <div class="col">
+      <div [ngStyle]="{'--p': healthInfo?.sleepinessLevel}" class="pie animate col"
+           style="--c:lightgreen">{{ healthInfo?.sleepinessLevel + '%' }}
+      </div>
+      <p style="font-size: 13px">Sleepiness level</p>
+    </div>
+  </div>
+</div>
