@@ -8,7 +8,8 @@ import {RegisterComponent} from './register/register.component';
 import {HttpClientModule} from "@angular/common/http";
 import {HomeComponent} from './home/home.component';
 import {DriverProfileComponent} from './driver-profile/driver-profile.component';
-import { HealthInfoComponent } from './health-info/health-info.component';
+import {HealthInfoComponent} from './health-info/health-info.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HealthInfoComponent } from './health-info/health-info.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgOptimizedImage
   ],
   providers: [],
   bootstrap: [AppComponent]

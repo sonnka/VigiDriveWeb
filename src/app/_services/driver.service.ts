@@ -4,6 +4,8 @@ import {RegisterRequest} from "../_models/register.request";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
+import {LoginService} from "./login.service";
+import {jwtDecode} from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class DriverService {
 
   private baseUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loginService: LoginService) {
   }
 
   register(data: RegisterRequest) {
@@ -25,6 +27,9 @@ export class DriverService {
   }
 
   getDriver(driverId: bigint | undefined, token: string | undefined) {
+    let token2 = this.loginService.getToken();
+    let t = jwtDecode(token2);
+
     console.log("Id: " + driverId + " | token: " + token);
 
     let httpOptions = {

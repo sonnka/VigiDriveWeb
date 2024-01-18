@@ -22,4 +22,16 @@ export class LoginService {
     };
     return this.http.post<LoginResponse>(this.baseUrl + '/login', '', httpOptions);
   }
+
+  setToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  getToken(): string {
+    return localStorage.getItem('token') ?? '';
+  }
+
+  isAuthorize(): boolean {
+    return localStorage.getItem('token') != null;
+  }
 }

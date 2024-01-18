@@ -3,3 +3,19 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.my-navbar {
+  background-color: darkslategray;
+  padding: 30px 50px;
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  font-size: 14pt;
+  font-weight: bold;
+  margin-right: 32px;
+}
