@@ -7,7 +7,7 @@ pipeline {
                 checkout scm
             }
         }
-
+//Test Jenkins
         stage('Install Dependencies') {
             steps {
                 bat 'npm install'
