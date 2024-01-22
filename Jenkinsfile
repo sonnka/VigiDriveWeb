@@ -10,13 +10,13 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Build Angular App') {
             steps {
-                sh 'CI=false npm run build'
+                bat 'npm run build'
             }
         }
     }
