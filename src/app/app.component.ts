@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LoginService} from "./_services/login.service";
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,5 @@ export class AppComponent {
   login = 'Login';
   register = 'Register';
   home = 'Home';
+  protected readonly LoginService = LoginService;
 }
