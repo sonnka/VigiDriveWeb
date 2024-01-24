@@ -25,7 +25,7 @@ export class HealthInfoComponent {
 
 
   private getHealthInfo() {
-    this.driverService.getHealthInfo(this.driverId, this.token)
+    this.driverService.getHealthInfo()
       .subscribe(response => {
         this.healthInfo = response;
         console.log('Health info: ' + JSON.stringify(response));

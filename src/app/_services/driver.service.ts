@@ -5,7 +5,6 @@ import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
 import {LoginService} from "./login.service";
-import {jwtDecode} from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +25,11 @@ export class DriverService {
     return this.http.post(this.baseUrl + '/register/driver', data, httpOptions);
   }
 
-  getDriver(driverId: bigint | undefined, token: string | undefined) {
-    let token2 = this.loginService.getToken();
-    let t = jwtDecode(token2);
+  getDriver() {
+    let token = this.loginService.getToken();
+    let id = this.loginService.getUserId();
 
-    console.log("Id: " + driverId + " | token: " + token);
+    console.log("Id: " + id + " | token: " + token);
 
     let httpOptions = {
       headers: new HttpHeaders({
@@ -39,27 +38,34 @@ export class DriverService {
       })
     };
 
-    return this.http.get<DriverResponse>(this.baseUrl + '/drivers/' + driverId, httpOptions);
+    return this.http.get<DriverResponse>(this.baseUrl + '/drivers/' + id, httpOptions);
   }
 
-  getHealthInfo(driverId: bigint | undefined, token: string | undefined) {
+  getHealthInfo() {
+    let token = this.loginService.getToken();
+    let id = this.loginService.getUserId();
+
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       })
     };
-    return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + driverId + "/health-info", httpOptions);
+
+    return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + id + "/health-info", httpOptions);
   }
 
-  getSituationInfo(driverId: bigint | undefined, token: string | undefined) {
+  getSituationInfo() {
+    let token = this.loginService.getToken();
+    let id = this.loginService.getUserId();
+
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       })
     };
-    return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + driverId + "/situations/week",
+    return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + id + "/situations/week",
       httpOptions);
   }
 }

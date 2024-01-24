@@ -14,13 +14,21 @@ export class LoginService {
   constructor(private http: HttpClient) {
   }
 
+  public static isAuthorize(): boolean {
+    return localStorage.getItem('token') != null;
+  }
+
   login(data: LoginRequest): Observable<LoginResponse> {
     let httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
       })
     };
-    return this.http.post<LoginResponse>(this.baseUrl + '/login', '', httpOptions);
+    let response = this.http.post<LoginResponse>(this.baseUrl + '/login', '', httpOptions);
+
+    response.subscribe(r => this.setUserId(r.id));
+
+    return response;
   }
 
   setToken(token: string) {
@@ -31,7 +39,11 @@ export class LoginService {
     return localStorage.getItem('token') ?? '';
   }
 
-  isAuthorize(): boolean {
-    return localStorage.getItem('token') != null;
+  setUserId(id: bigint) {
+    localStorage.setItem('id', id.toString());
+  }
+
+  getUserId(): string {
+    return localStorage.getItem('id') ?? '';
   }
 }

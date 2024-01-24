@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
 import {DriverService} from "../_services/driver.service";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
@@ -20,12 +19,10 @@ export class DriverProfileComponent implements OnInit {
   situations: SituationResponse[] | undefined;
   situationPeriod: string | undefined;
 
-  constructor(private driverService: DriverService, private router: Router) {
+  constructor(private driverService: DriverService) {
   }
 
   ngOnInit() {
-    this.driverId = history.state.id;
-    this.token = history.state.token;
     this.getDriverProfile();
   }
 
@@ -44,7 +41,7 @@ export class DriverProfileComponent implements OnInit {
   }
 
   private getDriver() {
-    this.driverService.getDriver(this.driverId, this.token)
+    this.driverService.getDriver()
       .subscribe(response => {
         this.driverResponse = response;
         console.log('Driver: ' + JSON.stringify(response));
@@ -52,7 +49,7 @@ export class DriverProfileComponent implements OnInit {
   }
 
   private getHealthInfo() {
-    this.driverService.getHealthInfo(this.driverId, this.token)
+    this.driverService.getHealthInfo()
       .subscribe(response => {
         this.healthInfo = response;
         console.log('Health info: ' + JSON.stringify(response));
@@ -60,7 +57,7 @@ export class DriverProfileComponent implements OnInit {
   }
 
   private getSituationInfo() {
-    this.driverService.getSituationInfo(this.driverId, this.token)
+    this.driverService.getSituationInfo()
       .subscribe(response => {
         this.situations = response;
         let monday = this.getMonday();

@@ -16,7 +16,6 @@ export class LoginComponent {
     let data = new LoginRequest(email, password);
 
     this.loginService.login(data).subscribe(response => {
-      let id = response.id;
       let token = response.token;
       this.loginService.setToken(token)
       this.router.navigate(['/driver-profile']);
