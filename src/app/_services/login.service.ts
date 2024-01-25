@@ -31,7 +31,7 @@ export class LoginService {
   }
 
   public static logout() {
-    localStorage.clear()
+    localStorage.clear();
   }
 
   login(data: LoginRequest): Observable<LoginResponse> {

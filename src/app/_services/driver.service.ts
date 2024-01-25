@@ -13,6 +13,9 @@ export class DriverService {
 
   private baseUrl = 'http://localhost:8080';
 
+  private token: string | undefined;
+  private id: string | undefined;
+
   constructor(private http: HttpClient, private loginService: LoginService) {
   }
 
@@ -26,46 +29,49 @@ export class DriverService {
   }
 
   getDriver() {
-    let token = this.loginService.getToken();
-    let id = this.loginService.getUserId();
-
-    console.log("Id: " + id + " | token: " + token);
+    this.getCredentials()
+    console.log("Id: " + this.id + " | token: " + this.token);
 
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + this.token
       })
     };
 
-    return this.http.get<DriverResponse>(this.baseUrl + '/drivers/' + id, httpOptions);
+    return this.http.get<DriverResponse>(this.baseUrl + '/drivers/' + this.id, httpOptions);
   }
 
   getHealthInfo() {
-    let token = this.loginService.getToken();
-    let id = this.loginService.getUserId();
-
+    this.getCredentials()
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + this.token
       })
     };
 
-    return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + id + "/health-info", httpOptions);
+    return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + this.id + "/health-info", httpOptions);
   }
 
   getSituationInfo() {
-    let token = this.loginService.getToken();
-    let id = this.loginService.getUserId();
-
+    this.getCredentials()
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + this.token
       })
     };
-    return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + id + "/situations/week",
+    return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + this.id + "/situations/week",
       httpOptions);
+  }
+
+  private getCredentials() {
+    this.token = this.loginService.getToken();
+    this.id = this.loginService.getUserId();
+
+    if (this.token == null || this.id == null) {
+      LoginService.logout();
+    }
   }
 }
