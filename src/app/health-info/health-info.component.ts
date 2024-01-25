@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
 import {HealthInfoResponse} from "../_models/health-info.response";
 import {DriverService} from "../_services/driver.service";
-import {Router} from "@angular/router";
+import {DriverProfileComponent} from "../driver-profile/driver-profile.component";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-health-info',
@@ -10,19 +11,16 @@ import {Router} from "@angular/router";
 })
 export class HealthInfoComponent {
 
-  driverId: bigint | undefined;
-  token: string | undefined;
   healthInfo: HealthInfoResponse | undefined;
+  protected readonly DriverProfileComponent = DriverProfileComponent;
+  protected readonly AppComponent = AppComponent;
 
-  constructor(private driverService: DriverService, private router: Router) {
+  constructor(private driverService: DriverService) {
   }
 
   ngOnInit() {
-    this.driverId = history.state.id;
-    this.token = history.state.token;
     this.getHealthInfo();
   }
-
 
   private getHealthInfo() {
     this.driverService.getHealthInfo()

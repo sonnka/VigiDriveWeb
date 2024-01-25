@@ -3,7 +3,7 @@ import {DriverService} from "../_services/driver.service";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
-import {formatDate} from "@angular/common";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-driver-profile',
@@ -12,12 +12,11 @@ import {formatDate} from "@angular/common";
 })
 export class DriverProfileComponent implements OnInit {
 
-  driverId: bigint | undefined;
-  token: string | undefined;
   driverResponse: DriverResponse | undefined;
   healthInfo: HealthInfoResponse | undefined;
   situations: SituationResponse[] | undefined;
   situationPeriod: string | undefined;
+  protected readonly AppComponent = AppComponent;
 
   constructor(private driverService: DriverService) {
   }
@@ -30,14 +29,6 @@ export class DriverProfileComponent implements OnInit {
     this.getDriver();
     this.getHealthInfo();
     this.getSituationInfo();
-  }
-
-  public formatDate(date: Date): string {
-    return formatDate(date, 'dd.MM.YYYY', 'en-US');
-  }
-
-  public formatDateTime(date: Date): string {
-    return formatDate(date, 'dd.MM.YYYY hh:mm', 'en-US');
   }
 
   private getDriver() {
@@ -60,11 +51,17 @@ export class DriverProfileComponent implements OnInit {
     this.driverService.getSituationInfo()
       .subscribe(response => {
         this.situations = response;
+
         let monday = this.getMonday();
         let sunday = new Date();
         let day = sunday.getDay();
+
         sunday.setDate(sunday.getDate() + (7 - day));
-        this.situationPeriod = this.formatDate(monday) + ' - ' + this.formatDate(sunday);
+
+        if (monday != null && sunday != null) {
+          this.situationPeriod = AppComponent.formatDate(monday) + ' - ' + AppComponent.formatDate(sunday);
+        }
+
         console.log('Situations: ' + JSON.stringify(response));
       });
   }

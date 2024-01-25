@@ -16,7 +16,7 @@
       </div>
       <p style="color: #99a2a2; font-size: 13px">{{ driverResponse?.email || 'Email' }}</p>
       <br>
-      <p style="font-size: 13px">{{ driverResponse?.dateOfBirth || 'Date of birth' }}</p>
+      <p style="font-size: 13px">{{ AppComponent.formatDate(driverResponse?.dateOfBirth) || 'Date of birth' }}</p>
     </div>
     <div class="col-3">
       <div class="license-container">
@@ -36,7 +36,7 @@
               <div>
                 <p>{{ (driverResponse?.firstName + ' ' + driverResponse?.lastName) || 'Name Surname' }}</p>
                 <p>{{ driverResponse?.license?.number || '0000000000' }}</p>
-                <p>{{ driverResponse?.license?.dateTo || '00/00' }}</p>
+                <p>{{ AppComponent.formatLicenseDate(driverResponse?.license?.dateTo) || '00/00' }}</p>
               </div>
             </div>
           </div>
@@ -102,7 +102,8 @@
 
   <div class="row">
     <p
-      style="margin-top: 90px; margin-bottom: 20px ; font-style: italic">{{ situationPeriod || '00.00.0000 - 00.00.0000' }}</p>
+      style="margin-top: 90px; margin-bottom: 20px ; font-style: italic; font-size: 13px; color: gray">
+      {{ situationPeriod || '00.00.0000 - 00.00.0000' }}</p>
     <table border="1" class="table table-condensed table-responsive-md" id="ordersTable">
       <thead>
       <tr>
@@ -122,8 +123,8 @@
       </thead>
       <tbody *ngFor="let situation of situations">
       <tr>
-        <td>{{ this.formatDateTime(situation.start) }}</td>
-        <td>{{ this.formatDateTime(situation.end) }}</td>
+        <td>{{ AppComponent.formatDateTime(situation.start) }}</td>
+        <td>{{ AppComponent.formatDateTime(situation.end) }}</td>
         <td>{{ situation.type }}</td>
         <td>{{ situation.description }}</td>
       </tr>

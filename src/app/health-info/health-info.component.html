@@ -1,4 +1,4 @@
-<p>Last update: {{ healthInfo?.time }} </p>
+<p>Last update: {{ AppComponent.formatDateTime(healthInfo?.time) || '00.00.0000 00:00' }} </p>
 <br><br>
 <div style="text-align: center;">
   <div class="row">
@@ -31,4 +31,6 @@
       <p style="font-size: 13px">Sleepiness level</p>
     </div>
   </div>
+  <br><br><br>
+  <p>Statistics</p>
 </div>
