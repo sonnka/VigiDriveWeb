@@ -13,8 +13,8 @@
     <div *ngIf="LoginService.isAuthorize()">
       <a class="link" href="/health-info">Health</a>
     </div>
-    <div *ngIf="LoginService.isAuthorize()">
-      <a class="link" href="/logout">Logout</a>
+    <div (click)="LoginService.logout()" *ngIf="LoginService.isAuthorize()">
+      <a class="link" href="/">Logout</a>
     </div>
   </div>
 </header>

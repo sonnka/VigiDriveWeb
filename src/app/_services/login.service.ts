@@ -15,7 +15,23 @@ export class LoginService {
   }
 
   public static isAuthorize(): boolean {
-    return localStorage.getItem('token') != null;
+    let token = localStorage.getItem('token');
+    let expireDate = localStorage.getItem("expires_at")
+
+    if (token == null || expireDate == null) {
+      return false;
+    }
+
+    if (Date.now() > Date.parse(expireDate)) {
+      localStorage.clear()
+      return false;
+    }
+
+    return true;
+  }
+
+  public static logout() {
+    localStorage.clear()
   }
 
   login(data: LoginRequest): Observable<LoginResponse> {
@@ -24,6 +40,7 @@ export class LoginService {
         'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
       })
     };
+
     let response = this.http.post<LoginResponse>(this.baseUrl + '/login', '', httpOptions);
 
     response.subscribe(r => this.setUserId(r.id));
@@ -32,7 +49,11 @@ export class LoginService {
   }
 
   setToken(token: string) {
+    let t = JSON.parse(atob(token.split('.')[1]));
+    let expireDate = new Date(t.exp * 1000);
+
     localStorage.setItem('token', token);
+    localStorage.setItem('expires_at', expireDate.toISOString())
   }
 
   getToken(): string {
