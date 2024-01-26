@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
 import {SituationStatistics} from "../_models/situation.statistics";
 import {AppComponent} from "../app.component";
+import {SituationResponse} from "../_models/situation.response";
 
 @Component({
   selector: 'app-situations',
@@ -13,13 +14,24 @@ export class SituationsComponent implements OnInit {
   protected yearStatistics: SituationStatistics | undefined;
   protected monthStatistics: SituationStatistics | undefined;
   protected weekStatistics: SituationStatistics | undefined;
+  protected situations: SituationResponse[] | undefined;
+  protected startOfCurrentWeek = '00.00.0000'
+  protected endOfCurrentWeek = '00.00.0000'
   protected week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   protected year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  protected readonly AppComponent = AppComponent;
 
   constructor(private driverService: DriverService) {
   }
 
   ngOnInit() {
+    let date = new Date()
+    date.setDate(date.getDate() - date.getDay() + 1)
+    this.startOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    date.setDate(date.getDate() + 6)
+    this.endOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+
+    this.getSituationInfo()
     this.getYearStatistics();
     this.getMonthStatistics();
     this.getWeekStatistics()
@@ -166,5 +178,12 @@ export class SituationsComponent implements OnInit {
         this.weekStatistics = response;
       }
     )
+  }
+
+  private getSituationInfo() {
+    this.driverService.getSituationInfo()
+      .subscribe(response => {
+        this.situations = response;
+      });
   }
 }

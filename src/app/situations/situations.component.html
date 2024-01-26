@@ -1,5 +1,35 @@
-<p>Statistics</p>
 <p>Last update: {{ getTodayDate() || '00.00.0000 00:00' }} </p>
+
+<p
+  style="margin-top: 90px; font-style: italic; font-size: 13px; color: gray">
+  {{ startOfCurrentWeek + '-' + endOfCurrentWeek }}</p>
+<table border="1" class="table table-condensed table-responsive-md" id="ordersTable">
+  <thead>
+  <tr>
+    <th style="width:20%">
+      <a id="sortDate">Start</a>
+    </th>
+    <th style="width:20%">
+      <a id="sortStatus">End</a>
+    </th>
+    <th style="width:20%">
+      <a id="orderSortPrice">Type</a>
+    </th>
+    <th style="width:40%">
+      <a id="orderSortPrice2">Description</a>
+    </th>
+  </tr>
+  </thead>
+  <tbody *ngFor="let situation of situations">
+  <tr>
+    <td>{{ AppComponent.formatDateTime(situation.start) }}</td>
+    <td>{{ AppComponent.formatDateTime(situation.end) }}</td>
+    <td>{{ situation.type }}</td>
+    <td>{{ situation.description }}</td>
+  </tr>
+  </tbody>
+</table>
+
 
 <body style="margin-top: 100px">
 <div class="main-container">
@@ -48,7 +78,7 @@
 <body style="margin-top: 100px">
 <div class="main-container">
   <div class="year-stats">
-    <div *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12]" class="month-group">
+    <div *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]" class="month-group">
       <div [ngStyle]="{'height': getPercentByPeriod(i + 1, yearStatistics) + '%'}"
            class="bar"
            style="width: 30px;">{{ getAmountByPeriod(i + 1, yearStatistics) || '' }}
