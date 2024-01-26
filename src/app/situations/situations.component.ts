@@ -12,6 +12,9 @@ export class SituationsComponent implements OnInit {
 
   protected yearStatistics: SituationStatistics | undefined;
   protected monthStatistics: SituationStatistics | undefined;
+  protected weekStatistics: SituationStatistics | undefined;
+  protected week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  protected year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
   constructor(private driverService: DriverService) {
   }
@@ -19,6 +22,7 @@ export class SituationsComponent implements OnInit {
   ngOnInit() {
     this.getYearStatistics();
     this.getMonthStatistics();
+    this.getWeekStatistics()
   }
 
   protected getYearPeriod(number: number | undefined): string {
@@ -151,6 +155,15 @@ export class SituationsComponent implements OnInit {
       response => {
         console.log('Month statistic' + JSON.stringify(response));
         this.monthStatistics = response;
+      }
+    )
+  }
+
+  private getWeekStatistics() {
+    this.driverService.getWeekSituationStatistic().subscribe(
+      response => {
+        console.log('Week statistic' + JSON.stringify(response));
+        this.weekStatistics = response;
       }
     )
   }
