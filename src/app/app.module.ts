@@ -10,6 +10,7 @@ import {HomeComponent} from './home/home.component';
 import {DriverProfileComponent} from './driver-profile/driver-profile.component';
 import {HealthInfoComponent} from './health-info/health-info.component';
 import {NgOptimizedImage} from "@angular/common";
+import { SituationsComponent } from './situations/situations.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {NgOptimizedImage} from "@angular/common";
     RegisterComponent,
     HomeComponent,
     DriverProfileComponent,
-    HealthInfoComponent
+    HealthInfoComponent,
+    SituationsComponent
   ],
   imports: [
     BrowserModule,

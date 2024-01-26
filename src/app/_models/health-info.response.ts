@@ -16,3 +16,4 @@ export class HealthInfoResponse {
     this.generalStatus = generalStatus;
   }
 }
+
