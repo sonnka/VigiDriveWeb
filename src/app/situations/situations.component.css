@@ -6,13 +6,6 @@
   margin: 0;
 }
 
-body {
-  font-family: "Roboto", sans-serif;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .main-container {
   color: #807f7f;
@@ -40,7 +33,7 @@ body {
 }
 
 .bar {
-  background-color: #d4f8f6;
+  background-color: #c0fdf9;
   width: 25px;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -49,28 +42,12 @@ body {
 
 .month-group:hover .bar,
 .selected .bar {
-  background: #7aded3;
+  background: #41c2bd;
 }
 
 .month-group:hover p,
 .selected p {
   color: #000000;
-}
-
-.h-25 {
-  height: 25%;
-}
-
-.h-50 {
-  height: 50%;
-}
-
-.h-75 {
-  height: 75%;
-}
-
-.h-100 {
-  height: 100%;
 }
 
 .info p {

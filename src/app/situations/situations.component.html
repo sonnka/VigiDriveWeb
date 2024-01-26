@@ -1,54 +1,99 @@
 <p>Statistics</p>
 <p>Last update: {{ getTodayDate() || '00.00.0000 00:00' }} </p>
+
+<body style="margin-top: 100px">
+<div class="main-container">
+  <div class="year-stats">
+    <div *ngFor="let i of getAmountOfDaysInMonth()" class="month-group">
+      <div [ngStyle]="{'height': getPercentByPeriod(i, monthStatistics) + '%'}"
+           class="bar"
+           style="width: 15px;">{{ getAmountByPeriod(i, monthStatistics) || '' }}
+      </div>
+      <p class="month">{{ i }}</p>
+    </div>
+  </div>
+  <div class="info">
+    <p>The number of situations that occur this month: <span>{{ monthStatistics?.amountOfSituations || 0 }}</span></p>
+    <p>The situation that happens most often:
+      <span>{{ getSituation(monthStatistics?.mostFrequentSituation) || "-" }}</span></p>
+    <p>The day with the most situations: <span>{{ getMonthPeriod(monthStatistics?.mostFrequentPeriod) || "-" }}</span>
+    </p>
+  </div>
+</div>
+</body>
 <body>
 <div class="main-container">
   <div class="year-stats">
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(1) + '%'}" class="bar">{{ getAmountByPeriod(1) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(1, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(1, yearStatistics) || '' }}
+      </div>
       <p class="month">Jan</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(2) + '%'}" class="bar">{{ getAmountByPeriod(2) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(2, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(2, yearStatistics) || '' }}
+      </div>
       <p class="month">Feb</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(3) + '%'}" class="bar">{{ getAmountByPeriod(3) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(3, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(3, yearStatistics) || '' }}
+      </div>
       <p class="month">Mar</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(4) + '%'}" class="bar">{{ getAmountByPeriod(4) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(4, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(4, yearStatistics) || '' }}
+      </div>
       <p class="month">Apr</p>
     </div>
     <div class="month-group ">
-      <div [ngStyle]="{'height': getPercentByPeriod(5) + '%'}" class="bar">{{ getAmountByPeriod(5) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(5, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(5, yearStatistics) || '' }}
+      </div>
       <p class="month">May</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(6) + '%'}" class="bar">{{ getAmountByPeriod(6) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(6, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(6, yearStatistics) || '' }}
+      </div>
       <p class="month">Jun</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(7) + '%'}" class="bar">{{ getAmountByPeriod(7) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(7, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(7, yearStatistics) || '' }}
+      </div>
       <p class="month">Jul</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(8) + '%'}" class="bar">{{ getAmountByPeriod(8) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(8, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(8, yearStatistics) || '' }}
+      </div>
       <p class="month">Aug</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(9) + '%'}" class="bar">{{ getAmountByPeriod(9) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(9, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(9, yearStatistics) || '' }}
+      </div>
       <p class="month">Sep</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(10) + '%'}" class="bar">{{ getAmountByPeriod(10) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(10, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(10, yearStatistics) || '' }}
+      </div>
       <p class="month">Oct</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(11) + '%'}" class="bar">{{ getAmountByPeriod(11) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(11, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(11, yearStatistics) || '' }}
+      </div>
       <p class="month">Nov</p>
     </div>
     <div class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(12) + '%'}" class="bar">{{ getAmountByPeriod(12) || '' }}</div>
+      <div [ngStyle]="{'height': getPercentByPeriod(12, yearStatistics) + '%'}"
+           class="bar">{{ getAmountByPeriod(12, yearStatistics) || '' }}
+      </div>
       <p class="month">Dec</p>
     </div>
   </div>

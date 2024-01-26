@@ -11,12 +11,14 @@ import {AppComponent} from "../app.component";
 export class SituationsComponent implements OnInit {
 
   protected yearStatistics: SituationStatistics | undefined;
+  protected monthStatistics: SituationStatistics | undefined;
 
   constructor(private driverService: DriverService) {
   }
 
   ngOnInit() {
     this.getYearStatistics();
+    this.getMonthStatistics();
   }
 
   protected getYearPeriod(number: number | undefined): string {
@@ -81,7 +83,7 @@ export class SituationsComponent implements OnInit {
     }
   }
 
-  protected getSituation(situation: number | undefined): string {
+  protected getSituation(situation: string | undefined): string {
     if (situation == null) {
       return "-";
     }
@@ -89,8 +91,8 @@ export class SituationsComponent implements OnInit {
     return situation.toString().toLowerCase().replace('_', ' ');
   }
 
-  protected getAmountByPeriod(period: number): string {
-    let elements = this.yearStatistics?.statistics;
+  protected getAmountByPeriod(period: number, statistics: SituationStatistics | undefined): string {
+    let elements = statistics?.statistics;
 
     if (elements == null || elements.length == 0) {
       return "";
@@ -105,9 +107,9 @@ export class SituationsComponent implements OnInit {
     return "";
   }
 
-  protected getPercentByPeriod(period: number): number {
-    let elements = this.yearStatistics?.statistics;
-    let amountOfSituations = this.yearStatistics?.amountOfSituations;
+  protected getPercentByPeriod(period: number, statistics: SituationStatistics | undefined): number {
+    let elements = statistics?.statistics;
+    let amountOfSituations = statistics?.amountOfSituations;
     if (elements == null || elements.length == 0 || amountOfSituations == null) {
       return 0;
     }
@@ -125,11 +127,30 @@ export class SituationsComponent implements OnInit {
     return AppComponent.formatDateTime(new Date()) || "00.00.0000 00:00";
   }
 
+  protected getAmountOfDaysInMonth(): number[] {
+    let today = new Date();
+    let daysInMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    let array = [];
+    for (let i = 1; i <= daysInMonth; i++) {
+      array[i - 1] = i;
+    }
+    return array;
+  }
+
   private getYearStatistics() {
     this.driverService.getYearSituationStatistic().subscribe(
       response => {
-        console.log('Statistic' + JSON.stringify(response));
+        console.log('Year statistic' + JSON.stringify(response));
         this.yearStatistics = response;
+      }
+    )
+  }
+
+  private getMonthStatistics() {
+    this.driverService.getMonthSituationStatistic().subscribe(
+      response => {
+        console.log('Month statistic' + JSON.stringify(response));
+        this.monthStatistics = response;
       }
     )
   }
