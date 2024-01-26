@@ -56,16 +56,22 @@ input[type="file"] {
   display: none;
 }
 
+.image {
+  border: .1em solid darkslategray;
+  border-radius: 10em;
+  display: flex;
+  height: 120px;
+  width: 120px;
+}
+
 .custom-file-upload {
   display: inline-block;
   cursor: pointer;
   appearance: none;
-  margin-top: 15px;
-  font-size: 17px;
-  border: .1em solid darkslategray;
+  font-size: 15px;
   padding: .85em 1.5em;
-  color: #000000;
-  border-radius: 2em;
+  color: darkslategray;
+  border-radius: 10em;
   transition: 1s;
   background: #ffffff;
 }
