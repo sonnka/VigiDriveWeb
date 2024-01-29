@@ -13,20 +13,20 @@
   <br>
   <div class="row">
     <div class="col">
-      <div [ngStyle]="{'--p': healthInfo?.stressLevel}" class="pie animate"
-           style="--c:lightgreen">{{ healthInfo?.stressLevel + '%' }}
+      <div [ngStyle]="{'--p': ((healthInfo?.stressLevel || 0) * 10)}" class="pie animate"
+           style="--c:lightgreen">{{ ((healthInfo?.stressLevel || 0) * 10) + '%' }}
       </div>
       <p style="font-size: 13px">Stress level</p>
     </div>
     <div class="col">
-      <div [ngStyle]="{'--p': healthInfo?.concentrationLevel}" class="pie animate col"
-           style="--c:lightgreen">{{ healthInfo?.concentrationLevel + '%' }}
+      <div [ngStyle]="{'--p': ((healthInfo?.concentrationLevel || 0) * 10)}" class="pie animate col"
+           style="--c:lightgreen">{{ ((healthInfo?.concentrationLevel || 0) * 10) + '%' }}
       </div>
       <p style="font-size: 13px">Concentration level</p>
     </div>
     <div class="col">
-      <div [ngStyle]="{'--p': healthInfo?.sleepinessLevel}" class="pie animate col"
-           style="--c:lightgreen">{{ healthInfo?.sleepinessLevel + '%' }}
+      <div [ngStyle]="{'--p': ((healthInfo?.sleepinessLevel || 0) * 10)}" class="pie animate col"
+           style="--c:lightgreen">{{ ((healthInfo?.sleepinessLevel || 0) * 10) + '%' }}
       </div>
       <p style="font-size: 13px">Sleepiness level</p>
     </div>
