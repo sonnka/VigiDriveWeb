@@ -1,4 +1,4 @@
-<p>Last update: {{ getTodayDate() || '00.00.0000 00:00' }} </p>
+<p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
 
 <p
   style="margin-top: 90px; font-style: italic; font-size: 13px; color: gray">
@@ -39,14 +39,15 @@
            class="bar"
            style="width: 15px;">{{ getAmountByPeriod(i + 1, weekStatistics) || '' }}
       </div>
-      <p class="month">{{ week[i] }}</p>
+      <p class="month">{{ UtilService.week[i] }}</p>
     </div>
   </div>
   <div class="info">
     <p>The number of situations that occur this month: <span>{{ weekStatistics?.amountOfSituations || 0 }}</span></p>
     <p>The situation that happens most often:
       <span>{{ getSituation(weekStatistics?.mostFrequentSituation) || "-" }}</span></p>
-    <p>The day with the most situations: <span>{{ getWeekPeriod(weekStatistics?.mostFrequentPeriod) || "-" }}</span>
+    <p>The day with the most situations:
+      <span>{{ UtilService.getWeekPeriod(weekStatistics?.mostFrequentPeriod) || "-" }}</span>
     </p>
   </div>
 </div>
@@ -56,7 +57,7 @@
 <body style="margin-top: 100px">
 <div class="main-container">
   <div class="year-stats">
-    <div *ngFor="let i of getAmountOfDaysInMonth()" class="month-group">
+    <div *ngFor="let i of UtilService.getAmountOfDaysInMonth()" class="month-group">
       <div [ngStyle]="{'height': getPercentByPeriod(i, monthStatistics) + '%'}"
            class="bar"
            style="width: 15px;">{{ getAmountByPeriod(i, monthStatistics) || '' }}
@@ -68,7 +69,8 @@
     <p>The number of situations that occur this month: <span>{{ monthStatistics?.amountOfSituations || 0 }}</span></p>
     <p>The situation that happens most often:
       <span>{{ getSituation(monthStatistics?.mostFrequentSituation) || "-" }}</span></p>
-    <p>The day with the most situations: <span>{{ getMonthPeriod(monthStatistics?.mostFrequentPeriod) || "-" }}</span>
+    <p>The day with the most situations:
+      <span>{{ UtilService.getMonthPeriod(monthStatistics?.mostFrequentPeriod) || "-" }}</span>
     </p>
   </div>
 </div>
@@ -83,14 +85,15 @@
            class="bar"
            style="width: 30px;">{{ getAmountByPeriod(i + 1, yearStatistics) || '' }}
       </div>
-      <p class="month">{{ year[i] }}</p>
+      <p class="month">{{ UtilService.year[i] }}</p>
     </div>
   </div>
   <div class="info">
     <p>The number of situations that occur this month: <span>{{ yearStatistics?.amountOfSituations || 0 }}</span></p>
     <p>The situation that happens most often:
       <span>{{ getSituation(yearStatistics?.mostFrequentSituation) || "-" }}</span></p>
-    <p>The day with the most situations: <span>{{ getYearPeriod(yearStatistics?.mostFrequentPeriod) || "-" }}</span>
+    <p>The day with the most situations:
+      <span>{{ UtilService.getYearPeriod(yearStatistics?.mostFrequentPeriod) || "-" }}</span>
     </p>
   </div>
 </div>

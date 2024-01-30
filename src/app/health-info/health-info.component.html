@@ -34,3 +34,27 @@
   <br><br><br>
   <p>Statistics</p>
 </div>
+
+
+<body style="margin-top: 100px">
+<div class="main-container">
+  <div class="year-stats">
+    <div *ngFor="let i of [0,1,2,3,4,5,6]" class="month-group">
+      <div [ngStyle]="{'height': getPercentByPeriod(i + 1, weekStatistics) + '%'}"
+           class="bar"
+           style="width: 15px;">{{ getAmountByPeriod(i + 1, weekStatistics) }}
+      </div>
+      <p class="month">{{ UtilService.week[i] }}</p>
+    </div>
+  </div>
+  <div class="info">
+    <p>Average level of health for this period: <span>{{ (weekStatistics?.generalLevelForPeriod || 0) + '%' }}</span>
+    </p>
+    <p>The best day for this period:
+      <span>{{ UtilService.getWeekPeriod(weekStatistics?.bestPeriod) || "-" }}</span>
+    </p>
+    <p>The worst day for this period:
+      <span>{{ UtilService.getWeekPeriod(weekStatistics?.worstPeriod) || "-" }}</span></p>
+  </div>
+</div>
+</body>

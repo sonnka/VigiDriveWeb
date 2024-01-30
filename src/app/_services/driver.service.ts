@@ -6,6 +6,7 @@ import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
 import {LoginService} from "./login.service";
 import {SituationStatistics} from "../_models/situation.statistics";
+import {HealthStatistics} from "../_models/health.statistics";
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,27 @@ export class DriverService {
 
     return this.http.get<SituationStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/situations/statistics/year", this.httpOptions);
+  }
+
+  getWeekHealthStatistic() {
+    this.getCredentials();
+
+    return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
+      "/health-info/statistics/week", this.httpOptions);
+  }
+
+  getMonthHealthStatistic() {
+    this.getCredentials();
+
+    return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
+      "/health-info/statistics/month", this.httpOptions);
+  }
+
+  getYearHealthStatistic() {
+    this.getCredentials();
+
+    return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
+      "/health-info/statistics/year", this.httpOptions);
   }
 
   private getCredentials() {
