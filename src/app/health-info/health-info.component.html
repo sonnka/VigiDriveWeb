@@ -1,4 +1,4 @@
-<p>Last update: {{ AppComponent.formatDateTime(healthInfo?.time) || '00.00.0000 00:00' }} </p>
+<p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
 <br><br>
 <div style="text-align: center;">
   <div class="row">
@@ -35,26 +35,71 @@
   <p>Statistics</p>
 </div>
 
-
 <body style="margin-top: 100px">
 <div class="main-container">
   <div class="year-stats">
     <div *ngFor="let i of [0,1,2,3,4,5,6]" class="month-group">
       <div [ngStyle]="{'height': getPercentByPeriod(i + 1, weekStatistics) + '%'}"
            class="bar"
-           style="width: 15px;">{{ getAmountByPeriod(i + 1, weekStatistics) }}
+           style="width: 30px;">{{ getAmountByPeriod(i + 1, weekStatistics) }}
       </div>
       <p class="month">{{ UtilService.week[i] }}</p>
     </div>
   </div>
   <div class="info">
-    <p>Average level of health for this period: <span>{{ (weekStatistics?.generalLevelForPeriod || 0) + '%' }}</span>
+    <p>Average level of health for this week: <span>{{ (weekStatistics?.generalLevelForPeriod || 0) + '%' }}</span>
     </p>
-    <p>The best day for this period:
+    <p>The healthiest day for this week:
       <span>{{ UtilService.getWeekPeriod(weekStatistics?.bestPeriod) || "-" }}</span>
     </p>
-    <p>The worst day for this period:
+    <p>The worst day for this week:
       <span>{{ UtilService.getWeekPeriod(weekStatistics?.worstPeriod) || "-" }}</span></p>
+  </div>
+</div>
+</body>
+
+<body style="margin-top: 100px">
+<div class="main-container">
+  <div class="year-stats">
+    <div *ngFor="let i of UtilService.getAmountOfDaysInMonth()" class="month-group">
+      <div [ngStyle]="{'height': getPercentByPeriod(i, monthStatistics) + '%'}"
+           class="bar"
+           style="width: 15px;">{{ getAmountByPeriod(i, monthStatistics) || '' }}
+      </div>
+      <p class="month">{{ i }}</p>
+    </div>
+  </div>
+  <div class="info">
+    <p>Average level of health for this month: <span>{{ (monthStatistics?.generalLevelForPeriod || 0) + '%' }}</span>
+    </p>
+    <p>The healthiest day for this month:
+      <span>{{ UtilService.getMonthPeriod(monthStatistics?.bestPeriod) || "-" }}</span>
+    </p>
+    <p>The worst day for this month:
+      <span>{{ UtilService.getMonthPeriod(monthStatistics?.worstPeriod) || "-" }}</span></p>
+  </div>
+</div>
+</body>
+
+<body style="margin-top: 100px">
+<div class="main-container">
+  <div class="year-stats">
+    <div *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]" class="month-group">
+      <div [ngStyle]="{'height': getPercentByPeriod(i + 1, yearStatistics) + '%'}"
+           class="bar"
+           style="width: 30px;">{{ getAmountByPeriod(i + 1, yearStatistics) || '' }}
+      </div>
+      <p class="month">{{ UtilService.year[i] }}</p>
+    </div>
+  </div>
+  <div class="info">
+    <p>Average level of health for this year: <span>{{ (yearStatistics?.generalLevelForPeriod || 0) + '%' }}</span>
+    </p>
+    <p>The healthiest month for this year:
+      <span>{{ UtilService.getYearPeriod(yearStatistics?.bestPeriod) || "-" }}</span>
+    </p>
+    <p>The worst month for this year:
+      <span>{{ UtilService.getYearPeriod(yearStatistics?.worstPeriod) || "-" }}</span></p>
   </div>
 </div>
 </body>
