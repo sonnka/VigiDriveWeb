@@ -3,9 +3,10 @@
 <div style="text-align: center;">
   <div class="row">
     <div class="col-12">
-      <div [ngStyle]="{'--p': healthInfo?.generalStatus}" class="pie animate"
+      <div [ngStyle]="{'--p': healthInfo?.generalStatus, '--c': UtilService.getColor(healthInfo?.generalStatus || 0)}"
+           class="pie animate"
            id="generalLevel"
-           style="--c:lightgreen">{{ healthInfo?.generalStatus + '%' }}
+      >{{ healthInfo?.generalStatus + '%' }}
       </div>
       <p style="font-size: 13px">General health level</p>
     </div>
@@ -13,20 +14,26 @@
   <br>
   <div class="row">
     <div class="col">
-      <div [ngStyle]="{'--p': ((healthInfo?.stressLevel || 0) * 10)}" class="pie animate"
-           style="--c:lightgreen">{{ ((healthInfo?.stressLevel || 0) * 10) + '%' }}
+      <div
+        [ngStyle]="{'--p': ((healthInfo?.stressLevel || 0) * 10), '--c': UtilService.getSleepColor((healthInfo?.stressLevel || 0) * 10)}"
+        class="pie animate"
+      >{{ ((healthInfo?.stressLevel || 0) * 10) + '%' }}
       </div>
       <p style="font-size: 13px">Stress level</p>
     </div>
     <div class="col">
-      <div [ngStyle]="{'--p': ((healthInfo?.concentrationLevel || 0) * 10)}" class="pie animate col"
-           style="--c:lightgreen">{{ ((healthInfo?.concentrationLevel || 0) * 10) + '%' }}
+      <div
+        [ngStyle]="{'--p': ((healthInfo?.concentrationLevel || 0) * 10), '--c': UtilService.getColor((healthInfo?.concentrationLevel || 0) * 10)}"
+        class="pie animate col"
+      >{{ ((healthInfo?.concentrationLevel || 0) * 10) + '%' }}
       </div>
       <p style="font-size: 13px">Concentration level</p>
     </div>
     <div class="col">
-      <div [ngStyle]="{'--p': ((healthInfo?.sleepinessLevel || 0) * 10)}" class="pie animate col"
-           style="--c:lightgreen">{{ ((healthInfo?.sleepinessLevel || 0) * 10) + '%' }}
+      <div
+        [ngStyle]="{'--p': ((healthInfo?.sleepinessLevel || 0) * 10), '--c': UtilService.getSleepColor((healthInfo?.sleepinessLevel || 0) * 10)}"
+        class="pie animate col"
+      >{{ ((healthInfo?.sleepinessLevel || 0) * 10) + '%' }}
       </div>
       <p style="font-size: 13px">Sleepiness level</p>
     </div>

@@ -4,6 +4,7 @@ import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
 import {AppComponent} from "../app.component";
+import {UtilService} from "../_services/util.service";
 
 @Component({
   selector: 'app-driver-profile',
@@ -17,6 +18,7 @@ export class DriverProfileComponent implements OnInit {
   situations: SituationResponse[] | undefined;
   situationPeriod: string | undefined;
   protected readonly AppComponent = AppComponent;
+  protected readonly UtilService = UtilService;
 
   constructor(private driverService: DriverService) {
   }

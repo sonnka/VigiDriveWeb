@@ -2,7 +2,7 @@
 .pie {
   --p: 20;
   --b: 15px;
-  --c: darkred;
+  --c: #7aded3;
   --w: 140px;
 
   width: var(--w);

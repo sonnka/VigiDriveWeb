@@ -85,4 +85,24 @@ export class UtilService {
     }
   }
 
+  static getColor(value: number): string {
+    if (value <= 60) {
+      return 'red';
+    } else if (value >= 90) {
+      return 'green';
+    }
+
+    return 'yellow';
+  }
+
+  static getSleepColor(value: number): string {
+    if (value <= 30) {
+      return 'green';
+    } else if (value >= 70) {
+      return 'red';
+    }
+
+    return 'yellow';
+  }
+
 }
