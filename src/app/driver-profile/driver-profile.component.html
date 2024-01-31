@@ -71,9 +71,9 @@
     <div class="row">
       <div class="col-12">
         <div
-          [ngStyle]="{'--p': healthInfo?.generalStatus, '--c': UtilService.getColor(healthInfo?.generalStatus || 0)}"
+          [ngStyle]="{'--p': (healthInfo?.generalStatus || 0), '--c': UtilService.getColor(healthInfo?.generalStatus || 0)}"
           class="pie animate"
-          id="generalLevel">{{ healthInfo?.generalStatus + '%' }}
+          id="generalLevel">{{ (healthInfo?.generalStatus || 0) + '%' }}
         </div>
         <p style="font-size: 13px">General health level</p>
       </div>

@@ -4,30 +4,17 @@
 <br>
 <div style="text-align: center;">
   <div class="row">
-    <div class="col-8">
-      <div>
-        <input #firstName id="firstName" placeholder="First name" type="text">
-      </div>
-      <div>
-        <input #lastName id="lastName" placeholder="Last name" type="text">
-      </div>
-      <div>
-        <input #email id="email" placeholder="Email" type="email">
-      </div>
-      <div>
-        <input #password id="password" placeholder="Password" type="password">
-      </div>
+    <div>
+      <input #firstName id="firstName" placeholder="First name" type="text">
     </div>
-    <div class="col-4">
-      <div style="margin-left: 70px; margin-top: 25px">
-        <img [src]="avatar.value || 'https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png'"
-             alt="avatar" class="image"/>
-      </div>
-      <label class="custom-file-upload">
-        <input #avatar id="avatar" placeholder="Avatar" type="text"/>
-        <div style="height: 20px"></div>
-        <button id="upload">Upload avatar</button>
-      </label>
+    <div>
+      <input #lastName id="lastName" placeholder="Last name" type="text">
+    </div>
+    <div>
+      <input #email id="email" placeholder="Email" type="email">
+    </div>
+    <div>
+      <input #password id="password" placeholder="Password" type="password">
     </div>
   </div>
 </div>
@@ -36,9 +23,9 @@
     <h3>Register as</h3>
   </div>
   <div>
-    <input (click)="registerDriver(firstName.value, lastName.value, email.value, password.value, avatar.value)"
+    <input (click)="registerDriver(firstName.value, lastName.value, email.value, password.value)"
            type="button" value="Driver">
-    <input (click)="registerManager(firstName.value, lastName.value, email.value, password.value, avatar.value)"
+    <input (click)="registerManager(firstName.value, lastName.value, email.value, password.value)"
            type="button" value="Manager">
   </div>
 </div>
