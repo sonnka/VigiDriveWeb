@@ -77,7 +77,7 @@ export class LoginService {
     return decodedToken['role'];
   }
 
-  login(data: LoginRequest): Observable<LoginResponse> {
+  public login(data: LoginRequest): Observable<LoginResponse> {
     let httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
@@ -91,7 +91,7 @@ export class LoginService {
     return response;
   }
 
-  setToken(token: string) {
+  public setToken(token: string) {
     let t = JSON.parse(atob(token.split('.')[1]));
     let expireDate = new Date(t.exp * 1000);
 
@@ -99,15 +99,15 @@ export class LoginService {
     localStorage.setItem('expires_at', expireDate.toISOString())
   }
 
-  getToken(): string {
+  public getToken(): string {
     return localStorage.getItem('token') ?? '';
   }
 
-  setUserId(id: bigint) {
+  public setUserId(id: bigint) {
     localStorage.setItem('id', id.toString());
   }
 
-  getUserId(): string {
+  public getUserId(): string {
     return localStorage.getItem('id') ?? '';
   }
 }

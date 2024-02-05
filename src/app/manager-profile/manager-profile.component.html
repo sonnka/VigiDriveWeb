@@ -1,1 +1,69 @@
-<p>manager-profile works!</p>
+<div class="container" style="width: 850px">
+  <div class="row">
+    <div class="col-3">
+      <div>
+        <img alt="avatar" class="rounded-circle" height="150" id="thumbnail"
+             ngSrc="{{managerResponse?.avatar || 'https://i.imgur.com/b08hxPY.png'}}"
+             width="150"/>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col">
+          <p
+            style="font-size: 22px; margin-top: 20px">{{ managerResponse?.firstName + ' ' + managerResponse?.lastName || 'Name Surname' }}</p>
+        </div>
+      </div>
+      <p style="color: #99a2a2; font-size: 13px">{{ managerResponse?.email || 'Email' }}</p>
+      <br>
+      <p style="color: #41c2bd; font-size: 15px">Amount of drivers:  {{ managerResponse?.amountOfDrivers || '0' }}</p>
+    </div>
+  </div>
+  <hr>
+  <br>
+  <div class="row">
+    <table border="1" class="table table-condensed table-responsive-md" id="ordersTable">
+      <thead>
+      <tr>
+        <th style="width:15%">
+          <a>Avatar</a>
+        </th>
+        <th style="width:15%">
+          <a>First name</a>
+        </th>
+        <th style="width:15%">
+          <a>Last name</a>
+        </th>
+        <th style="width:30%">
+          <a>Email</a>
+        </th>
+        <th style="width:25%">
+          <a>Actions</a>
+        </th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let driver of managerResponse?.drivers">
+      <tr>
+
+        <td><img alt="img" class="rounded-circle" height="60"
+                 ngSrc="{{driver?.avatar || 'https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png'}}"
+                 width="60"/>
+        </td>
+        <td>{{ driver.firstName }}</td>
+        <td>{{ driver.lastName }}</td>
+        <td>{{ driver.email }}</td>
+
+        <td class="actions" data-th="">
+          <a (click)="getDriverInfo(driver.id)" class="resendLetter" title="more info" type="button">
+            <i class="material-icons green">&#xe88e;</i></a>&emsp;
+          <!--          <a class="makeAdmin" title="make admin" type="button">-->
+          <!--            <i class="material-icons admin">&#xe7fd;</i></a>&emsp;-->
+          <!--          <a class="deleteCustomer" title="delete" type="button">-->
+          <!--            <i class="material-icons">&#xE872;</i></a>-->
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

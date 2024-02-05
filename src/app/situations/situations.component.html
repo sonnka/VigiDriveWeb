@@ -1,100 +1,102 @@
-<p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
+<div class="container" style="width: 850px">
+  <p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
 
-<p
-  style="margin-top: 90px; font-style: italic; font-size: 13px; color: gray">
-  {{ startOfCurrentWeek + '-' + endOfCurrentWeek }}</p>
-<table border="1" class="table table-condensed table-responsive-md" id="ordersTable">
-  <thead>
-  <tr>
-    <th style="width:20%">
-      <a id="sortDate">Start</a>
-    </th>
-    <th style="width:20%">
-      <a id="sortStatus">End</a>
-    </th>
-    <th style="width:20%">
-      <a id="orderSortPrice">Type</a>
-    </th>
-    <th style="width:40%">
-      <a id="orderSortPrice2">Description</a>
-    </th>
-  </tr>
-  </thead>
-  <tbody *ngFor="let situation of situations">
-  <tr>
-    <td>{{ AppComponent.formatDateTime(situation.start) }}</td>
-    <td>{{ AppComponent.formatDateTime(situation.end) }}</td>
-    <td>{{ situation.type }}</td>
-    <td>{{ situation.description }}</td>
-  </tr>
-  </tbody>
-</table>
+  <p
+    style="margin-top: 90px; font-style: italic; font-size: 13px; color: gray">
+    {{ startOfCurrentWeek + '-' + endOfCurrentWeek }}</p>
+  <table border="1" class="table table-condensed table-responsive-md" id="ordersTable">
+    <thead>
+    <tr>
+      <th style="width:20%">
+        <a id="sortDate">Start</a>
+      </th>
+      <th style="width:20%">
+        <a id="sortStatus">End</a>
+      </th>
+      <th style="width:20%">
+        <a id="orderSortPrice">Type</a>
+      </th>
+      <th style="width:40%">
+        <a id="orderSortPrice2">Description</a>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let situation of situations">
+    <tr>
+      <td>{{ AppComponent.formatDateTime(situation.start) }}</td>
+      <td>{{ AppComponent.formatDateTime(situation.end) }}</td>
+      <td>{{ situation.type }}</td>
+      <td>{{ situation.description }}</td>
+    </tr>
+    </tbody>
+  </table>
 
 
-<body style="margin-top: 100px">
-<div class="main-container">
-  <div class="year-stats">
-    <div *ngFor="let i of [0,1,2,3,4,5,6,7]" class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(i + 1, weekStatistics) + '%'}"
-           class="bar"
-           style="width: 15px;">{{ getAmountByPeriod(i + 1, weekStatistics) || '' }}
+  <body style="margin-top: 100px">
+  <div class="main-container">
+    <div class="year-stats">
+      <div *ngFor="let i of [0,1,2,3,4,5,6,7]" class="month-group">
+        <div [ngStyle]="{'height': getPercentByPeriod(i + 1, weekStatistics) + '%'}"
+             class="bar"
+             style="width: 15px;">{{ getAmountByPeriod(i + 1, weekStatistics) || '' }}
+        </div>
+        <p class="month">{{ UtilService.week[i] }}</p>
       </div>
-      <p class="month">{{ UtilService.week[i] }}</p>
+    </div>
+    <div class="info">
+      <p>The number of situations that occur this month: <span>{{ weekStatistics?.amountOfSituations || 0 }}</span></p>
+      <p>The situation that happens most often:
+        <span>{{ getSituation(weekStatistics?.mostFrequentSituation) || "-" }}</span></p>
+      <p>The day with the most situations:
+        <span>{{ UtilService.getWeekPeriod(weekStatistics?.mostFrequentPeriod) || "-" }}</span>
+      </p>
     </div>
   </div>
-  <div class="info">
-    <p>The number of situations that occur this month: <span>{{ weekStatistics?.amountOfSituations || 0 }}</span></p>
-    <p>The situation that happens most often:
-      <span>{{ getSituation(weekStatistics?.mostFrequentSituation) || "-" }}</span></p>
-    <p>The day with the most situations:
-      <span>{{ UtilService.getWeekPeriod(weekStatistics?.mostFrequentPeriod) || "-" }}</span>
-    </p>
-  </div>
-</div>
-</body>
+  </body>
 
 
-<body style="margin-top: 100px">
-<div class="main-container">
-  <div class="year-stats">
-    <div *ngFor="let i of UtilService.getAmountOfDaysInMonth()" class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(i, monthStatistics) + '%'}"
-           class="bar"
-           style="width: 15px;">{{ getAmountByPeriod(i, monthStatistics) || '' }}
+  <body style="margin-top: 100px">
+  <div class="main-container">
+    <div class="year-stats">
+      <div *ngFor="let i of UtilService.getAmountOfDaysInMonth()" class="month-group">
+        <div [ngStyle]="{'height': getPercentByPeriod(i, monthStatistics) + '%'}"
+             class="bar"
+             style="width: 15px;">{{ getAmountByPeriod(i, monthStatistics) || '' }}
+        </div>
+        <p class="month">{{ i }}</p>
       </div>
-      <p class="month">{{ i }}</p>
+    </div>
+    <div class="info">
+      <p>The number of situations that occur this month: <span>{{ monthStatistics?.amountOfSituations || 0 }}</span></p>
+      <p>The situation that happens most often:
+        <span>{{ getSituation(monthStatistics?.mostFrequentSituation) || "-" }}</span></p>
+      <p>The day with the most situations:
+        <span>{{ UtilService.getMonthPeriod(monthStatistics?.mostFrequentPeriod) || "-" }}</span>
+      </p>
     </div>
   </div>
-  <div class="info">
-    <p>The number of situations that occur this month: <span>{{ monthStatistics?.amountOfSituations || 0 }}</span></p>
-    <p>The situation that happens most often:
-      <span>{{ getSituation(monthStatistics?.mostFrequentSituation) || "-" }}</span></p>
-    <p>The day with the most situations:
-      <span>{{ UtilService.getMonthPeriod(monthStatistics?.mostFrequentPeriod) || "-" }}</span>
-    </p>
-  </div>
-</div>
-</body>
+  </body>
 
 
-<body style="margin-top: 100px">
-<div class="main-container">
-  <div class="year-stats">
-    <div *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]" class="month-group">
-      <div [ngStyle]="{'height': getPercentByPeriod(i + 1, yearStatistics) + '%'}"
-           class="bar"
-           style="width: 30px;">{{ getAmountByPeriod(i + 1, yearStatistics) || '' }}
+  <body style="margin-top: 100px">
+  <div class="main-container">
+    <div class="year-stats">
+      <div *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11]" class="month-group">
+        <div [ngStyle]="{'height': getPercentByPeriod(i + 1, yearStatistics) + '%'}"
+             class="bar"
+             style="width: 30px;">{{ getAmountByPeriod(i + 1, yearStatistics) || '' }}
+        </div>
+        <p class="month">{{ UtilService.year[i] }}</p>
       </div>
-      <p class="month">{{ UtilService.year[i] }}</p>
+    </div>
+    <div class="info">
+      <p>The number of situations that occur this month: <span>{{ yearStatistics?.amountOfSituations || 0 }}</span></p>
+      <p>The situation that happens most often:
+        <span>{{ getSituation(yearStatistics?.mostFrequentSituation) || "-" }}</span></p>
+      <p>The day with the most situations:
+        <span>{{ UtilService.getYearPeriod(yearStatistics?.mostFrequentPeriod) || "-" }}</span>
+      </p>
     </div>
   </div>
-  <div class="info">
-    <p>The number of situations that occur this month: <span>{{ yearStatistics?.amountOfSituations || 0 }}</span></p>
-    <p>The situation that happens most often:
-      <span>{{ getSituation(yearStatistics?.mostFrequentSituation) || "-" }}</span></p>
-    <p>The day with the most situations:
-      <span>{{ UtilService.getYearPeriod(yearStatistics?.mostFrequentPeriod) || "-" }}</span>
-    </p>
-  </div>
+  </body>
 </div>
-</body>
