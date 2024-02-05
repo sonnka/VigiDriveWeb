@@ -17,8 +17,18 @@ export class LoginComponent {
 
     this.loginService.login(data).subscribe(response => {
       let token = response.token;
-      this.loginService.setToken(token)
-      this.router.navigate(['/driver-profile']);
+      if (response.role == 'driver') {
+        this.loginService.setToken(token)
+        this.router.navigate(['/driver-profile']);
+      } else if (response.role == 'manager') {
+        this.loginService.setToken(token)
+        this.router.navigate(['/manager-profile']);
+      } else if (response.role == 'admin') {
+        this.loginService.setToken(token)
+        this.router.navigate(['/admin-profile']);
+      } else {
+        this.router.navigate(['/login']);
+      }
     });
 
   }

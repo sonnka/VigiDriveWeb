@@ -6,6 +6,7 @@ import {HomeComponent} from "./home/home.component";
 import {DriverProfileComponent} from "./driver-profile/driver-profile.component";
 import {HealthInfoComponent} from "./health-info/health-info.component";
 import {SituationsComponent} from "./situations/situations.component";
+import {ManagerProfileComponent} from "./manager-profile/manager-profile.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'driver-profile', component: DriverProfileComponent},
   {path: 'health-info', component: HealthInfoComponent},
-  {path: 'situations', component: SituationsComponent}
+  {path: 'situations', component: SituationsComponent},
+  {path: 'manager-profile', component: ManagerProfileComponent}
 ];
 
 @NgModule({

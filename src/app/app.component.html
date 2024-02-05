@@ -7,13 +7,16 @@
     <div *ngIf="!LoginService.isAuthorize()">
       <a class="link" href="/register">Register</a>
     </div>
-    <div *ngIf="LoginService.isAuthorize()">
+    <div *ngIf="LoginService.isDriver()">
       <a class="link" href="/driver-profile">Profile</a>
     </div>
-    <div *ngIf="LoginService.isAuthorize()">
+    <div *ngIf="LoginService.isManager()">
+      <a class="link" href="/manager-profile">Profile</a>
+    </div>
+    <div *ngIf="LoginService.isDriver()">
       <a class="link" href="/health-info">Health</a>
     </div>
-    <div *ngIf="LoginService.isAuthorize()">
+    <div *ngIf="LoginService.isDriver()">
       <a class="link" href="/situations">Situations</a>
     </div>
     <div (click)="LoginService.logout()" *ngIf="LoginService.isAuthorize()">

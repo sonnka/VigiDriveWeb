@@ -11,6 +11,7 @@ import {DriverProfileComponent} from './driver-profile/driver-profile.component'
 import {HealthInfoComponent} from './health-info/health-info.component';
 import {NgOptimizedImage} from "@angular/common";
 import { SituationsComponent } from './situations/situations.component';
+import { ManagerProfileComponent } from './manager-profile/manager-profile.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { SituationsComponent } from './situations/situations.component';
     HomeComponent,
     DriverProfileComponent,
     HealthInfoComponent,
-    SituationsComponent
+    SituationsComponent,
+    ManagerProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {LoginRequest} from "../_models/login.request";
 import {LoginResponse} from "../_models/login.response";
+import {jwtDecode} from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,50 @@ export class LoginService {
     return true;
   }
 
+  public static isDriver(): boolean {
+    if (!this.isAuthorize()) {
+      return false;
+    }
+
+    let role = this.getRole();
+
+    if (role == null || role == '') {
+      return false
+    }
+
+    return role == 'driver';
+  }
+
+  public static isManager(): boolean {
+    if (!this.isAuthorize()) {
+      return false;
+    }
+
+    let role = this.getRole();
+
+    if (role == null || role == '') {
+      return false
+    }
+
+    return role == 'manager';
+  }
+
   public static logout() {
     localStorage.clear();
+  }
+
+  private static getRole(): string | null {
+    let token = localStorage.getItem('token');
+
+    if (token == undefined) {
+      return null;
+    }
+
+    let decodedToken: { [key: string]: string };
+
+    decodedToken = jwtDecode(token);
+
+    return decodedToken['role'];
   }
 
   login(data: LoginRequest): Observable<LoginResponse> {
