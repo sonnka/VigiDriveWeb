@@ -1,0 +1,90 @@
+
+img {
+  border-radius: 50%;
+}
+
+.license-container {
+  width: 300px;
+  height: 170px;
+  display: flex;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(
+    109.6deg,
+    rgb(65, 194, 189) 11.2%,
+    rgb(173, 218, 229) 100.2%
+  );
+}
+
+.license-card {
+  width: 300px;
+  height: 170px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  z-index: 1;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  position: relative;
+}
+
+.visa_info img {
+  width: 80px;
+  height: 80px;
+}
+
+.visa_crinfo p {
+  font-size: 11px;
+  padding: 1px;
+  letter-spacing: 2px;
+  color: darkslategray;
+}
+
+.visa_crinfo {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  color: darkslategray;
+}
+
+.info-license {
+  margin-top: 20px;
+}
+
+.license-title {
+  background-color: #75a9a9;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.license-title p {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: darkslategray;
+  font-weight: bold;
+}
+
+.table {
+  width: 100%;
+  border: 1px solid #ffffff;
+  border-top: 0.22ch solid #e0e0e0;
+  border-collapse: collapse;
+}
+
+.table th {
+  font-weight: bold;
+  padding: 5px;
+  background: #ffffff;
+  border: none;
+  border-bottom: 2px solid #ffffff;
+}
+
+.table tr {
+  padding: 25px;
+  border: none;
+  background-color: #effaf9;
+  border-radius: 25px;
+  border-bottom: 20px solid #ffffff;
+}

@@ -44,10 +44,24 @@ export class DriverService {
       this.httpOptions);
   }
 
+  getDriverHealthInfo(driverId: string) {
+    this.getCredentials();
+
+    return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + driverId + "/health-info",
+      this.httpOptions);
+  }
+
   getSituationInfo() {
     this.getCredentials()
 
     return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + this.id + "/situations/week",
+      this.httpOptions);
+  }
+
+  getDriverSituationInfo(driverId: string) {
+    this.getCredentials();
+    
+    return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + driverId + "/situations/week",
       this.httpOptions);
   }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
@@ -11,7 +11,7 @@ import {UtilService} from "../_services/util.service";
   templateUrl: './driver-profile.component.html',
   styleUrl: './driver-profile.component.css'
 })
-export class DriverProfileComponent implements OnInit {
+export class DriverProfileComponent {
 
   driverResponse: DriverResponse | undefined;
   healthInfo: HealthInfoResponse | undefined;
@@ -24,10 +24,6 @@ export class DriverProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getDriverProfile();
-  }
-
-  getDriverProfile() {
     this.getDriver();
     this.getHealthInfo();
     this.getSituationInfo();

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {RegisterRequest} from "../_models/register.request";
 import {LoginService} from "./login.service";
 import {ManagerResponse} from "../_models/manager.response";
+import {DriverResponse} from "../_models/driver.response";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,13 @@ export class ManagerService {
     this.getCredentials()
 
     return this.http.get<ManagerResponse>(this.baseUrl + '/managers/' + this.id, this.httpOptions);
+  }
+
+  getDriverInfo(driverId: string) {
+    this.getCredentials()
+
+    return this.http.get<DriverResponse>(this.baseUrl + '/managers/' + this.id + '/drivers/' + driverId,
+      this.httpOptions);
   }
 
 
