@@ -10,8 +10,14 @@
     <div *ngIf="LoginService.isDriver()">
       <a class="link" href="/driver-profile">Profile</a>
     </div>
+    <div *ngIf="LoginService.isDriver()">
+      <a class="link" href="/driver-accesses">Accesses</a>
+    </div>
     <div *ngIf="LoginService.isManager()">
       <a class="link" href="/manager-profile">Profile</a>
+    </div>
+    <div *ngIf="LoginService.isManager()">
+      <a class="link" href="/manager-accesses">Accesses</a>
     </div>
     <div *ngIf="LoginService.isDriver()">
       <a class="link" href="/health-info">Health</a>
