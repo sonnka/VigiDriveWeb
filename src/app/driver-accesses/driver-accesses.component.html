@@ -1,6 +1,28 @@
 <div class="container" style="width: 850px">
   <p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
-  <h4>Manager: </h4>
+  <br>
+  <div class="row">
+    <div class="col-3">
+      <div>
+        <img alt="avatar" class="rounded-circle" height="150" id="thumbnail"
+             ngSrc="{{managerResponse?.avatar || 'https://i.imgur.com/b08hxPY.png'}}"
+             width="150"/>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col">
+          <p
+            style="font-size: 22px; margin-top: 20px">{{ managerResponse?.firstName + ' ' + managerResponse?.lastName || 'Name Surname' }}</p>
+        </div>
+      </div>
+      <p style="color: #99a2a2; font-size: 13px">{{ managerResponse?.email || 'Email' }}</p>
+      <br>
+      <p style="color: #41c2bd; font-size: 15px">Amount of drivers:  {{ managerResponse?.amountOfDrivers || '0' }}</p>
+    </div>
+  </div>
+  <br>
+  <hr>
   <p>Access requests</p>
   <p>Current active accesses</p>
   <p>Current inactive accesses</p>
