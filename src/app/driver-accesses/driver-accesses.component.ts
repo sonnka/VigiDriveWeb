@@ -42,33 +42,23 @@ export class DriverAccessesComponent {
           this.accessResponse = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
   protected giveAccess(accessId: bigint) {
     this.driverService.giveAccess(accessId).subscribe(() => {
+      location.reload();
     }, (error) => {
-      if (error.status == 401) {
-        LoginService.logout()
-        this.router.navigate(['/login']);
-      }
-      AppComponent.showError(error.message)
+      this.displayError(error)
     });
   }
 
   protected stopAccess(accessId: bigint) {
     this.driverService.stopAccess(accessId).subscribe(() => {
+      location.reload();
     }, (error) => {
-      if (error.status == 401) {
-        LoginService.logout()
-        this.router.navigate(['/login']);
-      }
-      AppComponent.showError(error.message)
+      this.displayError(error)
     });
   }
 
@@ -78,11 +68,7 @@ export class DriverAccessesComponent {
           this.managerResponse = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
@@ -92,11 +78,7 @@ export class DriverAccessesComponent {
           this.accessRequests = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
@@ -106,11 +88,7 @@ export class DriverAccessesComponent {
           this.activeAccesses = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
@@ -120,11 +98,19 @@ export class DriverAccessesComponent {
           this.inactiveAccesses = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout()
+      this.router.navigate(['/login']);
+    }
+    if (error.error != null) {
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      AppComponent.showError(error.message)
+    }
   }
 }

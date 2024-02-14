@@ -35,7 +35,11 @@ export class ManagerProfileComponent {
           LoginService.logout()
           this.router.navigate(['/login']);
         }
-        AppComponent.showError(error.message)
+        if (error.error != null) {
+          AppComponent.showError(error.error.errorMessage)
+        } else {
+          AppComponent.showError(error.message)
+        }
       });
   }
 }

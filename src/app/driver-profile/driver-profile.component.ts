@@ -37,11 +37,7 @@ export class DriverProfileComponent {
           this.driverResponse = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
@@ -51,11 +47,7 @@ export class DriverProfileComponent {
           this.healthInfo = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
@@ -75,11 +67,7 @@ export class DriverProfileComponent {
           }
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
@@ -88,5 +76,19 @@ export class DriverProfileComponent {
     let day = today.getDay();
     today.setDate(today.getDate() - day + 1)
     return today;
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout()
+      this.router.navigate(['/login']);
+    }
+    if (error.error != null) {
+      console.log(error.error)
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      console.log(error)
+      AppComponent.showError(error.message)
+    }
   }
 }

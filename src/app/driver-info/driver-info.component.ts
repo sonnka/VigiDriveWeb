@@ -50,11 +50,7 @@ export class DriverInfoComponent {
         this.driverInfoResponse = response;
       },
       (error) => {
-        if (error.status == 401) {
-          LoginService.logout()
-          this.router.navigate(['/login']);
-        }
-        AppComponent.showError(error.message)
+        this.displayError(error)
       })
   }
 
@@ -63,11 +59,7 @@ export class DriverInfoComponent {
         this.healthInfo = response;
       },
       (error) => {
-        if (error.status == 401) {
-          LoginService.logout()
-          this.router.navigate(['/login']);
-        }
-        AppComponent.showError(error.message)
+        this.displayError(error)
       })
   }
 
@@ -76,11 +68,19 @@ export class DriverInfoComponent {
         this.weekSituations = response;
       },
       (error) => {
-        if (error.status == 401) {
-          LoginService.logout()
-          this.router.navigate(['/login']);
-        }
-        AppComponent.showError(error.message)
+        this.displayError(error)
       })
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout()
+      this.router.navigate(['/login']);
+    }
+    if (error.error != null) {
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      AppComponent.showError(error.message)
+    }
   }
 }

@@ -104,5 +104,4 @@ export class UtilService {
 
     return 'yellow';
   }
-
 }

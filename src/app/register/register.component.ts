@@ -18,10 +18,9 @@ export class RegisterComponent {
   registerDriver(firstName: string, lastName: string, email: string, password: string): void {
     let data = new RegisterRequest(firstName, lastName, email, password);
     this.driverService.register(data).subscribe(response => {
-        console.log(response);
       },
       (error) => {
-        AppComponent.showError(error.message)
+        this.displayError(error)
       });
     this.router.navigate(['/login']);
   }
@@ -29,11 +28,18 @@ export class RegisterComponent {
   registerManager(firstName: string, lastName: string, email: string, password: string): void {
     let data = new RegisterRequest(firstName, lastName, email, password);
     this.managerService.register(data).subscribe(response => {
-        console.log(response);
       },
       (error) => {
-        AppComponent.showError(error.message)
+        this.displayError(error)
       });
     this.router.navigate(['/login']);
+  }
+
+  private displayError(error: any) {
+    if (error.error != null) {
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      AppComponent.showError(error.message)
+    }
   }
 }

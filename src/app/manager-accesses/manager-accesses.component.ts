@@ -4,8 +4,9 @@ import {Router} from "@angular/router";
 import {ManagerService} from "../_services/manager.service";
 import {AppComponent} from "../app.component";
 import {AccessDto} from "../_models/access.dto";
-import {AccessDuration} from "../_models/access.duration";
 import {AccessRequest} from "../_models/access.request";
+import {UtilService} from "../_services/util.service";
+import {AccessDuration} from "../_models/access.duration";
 
 @Component({
   selector: 'app-manager-accesses',
@@ -14,9 +15,11 @@ import {AccessRequest} from "../_models/access.request";
 })
 export class ManagerAccessesComponent {
 
-  protected accessRequests: AccessDto[] | undefined;
+  protected sentAccesses: AccessDto[] | undefined;
   protected activeAccesses: AccessDto[] | undefined;
   protected inactiveAccesses: AccessDto[] | undefined;
+  protected readonly UtilService = UtilService;
+  protected readonly AppComponent = AppComponent;
 
   constructor(private managerService: ManagerService, private router: Router) {
   }
@@ -29,37 +32,31 @@ export class ManagerAccessesComponent {
 
   protected requestAccess(accessId: bigint, accessRequest: AccessRequest) {
     this.managerService.requestAccess(accessId, accessRequest).subscribe(() => {
+      location.reload();
     }, (error) => {
-      if (error.status == 401) {
-        LoginService.logout()
-        this.router.navigate(['/login']);
-      }
-      AppComponent.showError(error.message)
+      this.displayError(error)
     });
   }
 
-  protected extendAccess(accessId: bigint, accessDuration: AccessDuration) {
-    this.managerService.extendAccess(accessId, accessDuration).subscribe(() => {
-    }, (error) => {
-      if (error.status == 401) {
-        LoginService.logout()
-        this.router.navigate(['/login']);
-      }
-      AppComponent.showError(error.message)
-    });
+  protected extendAccess(accessId: bigint) {
+    let duration = (document.getElementById("duration") as HTMLInputElement).value;
+    console.log(duration)
+    if (duration != "") {
+      this.managerService.extendAccess(accessId, new AccessDuration(duration)).subscribe(() => {
+        location.reload();
+      }, (error) => {
+        this.displayError(error)
+      });
+    }
   }
 
   private getSentAccesses() {
     this.managerService.getSentAccesses()
       .subscribe(response => {
-          this.accessRequests = response;
+          this.sentAccesses = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
@@ -69,11 +66,7 @@ export class ManagerAccessesComponent {
           this.activeAccesses = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
   }
 
@@ -83,11 +76,19 @@ export class ManagerAccessesComponent {
           this.inactiveAccesses = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         });
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout()
+      this.router.navigate(['/login']);
+    }
+    if (error.error != null) {
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      AppComponent.showError(error.message)
+    }
   }
 }

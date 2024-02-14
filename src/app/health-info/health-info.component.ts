@@ -73,11 +73,7 @@ export class HealthInfoComponent implements OnInit {
           this.healthInfo = response;
         },
         (error) => {
-          if (error.status == 401) {
-            LoginService.logout()
-            this.router.navigate(['/login']);
-          }
-          AppComponent.showError(error.message)
+          this.displayError(error)
         }
       );
   }
@@ -88,11 +84,7 @@ export class HealthInfoComponent implements OnInit {
         this.yearStatistics = response;
       },
       (error) => {
-        if (error.status == 401) {
-          LoginService.logout()
-          this.router.navigate(['/login']);
-        }
-        AppComponent.showError(error.message)
+        this.displayError(error)
       }
     )
   }
@@ -103,11 +95,7 @@ export class HealthInfoComponent implements OnInit {
         this.monthStatistics = response;
       },
       (error) => {
-        if (error.status == 401) {
-          LoginService.logout()
-          this.router.navigate(['/login']);
-        }
-        AppComponent.showError(error.message)
+        this.displayError(error)
       }
     )
   }
@@ -118,12 +106,20 @@ export class HealthInfoComponent implements OnInit {
         this.weekStatistics = response;
       },
       (error) => {
-        if (error.status == 401) {
-          LoginService.logout()
-          this.router.navigate(['/login']);
-        }
-        AppComponent.showError(error.message)
+        this.displayError(error)
       }
     )
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout()
+      this.router.navigate(['/login']);
+    }
+    if (error.error != null) {
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      AppComponent.showError(error.message)
+    }
   }
 }

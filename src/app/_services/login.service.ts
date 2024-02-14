@@ -91,9 +91,11 @@ export class LoginService {
         this.errorMessage = ""
       },
       (error) => {
-        console.log(error)
-        this.errorMessage = error.message;
-        console.log(this.errorMessage)
+        if (error.error != null) {
+          this.errorMessage = error.error.errorMessage
+        } else {
+          this.errorMessage = error.message
+        }
       });
 
     return response;
