@@ -51,3 +51,31 @@
   border-radius: 25px;
   border-bottom: 20px solid #ffffff;
 }
+
+
+.alert {
+  padding: 20px;
+  width: 40%;
+  background-color: #f8e8e7;
+  color: #ff0000;
+  margin-bottom: 15px;
+  border-radius: 30px;
+}
+
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+.closebtn:hover {
+  color: black;
+}
+

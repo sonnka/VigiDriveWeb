@@ -30,8 +30,10 @@
     </div>
   </div>
 </header>
-<br><br>
-<!--<h1 class="caption">{{ title }}</h1>-->
+<div class="alert" id="alert" style="visibility: hidden">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+</div>
+<br>
 <div class="my-container">
   <router-outlet></router-outlet>
 </div>

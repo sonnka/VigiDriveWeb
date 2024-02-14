@@ -5,6 +5,8 @@ import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
 import {AppComponent} from "../app.component";
 import {UtilService} from "../_services/util.service";
+import {LoginService} from "../_services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-driver-profile',
@@ -20,7 +22,7 @@ export class DriverProfileComponent {
   protected readonly AppComponent = AppComponent;
   protected readonly UtilService = UtilService;
 
-  constructor(private driverService: DriverService) {
+  constructor(private driverService: DriverService, private router: Router) {
   }
 
   ngOnInit() {
@@ -32,36 +34,53 @@ export class DriverProfileComponent {
   private getDriver() {
     this.driverService.getDriver()
       .subscribe(response => {
-        this.driverResponse = response;
-        console.log('Driver: ' + JSON.stringify(response));
-      });
+          this.driverResponse = response;
+        },
+        (error) => {
+          if (error.status == 401) {
+            LoginService.logout()
+            this.router.navigate(['/login']);
+          }
+          AppComponent.showError(error.message)
+        });
   }
 
   private getHealthInfo() {
     this.driverService.getHealthInfo()
       .subscribe(response => {
-        this.healthInfo = response;
-        console.log('Health info: ' + JSON.stringify(response));
-      });
+          this.healthInfo = response;
+        },
+        (error) => {
+          if (error.status == 401) {
+            LoginService.logout()
+            this.router.navigate(['/login']);
+          }
+          AppComponent.showError(error.message)
+        });
   }
 
   private getSituationInfo() {
     this.driverService.getSituationInfo()
       .subscribe(response => {
-        this.situations = response;
+          this.situations = response;
 
-        let monday = this.getMonday();
-        let sunday = new Date();
-        let day = sunday.getDay();
+          let monday = this.getMonday();
+          let sunday = new Date();
+          let day = sunday.getDay();
 
-        sunday.setDate(sunday.getDate() + (7 - day));
+          sunday.setDate(sunday.getDate() + (7 - day));
 
-        if (monday != null && sunday != null) {
-          this.situationPeriod = AppComponent.formatDate(monday) + ' - ' + AppComponent.formatDate(sunday);
-        }
-
-        console.log('Situations: ' + JSON.stringify(response));
-      });
+          if (monday != null && sunday != null) {
+            this.situationPeriod = AppComponent.formatDate(monday) + ' - ' + AppComponent.formatDate(sunday);
+          }
+        },
+        (error) => {
+          if (error.status == 401) {
+            LoginService.logout()
+            this.router.navigate(['/login']);
+          }
+          AppComponent.showError(error.message)
+        });
   }
 
   private getMonday() {

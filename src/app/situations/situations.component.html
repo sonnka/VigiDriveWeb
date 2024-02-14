@@ -46,7 +46,7 @@
     <div class="info">
       <p>The number of situations that occur this month: <span>{{ weekStatistics?.amountOfSituations || 0 }}</span></p>
       <p>The situation that happens most often:
-        <span>{{ getSituation(weekStatistics?.mostFrequentSituation) || "-" }}</span></p>
+        <span>{{ getSituation(weekStatistics?.mostFrequentSituation || "-") }}</span></p>
       <p>The day with the most situations:
         <span>{{ UtilService.getWeekPeriod(weekStatistics?.mostFrequentPeriod) || "-" }}</span>
       </p>
