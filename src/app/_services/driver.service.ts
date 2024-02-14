@@ -116,7 +116,7 @@ export class DriverService {
       "/manager", this.httpOptions);
   }
 
-  getAccess(accessId: string) {
+  getAccess(accessId: bigint) {
     this.getCredentials();
 
     return this.http.get<AccessDto>(this.baseUrl + '/drivers/' + this.id +
@@ -142,6 +142,20 @@ export class DriverService {
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/inactive", this.httpOptions);
+  }
+
+  giveAccess(accessId: bigint) {
+    this.getCredentials();
+
+    return this.http.post(this.baseUrl + '/drivers/' + this.id +
+      "/accesses/" + accessId, null, this.httpOptions);
+  }
+
+  stopAccess(accessId: bigint) {
+    this.getCredentials();
+
+    return this.http.patch(this.baseUrl + '/drivers/' + this.id +
+      "/accesses/" + accessId + "/stop", null, this.httpOptions);
   }
 
   private getCredentials() {

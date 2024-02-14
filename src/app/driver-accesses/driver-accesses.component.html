@@ -1,12 +1,13 @@
 <div class="container" style="width: 850px">
   <p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
   <br>
-  <div class="row">
+  <div *ngIf="isManager()" class="row">
+    <p style="color: #15abab; font-style: italic; font-size: 13px; margin-bottom: 20px">Your manager</p>
     <div class="col-3">
       <div>
-        <img alt="avatar" class="rounded-circle" height="150" id="thumbnail"
+        <img alt="avatar" class="rounded-circle" height="120" id="thumbnail"
              ngSrc="{{managerResponse?.avatar || 'https://i.imgur.com/b08hxPY.png'}}"
-             width="150"/>
+             width="120"/>
       </div>
     </div>
     <div class="col-9">
@@ -17,13 +18,100 @@
         </div>
       </div>
       <p style="color: #99a2a2; font-size: 13px">{{ managerResponse?.email || 'Email' }}</p>
-      <br>
-      <p style="color: #41c2bd; font-size: 15px">Amount of drivers:  {{ managerResponse?.amountOfDrivers || '0' }}</p>
     </div>
+    <br>
   </div>
-  <br>
-  <hr>
-  <p>Access requests</p>
-  <p>Current active accesses</p>
-  <p>Current inactive accesses</p>
+  <div *ngIf="!isManager()">
+    <p style="color: #a2a4a4; margin-bottom: 20px">No manager</p>
+  </div>
+  <br><br><br>
+  <p style="color: #15abab; font-style: italic; font-size: 13px; margin-bottom: 20px">Access requests</p>
+  <table border="1" class="table table-condensed table-responsive-md" style="width: 600px">
+    <thead>
+    <tr>
+      <th style="width:40%">
+        <a>Manager email</a>
+      </th>
+      <th style="width:30%">
+        <a>Access duration</a>
+      </th>
+      <th style="width:30%">
+        <a>Actions</a>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let access of accessRequests">
+    <tr>
+      <td>{{ access.managerEmail }}</td>
+      <td>{{ access.accessDuration.toLowerCase() }}</td>
+      <td class="actions" data-th="">
+        <a (click)="giveAccess(access.id)" class="getAccess" title="Give access" type="button">
+          <i class="material-icons green">&#xe834;</i></a>&emsp;
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br><br>
+  <p style="color: #15abab; font-style: italic; font-size: 13px; margin-bottom: 20px">Current active accesses</p>
+  <table border="1" class="table table-condensed table-responsive-md">
+    <thead>
+    <tr>
+      <th style="width:25%">
+        <a>Manager email</a>
+      </th>
+      <th style="width:20%">
+        <a>Access duration</a>
+      </th>
+      <th style="width:25%">
+        <a>Start date</a>
+      </th>
+      <th style="width:25%">
+        <a>End date</a>
+      </th>
+      <th style="width:5%">
+        <a>Actions</a>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let access of activeAccesses">
+    <tr>
+      <td>{{ access.managerEmail }}</td>
+      <td>{{ access.accessDuration.toLowerCase() }}</td>
+      <td>{{ AppComponent.formatDateTime(access.startDateOfAccess) }}</td>
+      <td>{{ AppComponent.formatDateTime(access.endDateOfAccess) }}</td>
+      <td class="actions" data-th="">
+        <a (click)="stopAccess(access.id)" class="stopAccess" title="Stop access" type="button">
+          <i class="material-icons red">&#xf230;</i></a>&emsp;
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <br><br>
+  <p style="color: #15abab; font-style: italic; font-size: 13px; margin-bottom: 20px">Current inactive accesses</p>
+  <table border="1" class="table table-condensed table-responsive-md">
+    <thead>
+    <tr>
+      <th style="width:30%">
+        <a>Manager email</a>
+      </th>
+      <th style="width:20%">
+        <a>Access duration</a>
+      </th>
+      <th style="width:25%">
+        <a>Start date</a>
+      </th>
+      <th style="width:25%">
+        <a>End date</a>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let access of inactiveAccesses">
+    <tr>
+      <td>{{ access.managerEmail }}</td>
+      <td>{{ access.accessDuration.toLowerCase() }}</td>
+      <td>{{ AppComponent.formatDateTime(access.startDateOfAccess) }}</td>
+      <td>{{ AppComponent.formatDateTime(access.endDateOfAccess) }}</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
