@@ -14,6 +14,7 @@ import { SituationsComponent } from './situations/situations.component';
 import { ManagerProfileComponent } from './manager-profile/manager-profile.component';
 import { DriverInfoComponent } from './driver-info/driver-info.component';
 import { DriverAccessesComponent } from './driver-accesses/driver-accesses.component';
+import { ManagerAccessesComponent } from './manager-accesses/manager-accesses.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DriverAccessesComponent } from './driver-accesses/driver-accesses.compo
     SituationsComponent,
     ManagerProfileComponent,
     DriverInfoComponent,
-    DriverAccessesComponent
+    DriverAccessesComponent,
+    ManagerAccessesComponent
   ],
   imports: [
     BrowserModule,
