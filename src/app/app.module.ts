@@ -10,11 +10,13 @@ import {HomeComponent} from './home/home.component';
 import {DriverProfileComponent} from './driver-profile/driver-profile.component';
 import {HealthInfoComponent} from './health-info/health-info.component';
 import {NgOptimizedImage} from "@angular/common";
-import { SituationsComponent } from './situations/situations.component';
-import { ManagerProfileComponent } from './manager-profile/manager-profile.component';
-import { DriverInfoComponent } from './driver-info/driver-info.component';
-import { DriverAccessesComponent } from './driver-accesses/driver-accesses.component';
-import { ManagerAccessesComponent } from './manager-accesses/manager-accesses.component';
+import {SituationsComponent} from './situations/situations.component';
+import {ManagerProfileComponent} from './manager-profile/manager-profile.component';
+import {DriverInfoComponent} from './driver-info/driver-info.component';
+import {DriverAccessesComponent} from './driver-accesses/driver-accesses.component';
+import {ManagerAccessesComponent} from './manager-accesses/manager-accesses.component';
+import {MessagesComponent} from './messages/messages.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -28,13 +30,15 @@ import { ManagerAccessesComponent } from './manager-accesses/manager-accesses.co
     ManagerProfileComponent,
     DriverInfoComponent,
     DriverAccessesComponent,
-    ManagerAccessesComponent
+    ManagerAccessesComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
