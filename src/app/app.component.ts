@@ -34,4 +34,14 @@ export class AppComponent {
     }
     return formatDate(date, 'MM/YY', 'en-US');
   }
+
+  public static showError(message: string) {
+    let div = document.getElementById("alert");
+    div!.textContent = message
+    div!.style.visibility = "visible";
+    setTimeout(function () {
+      div!.style.opacity = "0";
+      div!.style.visibility = "hidden";
+    }, 6000);
+  }
 }

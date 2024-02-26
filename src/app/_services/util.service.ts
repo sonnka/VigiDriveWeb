@@ -55,7 +55,7 @@ export class UtilService {
   }
 
   static getMonthPeriod(number: number | undefined): string {
-    if (number == null) {
+    if (number == null || number == 0) {
       return "-";
     }
     let date = new Date();
@@ -104,5 +104,4 @@ export class UtilService {
 
     return 'yellow';
   }
-
 }

@@ -7,6 +7,8 @@ import {SituationResponse} from "../_models/situation.response";
 import {LoginService} from "./login.service";
 import {SituationStatistics} from "../_models/situation.statistics";
 import {HealthStatistics} from "../_models/health.statistics";
+import {ManagerDto} from "../_models/manager.dto";
+import {AccessDto} from "../_models/access.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +62,7 @@ export class DriverService {
 
   getDriverSituationInfo(driverId: string) {
     this.getCredentials();
-    
+
     return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + driverId + "/situations/week",
       this.httpOptions);
   }
@@ -105,6 +107,55 @@ export class DriverService {
 
     return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/health-info/statistics/year", this.httpOptions);
+  }
+
+  getManager() {
+    this.getCredentials();
+
+    return this.http.get<ManagerDto>(this.baseUrl + '/drivers/' + this.id +
+      "/manager", this.httpOptions);
+  }
+
+  getAccess(accessId: bigint) {
+    this.getCredentials();
+
+    return this.http.get<AccessDto>(this.baseUrl + '/drivers/' + this.id +
+      "/accesses/" + accessId, this.httpOptions);
+  }
+
+  getAccessRequests() {
+    this.getCredentials();
+
+    return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
+      "/accesses/requests", this.httpOptions);
+  }
+
+  getActiveAccesses() {
+    this.getCredentials();
+
+    return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
+      "/accesses/active", this.httpOptions);
+  }
+
+  getInactiveAccesses() {
+    this.getCredentials();
+
+    return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
+      "/accesses/inactive", this.httpOptions);
+  }
+
+  giveAccess(accessId: bigint) {
+    this.getCredentials();
+
+    return this.http.post(this.baseUrl + '/drivers/' + this.id +
+      "/accesses/" + accessId, null, this.httpOptions);
+  }
+
+  stopAccess(accessId: bigint) {
+    this.getCredentials();
+
+    return this.http.patch(this.baseUrl + '/drivers/' + this.id +
+      "/accesses/" + accessId + "/stop", null, this.httpOptions);
   }
 
   private getCredentials() {

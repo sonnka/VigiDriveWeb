@@ -7,6 +7,7 @@ import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
 import {AppComponent} from "../app.component";
 import {UtilService} from "../_services/util.service";
+import {LoginService} from "../_services/login.service";
 
 @Component({
   selector: 'app-driver-info',
@@ -46,19 +47,40 @@ export class DriverInfoComponent {
 
   private getDriverInfo(): void {
     this.managerService.getDriverInfo(this.driverId!).subscribe(response => {
-      this.driverInfoResponse = response;
-    })
+        this.driverInfoResponse = response;
+      },
+      (error) => {
+        this.displayError(error)
+      })
   }
 
   private getDriverHealthInfo() {
     this.driverService.getDriverHealthInfo(this.driverId!).subscribe(response => {
-      this.healthInfo = response;
-    })
+        this.healthInfo = response;
+      },
+      (error) => {
+        this.displayError(error)
+      })
   }
 
   private getWeekSituations() {
     this.driverService.getDriverSituationInfo(this.driverId!).subscribe(response => {
-      this.weekSituations = response;
-    })
+        this.weekSituations = response;
+      },
+      (error) => {
+        this.displayError(error)
+      })
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout()
+      this.router.navigate(['/login']);
+    }
+    if (error.error != null) {
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      AppComponent.showError(error.message)
+    }
   }
 }

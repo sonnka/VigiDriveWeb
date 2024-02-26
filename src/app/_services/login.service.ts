@@ -10,6 +10,7 @@ import {jwtDecode} from "jwt-decode";
 })
 export class LoginService {
 
+  public errorMessage = "";
   private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {
@@ -83,10 +84,19 @@ export class LoginService {
         'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
       })
     };
-
     let response = this.http.post<LoginResponse>(this.baseUrl + '/login', '', httpOptions);
 
-    response.subscribe(r => this.setUserId(r.id));
+    response.subscribe((r) => {
+        this.setUserId(r.id)
+        this.errorMessage = ""
+      },
+      (error) => {
+        if (error.error != null) {
+          this.errorMessage = error.error.errorMessage
+        } else {
+          this.errorMessage = error.message
+        }
+      });
 
     return response;
   }

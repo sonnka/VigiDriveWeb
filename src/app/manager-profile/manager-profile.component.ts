@@ -3,6 +3,7 @@ import {ManagerService} from "../_services/manager.service";
 import {ManagerResponse} from "../_models/manager.response";
 import {AppComponent} from "../app.component";
 import {Router} from "@angular/router";
+import {LoginService} from "../_services/login.service";
 
 @Component({
   selector: 'app-manager-profile',
@@ -29,7 +30,16 @@ export class ManagerProfileComponent {
     this.managerService.getManager()
       .subscribe(response => {
         this.managerResponse = response;
-        console.log('Manager: ' + JSON.stringify(response));
+      }, (error) => {
+        if (error.status == 401) {
+          LoginService.logout()
+          this.router.navigate(['/login']);
+        }
+        if (error.error != null) {
+          AppComponent.showError(error.error.errorMessage)
+        } else {
+          AppComponent.showError(error.message)
+        }
       });
   }
 }

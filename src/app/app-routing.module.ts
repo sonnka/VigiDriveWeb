@@ -8,6 +8,8 @@ import {HealthInfoComponent} from "./health-info/health-info.component";
 import {SituationsComponent} from "./situations/situations.component";
 import {ManagerProfileComponent} from "./manager-profile/manager-profile.component";
 import {DriverInfoComponent} from "./driver-info/driver-info.component";
+import {DriverAccessesComponent} from "./driver-accesses/driver-accesses.component";
+import {ManagerAccessesComponent} from "./manager-accesses/manager-accesses.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -17,7 +19,9 @@ const routes: Routes = [
   {path: 'health-info', component: HealthInfoComponent},
   {path: 'situations', component: SituationsComponent},
   {path: 'manager-profile', component: ManagerProfileComponent},
-  {path: 'driver-info', component: DriverInfoComponent}
+  {path: 'driver-info', component: DriverInfoComponent},
+  {path: 'driver-accesses', component: DriverAccessesComponent},
+  {path: 'manager-accesses', component: ManagerAccessesComponent}
 ];
 
 @NgModule({

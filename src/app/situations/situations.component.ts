@@ -4,6 +4,8 @@ import {SituationStatistics} from "../_models/situation.statistics";
 import {AppComponent} from "../app.component";
 import {SituationResponse} from "../_models/situation.response";
 import {UtilService} from "../_services/util.service";
+import {LoginService} from "../_services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-situations',
@@ -21,7 +23,7 @@ export class SituationsComponent implements OnInit {
   protected readonly AppComponent = AppComponent;
   protected readonly UtilService = UtilService;
 
-  constructor(private driverService: DriverService) {
+  constructor(private driverService: DriverService, private router: Router) {
   }
 
   ngOnInit() {
@@ -80,8 +82,10 @@ export class SituationsComponent implements OnInit {
   private getYearStatistics() {
     this.driverService.getYearSituationStatistic().subscribe(
       response => {
-        console.log('Year statistic' + JSON.stringify(response));
         this.yearStatistics = response;
+      },
+      (error) => {
+        this.displayError(error)
       }
     )
   }
@@ -89,8 +93,10 @@ export class SituationsComponent implements OnInit {
   private getMonthStatistics() {
     this.driverService.getMonthSituationStatistic().subscribe(
       response => {
-        console.log('Month statistic' + JSON.stringify(response));
         this.monthStatistics = response;
+      },
+      (error) => {
+        this.displayError(error)
       }
     )
   }
@@ -98,8 +104,10 @@ export class SituationsComponent implements OnInit {
   private getWeekStatistics() {
     this.driverService.getWeekSituationStatistic().subscribe(
       response => {
-        console.log('Week statistic' + JSON.stringify(response));
         this.weekStatistics = response;
+      },
+      (error) => {
+        this.displayError(error)
       }
     )
   }
@@ -107,7 +115,22 @@ export class SituationsComponent implements OnInit {
   private getSituationInfo() {
     this.driverService.getSituationInfo()
       .subscribe(response => {
-        this.situations = response;
-      });
+          this.situations = response;
+        },
+        (error) => {
+          this.displayError(error)
+        });
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout()
+      this.router.navigate(['/login']);
+    }
+    if (error.error != null) {
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      AppComponent.showError(error.message)
+    }
   }
 }

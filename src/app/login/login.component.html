@@ -1,17 +1,19 @@
-<div>
-  <h1 style="text-align: center;">Login</h1>
-</div>
-<br>
-<br>
-<div>
+<div class="container" style="margin: auto; text-align: center">
   <div>
-    <input #email id="email" placeholder="Email" type="email">
+    <h1 style="text-align: center;">Login</h1>
   </div>
+  <br>
+  <br>
   <div>
-    <input #password id="password" placeholder="Password" type="password">
+    <div>
+      <input #email id="email" placeholder="Email" type="email">
+    </div>
+    <div>
+      <input #password id="password" placeholder="Password" type="password">
+    </div>
   </div>
+  <div style="text-align: center;">
+    <input (click)="login(email.value, password.value)" type="button" value="Login">
+  </div>
+  <br><br>
 </div>
-<div style="text-align: center;">
-  <input (click)="login(email.value, password.value)" type="button" value="Login">
-</div>
-

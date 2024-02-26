@@ -5,6 +5,8 @@ import {DriverProfileComponent} from "../driver-profile/driver-profile.component
 import {AppComponent} from "../app.component";
 import {HealthStatistics} from "../_models/health.statistics";
 import {UtilService} from "../_services/util.service";
+import {LoginService} from "../_services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-health-info',
@@ -24,7 +26,7 @@ export class HealthInfoComponent implements OnInit {
   protected endOfCurrentWeek = '00.00.0000'
   protected readonly UtilService = UtilService;
 
-  constructor(private driverService: DriverService) {
+  constructor(private driverService: DriverService, private router: Router) {
   }
 
   ngOnInit() {
@@ -67,17 +69,22 @@ export class HealthInfoComponent implements OnInit {
 
   private getHealthInfo() {
     this.driverService.getHealthInfo()
-      .subscribe(response => {
-        this.healthInfo = response;
-        console.log('Health info: ' + JSON.stringify(response));
-      });
+      .subscribe((response) => {
+          this.healthInfo = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      );
   }
 
   private getYearStatistics() {
     this.driverService.getYearHealthStatistic().subscribe(
       response => {
-        console.log('Year statistic' + JSON.stringify(response));
         this.yearStatistics = response;
+      },
+      (error) => {
+        this.displayError(error)
       }
     )
   }
@@ -85,8 +92,10 @@ export class HealthInfoComponent implements OnInit {
   private getMonthStatistics() {
     this.driverService.getMonthHealthStatistic().subscribe(
       response => {
-        console.log('Month statistic' + JSON.stringify(response));
         this.monthStatistics = response;
+      },
+      (error) => {
+        this.displayError(error)
       }
     )
   }
@@ -94,9 +103,23 @@ export class HealthInfoComponent implements OnInit {
   private getWeekStatistics() {
     this.driverService.getWeekHealthStatistic().subscribe(
       response => {
-        console.log('Week statistic' + JSON.stringify(response));
         this.weekStatistics = response;
+      },
+      (error) => {
+        this.displayError(error)
       }
     )
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout()
+      this.router.navigate(['/login']);
+    }
+    if (error.error != null) {
+      AppComponent.showError(error.error.errorMessage)
+    } else {
+      AppComponent.showError(error.message)
+    }
   }
 }
