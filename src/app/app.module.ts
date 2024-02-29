@@ -17,6 +17,7 @@ import {DriverAccessesComponent} from './driver-accesses/driver-accesses.compone
 import {ManagerAccessesComponent} from './manager-accesses/manager-accesses.component';
 import {MessagesComponent} from './messages/messages.component';
 import {FormsModule} from "@angular/forms";
+import { ChatsComponent } from './chats/chats.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {FormsModule} from "@angular/forms";
     DriverInfoComponent,
     DriverAccessesComponent,
     ManagerAccessesComponent,
-    MessagesComponent
+    MessagesComponent,
+    ChatsComponent
   ],
   imports: [
     BrowserModule,

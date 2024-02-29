@@ -91,7 +91,6 @@ export class UtilService {
     } else if (value >= 90) {
       return 'green';
     }
-
     return 'yellow';
   }
 

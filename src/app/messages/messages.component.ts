@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {Client, Message} from '@stomp/stompjs';
+import * as Stomp from 'stompjs';
+import SockJS from 'sockjs-client';
 import {DriverService} from "../_services/driver.service";
 
 
@@ -10,39 +11,51 @@ import {DriverService} from "../_services/driver.service";
 })
 export class MessagesComponent {
 
-  private client = new Client();
+  webSocketEndPoint: string = 'http://localhost:8080/websocket';
+  topic: string = "/broker";
+  stompClient: any;
 
   constructor(private driverService: DriverService) {
   }
 
-  connect() {
-    this.client.configure({
-      brokerURL: 'ws://localhost:8080/websocket',
-      onConnect: () => {
-        console.log("Client connected")
-        this.client.subscribe('/broker/messages', (message: Message) => {
-          console.log('Received message:', message.body);
-        });
-        console.log("After subscribe")
-      }
-    });
+  ngOnInit() {
+    this._connect()
+    setTimeout(() => {
+        this._send("Hello")
+      },
+      5000);
   }
 
-  sendMessage() {
-    this.client.publish({
-      destination: "/message",
-      body: JSON.stringify("Helloo")
-    });
+  _connect() {
+    console.log("Initialize WebSocket Connection");
+    let ws = new SockJS(this.webSocketEndPoint);
+    this.stompClient = Stomp.over(ws);
+    const _this = this;
+    _this.stompClient.connect({}, function (frame: any) {
+      _this.stompClient.subscribe(_this.topic, function (sdkEvent: any) {
+        console.log(sdkEvent)
+      });
+    }, this.errorCallBack);
+  };
+
+  _disconnect() {
+    if (this.stompClient !== null) {
+      this.stompClient.disconnect();
+    }
+    console.log("Disconnected");
   }
 
-  ngOnInit(): void {
-    console.log('WebSocketImplComponent ngOnInit() called');
 
-    this.connect();
-
-    this.client.activate();
-
-    this.sendMessage();
-
+  errorCallBack(error: any) {
+    console.log("errorCallBack -> " + error)
+    setTimeout(() => {
+      this._connect();
+    }, 5000);
   }
+
+  _send(message: any) {
+    console.log("calling logout api via web socket");
+    this.stompClient.send("/message", {}, JSON.stringify(message));
+  }
+
 }
