@@ -11,6 +11,7 @@ import {DriverInfoComponent} from "./driver-info/driver-info.component";
 import {DriverAccessesComponent} from "./driver-accesses/driver-accesses.component";
 import {ManagerAccessesComponent} from "./manager-accesses/manager-accesses.component";
 import {MessagesComponent} from "./messages/messages.component";
+import {ChatsComponent} from "./chats/chats.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'driver-info', component: DriverInfoComponent},
   {path: 'driver-accesses', component: DriverAccessesComponent},
   {path: 'manager-accesses', component: ManagerAccessesComponent},
-  {path: 'messages', component: MessagesComponent}
+  {path: 'messages', component: MessagesComponent},
+  {path: 'chats', component: ChatsComponent}
 ];
 
 @NgModule({
