@@ -38,10 +38,10 @@ export class AppComponent {
   public static showError(message: string) {
     let div = document.getElementById("alert");
     div!.textContent = message
-    div!.style.visibility = "visible";
+    div!.style.display = "block";
     setTimeout(function () {
       div!.style.opacity = "0";
-      div!.style.visibility = "hidden";
+      div!.style.display = "none";
     }, 6000);
   }
 }
