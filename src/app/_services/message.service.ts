@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LoginService} from "./login.service";
 import {MessagesResponse} from "../_models/messages.response";
+import {UserResponse} from "../_models/user.response";
+import {MessageRequest} from "../_models/message.request";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,25 @@ export class MessageService {
 
     return this.http.get<MessagesResponse>(this.baseUrl + '/users/' + this.id +
       "/chats/" + receiverId, this.httpOptions);
+  }
+
+  getChats() {
+    this.getCredentials()
+
+    return this.http.get<UserResponse[]>(this.baseUrl + "/users/" + this.id + "/chats", this.httpOptions);
+  }
+
+  sendMessage(stompClient: any, message: MessageRequest, receiverId: bigint) {
+    this.getCredentials()
+
+    let header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.token
+    }
+
+    stompClient.send("/users/" + this.id + "/chats/" + receiverId + "/message",
+      header,
+      JSON.stringify(message));
   }
 
   private getCredentials() {
