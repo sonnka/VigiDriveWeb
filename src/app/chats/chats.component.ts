@@ -47,14 +47,16 @@ export class ChatsComponent {
     let webSocket = new SockJS(this.webSocketEndPoint);
     this.stompClient = Stomp.over(webSocket);
     const _this = this;
-
-    _this.stompClient.connect({}, function (frame: any) {
+    this.stompClient.connect({}, function (frame: any) {
       _this.stompClient.subscribe(_this.topic, function (sdkEvent: any) {
         console.log(sdkEvent)
-        _this.chatHistory = <MessagesResponse>sdkEvent.body
+        _this.updateHistory(JSON.parse(sdkEvent.body) as MessagesResponse)
       });
     }, this.errorCallBack);
+  }
 
+  updateHistory(history: MessagesResponse) {
+    this.chatHistory = history;
   }
 
   select(receiverId: bigint) {
@@ -68,8 +70,10 @@ export class ChatsComponent {
           this.displayError(error)
         }
       );
-
-
+    const element = document.getElementById("historyList");
+    // document.getElementById("historyList")?.scrollIntoView()
+    console.log("height: " + element?.scrollHeight)
+    element?.scrollTo(0, element?.scrollHeight)
   }
 
   errorCallBack(error: any) {
@@ -88,15 +92,18 @@ export class ChatsComponent {
   sendMessage(message: string, receiverId: bigint | undefined) {
     if (receiverId != null) {
       this.messageService.sendMessage(this.stompClient, new MessageRequest(message), receiverId);
+      let input: HTMLInputElement;
+      input = document.getElementById("messageText") as HTMLInputElement;
+      input.value = ""
     } else {
       AppComponent.showError("Something went wrong during message sending.")
     }
   }
 
   private clearSelecting() {
-    for (let i = 0; i < this.chats!.length; i++) {
-      if (document.getElementById(this.chats![i].toString())?.classList.contains("active")) {
-        document.getElementById(this.chats![i].toString())?.classList.remove("active");
+    for (const element of this.chats!) {
+      if (document.getElementById(element.toString())?.classList.contains("active")) {
+        document.getElementById(element.toString())?.classList.remove("active");
       }
     }
   }

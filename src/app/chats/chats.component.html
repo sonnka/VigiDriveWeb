@@ -11,8 +11,8 @@
       </ul>
     </div>
   </div>
-  <div *ngIf="isSelected" class="second-col">
-    <div class="chat">
+  <div class="second-col">
+    <div *ngIf="isSelected" class="chat">
       <div class="chat-header clearfix">
         <div class="row">
           <div>
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="chat-history" style="overflow-y: scroll;">
+      <div class="chat-history" id="historyList" style="overflow-y: scroll;">
         <ul *ngFor="let message of chatHistory?.chatMessages">
           <li class="clearfix">
             <div [ngClass]="message.me ? 'text-right' : ''" class="message-data">
@@ -43,7 +43,8 @@
             <span (click)="sendMessage(text.value, chatHistory?.receiverId)" class="input-group-text"><i
               class="fa fa-send"></i></span>
           </div>
-          <input #text class="form-control" placeholder="Enter text here..." type="text">
+          <input #text class="form-control" id="messageText" placeholder="Enter text here..."
+                 type="text">
         </div>
       </div>
     </div>
