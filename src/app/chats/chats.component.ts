@@ -51,6 +51,7 @@ export class ChatsComponent {
       _this.stompClient.subscribe(_this.topic, function (sdkEvent: any) {
         console.log(sdkEvent)
         _this.updateHistory(JSON.parse(sdkEvent.body) as MessagesResponse)
+        _this.scrollDiv()
       });
     }, this.errorCallBack);
   }
@@ -70,10 +71,19 @@ export class ChatsComponent {
           this.displayError(error)
         }
       );
-    const element = document.getElementById("historyList");
-    // document.getElementById("historyList")?.scrollIntoView()
-    console.log("height: " + element?.scrollHeight)
-    element?.scrollTo(0, element?.scrollHeight)
+    this.scrollDiv();
+
+  }
+
+  scrollDiv() {
+    setTimeout(() => {
+        const element = document.getElementById("historyList") as HTMLDivElement;
+        element.scrollIntoView()
+        console.log("height: " + element.scrollHeight)
+        element.scrollTo(0, element.scrollHeight)
+      },
+      50
+    );
   }
 
   errorCallBack(error: any) {

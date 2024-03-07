@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="chat-history" id="historyList" style="overflow-y: scroll;">
+      <div class="chat-history" id="historyList" style="overflow-y: scroll">
         <ul *ngFor="let message of chatHistory?.chatMessages">
           <li class="clearfix">
             <div [ngClass]="message.me ? 'text-right' : ''" class="message-data">
