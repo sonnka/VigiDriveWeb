@@ -82,7 +82,7 @@ export class ChatsComponent {
         console.log("height: " + element.scrollHeight)
         element.scrollTo(0, element.scrollHeight)
       },
-      50
+      200
     );
   }
 
