@@ -19,10 +19,10 @@ export class ChatsComponent {
   protected chatHistory: MessagesResponse | undefined;
   protected chats: UserResponse[] | undefined;
   protected isSelected = false;
+  protected readonly AppComponent = AppComponent;
   private webSocketEndPoint: string = 'http://localhost:8080/websocket';
   private topic: string = "/broker";
   private stompClient: any;
-
 
   constructor(private messageService: MessageService, private router: Router) {
   }

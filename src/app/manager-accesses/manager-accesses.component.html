@@ -1,7 +1,13 @@
 <br><br>
 <div class="container" style="width: 950px">
-  <p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
-  <br>
+  <div class="row">
+    <div class="col-6">
+      <p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
+    </div>
+    <div class="col-6">
+      <input type="button" value="Request access">
+    </div>
+  </div>
   <p style="color: #15abab; font-style: italic; font-size: 13px; margin-bottom: 20px">Sent accesses</p>
   <table border="1" class="table table-condensed table-responsive-md" style="width: 600px">
     <thead>

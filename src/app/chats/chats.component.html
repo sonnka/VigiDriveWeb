@@ -30,7 +30,7 @@
         <ul *ngFor="let message of chatHistory?.chatMessages">
           <li class="clearfix">
             <div [ngClass]="message.me ? 'text-right' : ''" class="message-data">
-              <span class="message-data-time">{{ message.time }}</span>
+              <span class="message-data-time">{{ AppComponent.formatFullDateTime(message.time) }}</span>
             </div>
             <div [ngClass]="message.me ? 'other-message float-right' : 'my-message'" class="message"> {{ message.text }}
             </div>
