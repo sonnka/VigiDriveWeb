@@ -47,8 +47,8 @@ export class ChatsComponent {
     let webSocket = new SockJS(this.webSocketEndPoint);
     this.stompClient = Stomp.over(webSocket);
     const _this = this;
-    this.stompClient.connect({}, function (frame: any) {
-      _this.stompClient.subscribe(_this.topic, function (sdkEvent: any) {
+    await this.stompClient.connect({}, async function (frame: any) {
+      await _this.stompClient.subscribe(_this.topic, function (sdkEvent: any) {
         console.log(sdkEvent)
         _this.updateHistory(JSON.parse(sdkEvent.body) as MessagesResponse)
         _this.scrollDiv()
@@ -64,26 +64,22 @@ export class ChatsComponent {
     this.isSelected = true;
     this.clearSelecting();
     document.getElementById(receiverId.toString())?.classList.add("active");
-    this.messageService.getChatHistory(receiverId)
-      .subscribe(response => {
-          this.chatHistory = response;
-        }, error => {
-          this.displayError(error)
-        }
-      );
-    this.scrollDiv();
-
+    this.getChatHistory(receiverId).then(() => this.scrollDiv())
   }
 
-  scrollDiv() {
-    setTimeout(() => {
-        const element = document.getElementById("historyList") as HTMLDivElement;
-        element.scrollIntoView()
-        console.log("height: " + element.scrollHeight)
-        element.scrollTo(0, element.scrollHeight)
-      },
-      200
-    );
+  async getChatHistory(receiverId: bigint) {
+    try {
+      this.chatHistory = await this.messageService.getChatHistory(receiverId).toPromise();
+    } catch (error) {
+      this.displayError(error);
+    }
+  }
+
+  async scrollDiv() {
+    const element = document.getElementById("historyList") as HTMLDivElement;
+    element.scrollIntoView()
+    console.log("height: " + element.scrollHeight)
+    element.scrollTo(0, element.scrollHeight)
   }
 
   errorCallBack(error: any) {
