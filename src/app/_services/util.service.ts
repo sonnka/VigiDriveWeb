@@ -1,16 +1,19 @@
 import {Injectable} from '@angular/core';
 import {AppComponent} from "../app.component";
+import {DatePipe} from "@angular/common";
+import getUserLocale from "get-user-locale";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
 
-  static week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  static year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  static readonly week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  static readonly year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
   static getTodayDate(): string {
-    return AppComponent.formatDateTime(new Date()) || "00.00.0000 00:00";
+    let formatter: DatePipe = new DatePipe(getUserLocale(), Intl.DateTimeFormat().resolvedOptions().timeZone);
+    return formatter.transform(new Date(), "MMM d, y, HH:mm:ss") || "00-00-0000 00:00:00";
   }
 
   static getAmountOfDaysInMonth(): number[] {
@@ -60,7 +63,6 @@ export class UtilService {
     }
     let date = new Date();
     date.setDate(number);
-
     return AppComponent.formatDate(date) ?? "-";
   }
 
@@ -91,7 +93,6 @@ export class UtilService {
     } else if (value >= 90) {
       return 'green';
     }
-
     return 'yellow';
   }
 
@@ -101,7 +102,6 @@ export class UtilService {
     } else if (value >= 70) {
       return 'red';
     }
-
     return 'yellow';
   }
 }

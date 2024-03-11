@@ -1,5 +1,4 @@
 .my-container {
-  margin: 20px 15%;
   font-family: "Arial", sans-serif;
   display: flex;
   flex-direction: column;
@@ -54,18 +53,19 @@
 
 
 .alert {
-  padding: 20px;
-  width: 40%;
-  background-color: #f8e8e7;
+  width: fit-content;
+  background-color: #fae2e1;
   color: #ff0000;
-  margin-bottom: 15px;
   border-radius: 30px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }
 
 
 .closebtn {
   margin-left: 15px;
-  color: white;
+  color: #000000;
   font-weight: bold;
   float: right;
   font-size: 22px;

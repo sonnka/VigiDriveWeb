@@ -38,3 +38,45 @@
   margin-left: 15px;
   color: #009a1e;
 }
+
+.my-btn {
+  appearance: none;
+  font-size: 17px;
+  border: .2em solid darkslategray;
+  padding: .85em 1.5em;
+  color: #ffffff;
+  border-radius: 2em;
+  transition: 1s;
+  background: darkslategray;
+
+  &:hover, &:focus, &:active {
+    background: #93afaf;
+    border: .2em solid #93afaf;
+    color: #fff;
+  }
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 15%;
+  bottom: 35%;
+  left: 34%;
+  right: 34%;
+  border: 1px solid darkslategray;
+  background: #f0f8f8;
+  width: 32%;
+}
+
+.input-query {
+  width: 90%;
+  padding: 0.5em;
+  border: 1px solid #d4d7e1;
+  border-radius: 3px;
+  font-size: 1em;
+}
+
+.input-query:focus ~ .counter {
+  opacity: 0.1;
+  transition: opacity 1s ease-in;
+}

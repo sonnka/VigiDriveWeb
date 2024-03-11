@@ -1,0 +1,53 @@
+<div class="card chat-app">
+  <div class="first-col">
+    <div class="people-list" id="plist">
+      <ul *ngFor="let chat of chats" class="list-unstyled chat-list ">
+        <li (click)="select(chat.userId)" class="clearfix" id="{{chat.userId}}">
+          <img alt="avatar" height="50" ngSrc="{{chat.avatar || 'https://i.imgur.com/b08hxPY.png'}}" width="50">
+          <div class="about">
+            <div class="name">{{ chat.fullName }}</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="second-col">
+    <div *ngIf="isSelected" class="chat">
+      <div class="chat-header clearfix">
+        <div class="row">
+          <div>
+            <a data-target="#view_info" data-toggle="modal" href="javascript:void(0);">
+              <img alt="avatar" height="55" ngSrc="{{chatHistory?.avatar || 'https://i.imgur.com/b08hxPY.png'}}"
+                   width="55">
+            </a>
+            <div class="chat-about">
+              <h6 class="">{{ chatHistory?.receiverFullName }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-history" id="historyList" style="overflow-y: scroll">
+        <ul *ngFor="let message of chatHistory?.chatMessages">
+          <li class="clearfix">
+            <div [ngClass]="message.me ? 'text-right' : ''" class="message-data">
+              <span class="message-data-time">{{ AppComponent.formatFullDateTime(message.time) }}</span>
+            </div>
+            <div [ngClass]="message.me ? 'other-message float-right' : 'my-message'" class="message"> {{ message.text }}
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="chat-message clearfix">
+        <div class="input-group ">
+          <div class="input-group-prepend">
+            <span (click)="sendMessage(text.value, chatHistory?.receiverId)" class="input-group-text"><i
+              class="fa fa-send"></i></span>
+          </div>
+          <input #text class="form-control" id="messageText" placeholder="Enter text here..."
+                 type="text">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
