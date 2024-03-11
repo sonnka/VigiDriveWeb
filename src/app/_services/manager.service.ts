@@ -71,7 +71,7 @@ export class ManagerService {
       "/accesses/" + accessId + "/extend", accessDuration, this.httpOptions);
   }
 
-  requestAccess(accessId: bigint, accessRequest: AccessRequest) {
+  requestAccess(accessRequest: AccessRequest) {
     this.getCredentials();
 
     return this.http.post(this.baseUrl + '/managers/' + this.id +
