@@ -9,6 +9,8 @@ import {SituationStatistics} from "../_models/situation.statistics";
 import {HealthStatistics} from "../_models/health.statistics";
 import {ManagerDto} from "../_models/manager.dto";
 import {AccessDto} from "../_models/access.dto";
+import {DriverRequest} from "../_models/driver.request";
+import {DriverLicenseRequest} from "../_models/driver-license.request";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +39,19 @@ export class DriverService {
     this.getCredentials()
 
     return this.http.get<DriverResponse>(this.baseUrl + '/drivers/' + this.id, this.httpOptions);
+  }
+
+  updateDriver(driverRequest: DriverRequest) {
+    this.getCredentials()
+
+    return this.http.patch<DriverResponse>(this.baseUrl + "/drivers/" + this.id, driverRequest, this.httpOptions)
+  }
+
+  updateDriverLicense(driverLicenseRequest: DriverLicenseRequest) {
+    this.getCredentials()
+
+    return this.http.post<void>(this.baseUrl + "/drivers/" + this.id + "/driver-license", driverLicenseRequest,
+      this.httpOptions)
   }
 
   getHealthInfo() {

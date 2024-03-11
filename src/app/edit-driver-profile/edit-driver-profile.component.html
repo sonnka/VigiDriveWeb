@@ -1,0 +1,46 @@
+<br><br>
+<div>
+  <label>Avatar:
+    <input #avatar id="avatar" placeholder="Avatar" type="text" value="{{driverResponse?.avatar || ''}}">
+  </label>
+</div>
+<hr>
+<div>
+  <label>Firstname:
+    <input #firstName id="firstName" placeholder="First name" type="text" value="{{driverResponse?.firstName}}">
+  </label>
+</div>
+<div>
+  <label>Lastname:
+    <input #lastName id="lastName" placeholder="Last name" type="text" value="{{driverResponse?.lastName}}">
+  </label>
+</div>
+<div>
+  <label>Date of birth:
+    <input #dateOfBirth id="dateOfBirth" placeholder="Date of birth" type="date"
+           value="{{driverResponse?.dateOfBirth}}">
+  </label>
+</div>
+<div>
+  <label>Phone:
+    <input #phone id="phone" placeholder="Phone" type="text" value="{{driverResponse?.phoneNumber || ''}}">
+  </label>
+</div>
+<hr>
+<div>
+  <label>License number:
+    <input #number id="number" minlength="6" placeholder="License number" type="text"
+           value="{{driverResponse?.license?.number || ''}}">
+  </label>
+</div>
+<div>
+  <label>License due date:
+    <input #dateTo id="dateTo" placeholder="License date" type="date"
+           value="{{driverResponse?.license?.dateTo || ''}}">
+  </label>
+</div>
+<div style="text-align: center">
+  <button (click)="updateProfile(avatar.value, firstName.value, lastName.value, dateOfBirth.value,
+  phone.value, number.value, dateTo.value)" class="my-btn">Update
+  </button>
+</div>
