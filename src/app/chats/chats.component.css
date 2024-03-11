@@ -33,18 +33,18 @@
 .people-list .chat-list li {
   padding: 18px 20px;
   list-style: none;
-  background: #cdf6f2;
+  background: #ecf5f5;
   margin-top: 10px;
   border-radius: 15px
 }
 
 .people-list .chat-list li:hover {
-  background: #ecf5f5;
+  background: #cafaf5;
   cursor: pointer
 }
 
 .people-list .chat-list li.active {
-  background: #ecf5f5
+  background: #cafaf5
 }
 
 .people-list .chat-list li .name {

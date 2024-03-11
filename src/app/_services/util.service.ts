@@ -12,7 +12,6 @@ export class UtilService {
   static readonly year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
   static getTodayDate(): string {
-    console.log(getUserLocale() + "   -   " + Intl.DateTimeFormat().resolvedOptions().timeZone)
     let formatter: DatePipe = new DatePipe(getUserLocale(), Intl.DateTimeFormat().resolvedOptions().timeZone);
     return formatter.transform(new Date(), "MMM d, y, HH:mm:ss") || "00-00-0000 00:00:00";
   }
@@ -64,7 +63,6 @@ export class UtilService {
     }
     let date = new Date();
     date.setDate(number);
-
     return AppComponent.formatDate(date) ?? "-";
   }
 
@@ -104,7 +102,6 @@ export class UtilService {
     } else if (value >= 70) {
       return 'red';
     }
-
     return 'yellow';
   }
 }

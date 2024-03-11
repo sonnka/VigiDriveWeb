@@ -2,7 +2,7 @@
   <div class="first-col">
     <div class="people-list" id="plist">
       <ul *ngFor="let chat of chats" class="list-unstyled chat-list ">
-        <li (click)="select(chat.userId)" class="clearfix" id="{{chat.userId}}}">
+        <li (click)="select(chat.userId)" class="clearfix" id="{{chat.userId}}">
           <img alt="avatar" height="50" ngSrc="{{chat.avatar || 'https://i.imgur.com/b08hxPY.png'}}" width="50">
           <div class="about">
             <div class="name">{{ chat.fullName }}</div>

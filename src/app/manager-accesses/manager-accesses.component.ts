@@ -30,8 +30,8 @@ export class ManagerAccessesComponent {
     this.getInactiveAccesses();
   }
 
-  protected requestAccess(accessId: bigint, accessRequest: AccessRequest) {
-    this.managerService.requestAccess(accessId, accessRequest).subscribe(() => {
+  protected requestAccess(driverEmail: string, duration: string) {
+    this.managerService.requestAccess(new AccessRequest(driverEmail, duration)).subscribe(() => {
       location.reload();
     }, (error) => {
       this.displayError(error)
@@ -48,6 +48,14 @@ export class ManagerAccessesComponent {
         this.displayError(error)
       });
     }
+  }
+
+  protected openFormAccess() {
+    document.getElementById("myForm")!.style.display = "block";
+  }
+
+  protected closeForm() {
+    document.getElementById("myForm")!.style.display = "none";
   }
 
   private getSentAccesses() {
@@ -86,8 +94,10 @@ export class ManagerAccessesComponent {
       this.router.navigate(['/login']);
     }
     if (error.error != null) {
+      console.log(error.error)
       AppComponent.showError(error.error.errorMessage)
     } else {
+      console.log(error.message)
       AppComponent.showError(error.message)
     }
   }

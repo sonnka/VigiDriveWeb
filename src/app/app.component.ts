@@ -9,7 +9,7 @@ import getUserLocale from "get-user-locale";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  static formatter = new DatePipe(getUserLocale(), Intl.DateTimeFormat().resolvedOptions().timeZone);
+  static readonly formatter = new DatePipe(getUserLocale(), Intl.DateTimeFormat().resolvedOptions().timeZone);
   title = 'VigiDriveWeb';
   login = 'Login';
   register = 'Register';
@@ -26,6 +26,7 @@ export class AppComponent {
     if (date == null) {
       return null;
     }
+    console.log(getUserLocale() + " " + Intl.DateTimeFormat().resolvedOptions().timeZone)
     return this.formatter.transform(date, "dd.MM.YYYY HH:mm");
   }
 

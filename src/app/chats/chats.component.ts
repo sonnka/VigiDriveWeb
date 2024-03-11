@@ -62,7 +62,8 @@ export class ChatsComponent {
   async select(receiverId: bigint) {
     this.isSelected = true;
     this.clearSelecting();
-    document.getElementById(receiverId.toString())?.classList.add("active");
+    document.getElementById(receiverId.toString())!.classList.add("active");
+    console.log("Class list: " + document.getElementById(receiverId.toString())!.classList)
     try {
       await this.getChatHistory(receiverId)
       this.scrollDiv()
@@ -112,8 +113,8 @@ export class ChatsComponent {
 
   private clearSelecting() {
     for (const element of this.chats!) {
-      if (document.getElementById(element.toString())?.classList.contains("active")) {
-        document.getElementById(element.toString())?.classList.remove("active");
+      if (document.getElementById(element.userId.toString())!.classList.contains("active")) {
+        document.getElementById(element.userId.toString())!.classList.remove("active");
       }
     }
   }

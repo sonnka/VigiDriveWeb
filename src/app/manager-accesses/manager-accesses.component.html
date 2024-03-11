@@ -1,14 +1,15 @@
 <br><br>
-<div class="container" style="width: 950px">
+<div class="container" style="width: 950px;">
   <div class="row">
-    <div class="col-6">
+    <div class="col-8">
       <p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
     </div>
-    <div class="col-6">
-      <input type="button" value="Request access">
+    <div class="col-4">
+      <button (click)="openFormAccess()" class="my-btn">Request access</button>
     </div>
   </div>
-  <p style="color: #15abab; font-style: italic; font-size: 13px; margin-bottom: 20px">Sent accesses</p>
+  <p style="color: #15abab; font-style: italic; font-size: 13px; margin-bottom: 20px; margin-top: 80px">Sent
+    accesses</p>
   <table border="1" class="table table-condensed table-responsive-md" style="width: 600px">
     <thead>
     <tr>
@@ -99,4 +100,44 @@
     </tr>
     </tbody>
   </table>
+
+  <div class="form-popup" id="myForm">
+    <div class="container">
+      <button (click)="closeForm()" class="btn-close" style="cursor: pointer; top: 16%; right: 35%; position: fixed"
+              type="button">
+        <span class="cross-stand-alone"></span>
+      </button>
+      <h5 style="text-align: center; font-weight: bold; margin-top: 15px; color: darkslategray">New access</h5>
+      <br><br>
+      <div style="text-align: center">
+        <div class="row">
+          <label> Driver email:
+            <input #driverEmail style="width: 200px; height: 30px" type="email">
+          </label>
+        </div>
+        <br>
+        <div class="row">
+          <label>Access duration:
+            <select #duration style="width: 200px; height: 30px" type="text">
+              <option value="DAY">1 day</option>
+              <option value="WEEK">1 week</option>
+              <option value="TWO_WEEKS">2 weeks</option>
+              <option value="MONTH">1 month</option>
+              <option value="SIX_MONTHS">6 months</option>
+              <option value="YEAR">1 year</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <br><br>
+      <div style="text-align: center">
+        <button (click)="requestAccess(driverEmail.value, duration.value)" class="my-btn"
+                style="width: fit-content;">
+          Send request for access
+        </button>
+      </div>
+    </div>
+  </div>
+
+
 </div>
