@@ -47,9 +47,8 @@ export class ChatsComponent {
     let webSocket = new SockJS(this.webSocketEndPoint);
     this.stompClient = Stomp.over(webSocket);
     const _this = this;
-    await this.stompClient.connect({}, async function (frame: any) {
-      await _this.stompClient.subscribe(_this.topic, function (sdkEvent: any) {
-        console.log(sdkEvent)
+    await this.stompClient.connect({}, function (frame: any) {
+      _this.stompClient.subscribe(_this.topic, function (sdkEvent: any) {
         _this.updateHistory(JSON.parse(sdkEvent.body) as MessagesResponse)
         _this.scrollDiv()
       });
@@ -60,11 +59,16 @@ export class ChatsComponent {
     this.chatHistory = history;
   }
 
-  select(receiverId: bigint) {
+  async select(receiverId: bigint) {
     this.isSelected = true;
     this.clearSelecting();
     document.getElementById(receiverId.toString())?.classList.add("active");
-    this.getChatHistory(receiverId).then(() => this.scrollDiv())
+    try {
+      await this.getChatHistory(receiverId)
+      this.scrollDiv()
+    } catch (error) {
+      this.displayError(error);
+    }
   }
 
   async getChatHistory(receiverId: bigint) {
@@ -75,15 +79,15 @@ export class ChatsComponent {
     }
   }
 
-  async scrollDiv() {
-    const element = document.getElementById("historyList") as HTMLDivElement;
-    element.scrollIntoView()
-    console.log("height: " + element.scrollHeight)
-    element.scrollTo(0, element.scrollHeight)
+  scrollDiv() {
+    setTimeout(() => {
+      const element = document.getElementById("historyList") as HTMLDivElement;
+      element.scrollIntoView()
+      element.scrollTo(0, element.scrollHeight)
+    }, 100)
   }
 
   errorCallBack(error: any) {
-    console.log("ErrorCallBack -> " + error)
     setTimeout(() => {
       this.connectToWebsocket();
     }, 5000);
@@ -120,10 +124,8 @@ export class ChatsComponent {
       this.router.navigate(['/login']);
     }
     if (error.error != null) {
-      console.log(error.error)
       AppComponent.showError(error.error.errorMessage)
     } else {
-      console.log(error)
       AppComponent.showError(error.message)
     }
   }
