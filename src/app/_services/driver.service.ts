@@ -55,6 +55,14 @@ export class DriverService {
       this.httpOptions).toPromise()
   }
 
+  async updateEmergencyContact(emergencyContact: string) {
+    await this.getCredentials()
+
+    return await this.http.patch<void>(
+      this.baseUrl + "/drivers/" + this.id + "/emergency-number/" + emergencyContact,
+      null, this.httpOptions).toPromise()
+  }
+
   async getHealthInfo() {
     await this.getCredentials()
 

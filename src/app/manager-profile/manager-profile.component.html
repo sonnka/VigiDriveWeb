@@ -5,6 +5,7 @@
       <div>
         <img alt="avatar" class="rounded-circle" height="150" id="thumbnail"
              ngSrc="{{managerResponse?.avatar || 'https://i.imgur.com/b08hxPY.png'}}"
+             style="object-fit: cover"
              width="150"/>
       </div>
     </div>
@@ -52,7 +53,7 @@
       <tr>
         <td><img alt="img" class="rounded-circle" height="60"
                  ngSrc="{{driver?.avatar || 'https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png'}}"
-                 width="60"/>
+                 style="object-fit: cover" width="60"/>
         </td>
         <td>{{ driver.firstName }}</td>
         <td>{{ driver.lastName }}</td>

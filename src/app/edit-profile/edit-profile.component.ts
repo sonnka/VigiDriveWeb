@@ -36,9 +36,10 @@ export class EditProfileComponent {
   }
 
   protected async updateDriverProfile(avatar: string, firstName: string, lastName: string, dateOfBirth: string, phone: string,
-                                      number: string, dateTo: string) {
+                                      number: string, dateTo: string, emergencyContact: string) {
     await this.updateDriver(new DriverRequest(avatar, firstName, lastName, dateOfBirth, phone))
     await this.updateDriverLicense(new DriverLicenseRequest(number, dateTo))
+    await this.updateEmergencyContact(emergencyContact);
     await this.router.navigate(['/driver-profile']);
   }
 
@@ -61,6 +62,14 @@ export class EditProfileComponent {
   private async updateManager(managerRequest: ManagerRequest) {
     try {
       await this.managerService.updateManager(managerRequest);
+    } catch (error) {
+      this.displayError(error)
+    }
+  }
+
+  private async updateEmergencyContact(emergencyContact: string) {
+    try {
+      await this.driverService.updateEmergencyContact(emergencyContact);
     } catch (error) {
       this.displayError(error)
     }

@@ -40,9 +40,16 @@
              value="{{driverResponse?.license?.dateTo || ''}}">
     </label>
   </div>
+  <hr>
+  <div>
+    <label>Emergency contact:
+      <input #emergencyContact id="emergencyContact" placeholder="Emergency contact" type="text"
+             value="{{driverResponse?.emergencyContact || ''}}">
+    </label>
+  </div>
   <div style="text-align: center">
     <button (click)="updateDriverProfile(avatar.value, firstName.value, lastName.value, dateOfBirth.value,
-  phone.value, number.value, dateTo.value)" class="my-btn">Update
+  phone.value, number.value, dateTo.value, emergencyContact.value)" class="my-btn">Update
     </button>
   </div>
 </div>
