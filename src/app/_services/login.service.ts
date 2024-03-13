@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
 import {LoginRequest} from "../_models/login.request";
 import {LoginResponse} from "../_models/login.response";
 import {jwtDecode} from "jwt-decode";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +60,7 @@ export class LoginService {
     return role == 'manager';
   }
 
-  public static logout() {
+  public static async logout() {
     localStorage.clear();
   }
 
@@ -97,27 +97,30 @@ export class LoginService {
           this.errorMessage = error.message
         }
       });
-
     return response;
   }
 
-  public setToken(token: string) {
+  public async setCredentials(token: string, id: bigint) {
+    await this.setToken(token)
+    await this.setUserId(id)
+  }
+
+  public async getToken(): Promise<string> {
+    return localStorage.getItem('token') ?? '';
+  }
+
+  public async getUserId(): Promise<string> {
+    return localStorage.getItem('id') ?? '';
+  }
+
+  private async setToken(token: string) {
     let t = JSON.parse(atob(token.split('.')[1]));
     let expireDate = new Date(t.exp * 1000);
-
     localStorage.setItem('token', token);
     localStorage.setItem('expires_at', expireDate.toISOString())
   }
 
-  public getToken(): string {
-    return localStorage.getItem('token') ?? '';
-  }
-
-  public setUserId(id: bigint) {
+  private async setUserId(id: bigint) {
     localStorage.setItem('id', id.toString());
-  }
-
-  public getUserId(): string {
-    return localStorage.getItem('id') ?? '';
   }
 }

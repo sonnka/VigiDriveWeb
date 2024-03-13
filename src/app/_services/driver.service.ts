@@ -35,150 +35,152 @@ export class DriverService {
     return this.http.post(this.baseUrl + '/register/driver', data, httpOptions);
   }
 
-  getDriver() {
-    this.getCredentials()
+  async getDriver() {
+    await this.getCredentials()
 
     return this.http.get<DriverResponse>(this.baseUrl + '/drivers/' + this.id, this.httpOptions);
   }
 
-  updateDriver(driverRequest: DriverRequest) {
-    this.getCredentials()
+  async updateDriver(driverRequest: DriverRequest) {
+    await this.getCredentials()
 
-    return this.http.patch<DriverResponse>(this.baseUrl + "/drivers/" + this.id, driverRequest, this.httpOptions)
+    return await this.http.patch<DriverResponse>(this.baseUrl + "/drivers/" + this.id,
+      driverRequest, this.httpOptions).toPromise()
   }
 
-  updateDriverLicense(driverLicenseRequest: DriverLicenseRequest) {
-    this.getCredentials()
+  async updateDriverLicense(driverLicenseRequest: DriverLicenseRequest) {
+    await this.getCredentials()
 
-    return this.http.post<void>(this.baseUrl + "/drivers/" + this.id + "/driver-license", driverLicenseRequest,
-      this.httpOptions)
+    return await this.http.post<void>(this.baseUrl + "/drivers/" + this.id + "/driver-license", driverLicenseRequest,
+      this.httpOptions).toPromise()
   }
 
-  getHealthInfo() {
-    this.getCredentials()
+  async getHealthInfo() {
+    await this.getCredentials()
 
     return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + this.id + "/health-info",
       this.httpOptions);
   }
 
-  getDriverHealthInfo(driverId: string) {
-    this.getCredentials();
+  async getDriverHealthInfo(driverId: string) {
+    await this.getCredentials();
 
     return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + driverId + "/health-info",
       this.httpOptions);
   }
 
-  getSituationInfo() {
-    this.getCredentials()
+  async getSituationInfo() {
+    await this.getCredentials()
 
     return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + this.id + "/situations/week",
       this.httpOptions);
   }
 
-  getDriverSituationInfo(driverId: string) {
-    this.getCredentials();
+  async getDriverSituationInfo(driverId: string) {
+    await this.getCredentials();
 
     return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + driverId + "/situations/week",
       this.httpOptions);
   }
 
-  getWeekSituationStatistic() {
-    this.getCredentials();
+  async getWeekSituationStatistic() {
+    await this.getCredentials();
 
     return this.http.get<SituationStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/situations/statistics/week", this.httpOptions);
   }
 
-  getMonthSituationStatistic() {
-    this.getCredentials();
+  async getMonthSituationStatistic() {
+    await this.getCredentials();
 
     return this.http.get<SituationStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/situations/statistics/month", this.httpOptions);
   }
 
-  getYearSituationStatistic() {
-    this.getCredentials();
+  async getYearSituationStatistic() {
+    await this.getCredentials();
 
     return this.http.get<SituationStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/situations/statistics/year", this.httpOptions);
   }
 
-  getWeekHealthStatistic() {
-    this.getCredentials();
+  async getWeekHealthStatistic() {
+    await this.getCredentials();
 
     return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/health-info/statistics/week", this.httpOptions);
   }
 
-  getMonthHealthStatistic() {
-    this.getCredentials();
+  async getMonthHealthStatistic() {
+    await this.getCredentials();
 
     return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/health-info/statistics/month", this.httpOptions);
   }
 
-  getYearHealthStatistic() {
-    this.getCredentials();
+  async getYearHealthStatistic() {
+    await this.getCredentials();
 
     return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/health-info/statistics/year", this.httpOptions);
   }
 
-  getManager() {
-    this.getCredentials();
+  async getManager() {
+    await this.getCredentials();
 
     return this.http.get<ManagerDto>(this.baseUrl + '/drivers/' + this.id +
       "/manager", this.httpOptions);
   }
 
-  getAccess(accessId: bigint) {
-    this.getCredentials();
+  async getAccess(accessId: bigint) {
+    await this.getCredentials();
 
     return this.http.get<AccessDto>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/" + accessId, this.httpOptions);
   }
 
-  getAccessRequests() {
-    this.getCredentials();
+  async getAccessRequests() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/requests", this.httpOptions);
   }
 
-  getActiveAccesses() {
-    this.getCredentials();
+  async getActiveAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/active", this.httpOptions);
   }
 
-  getInactiveAccesses() {
-    this.getCredentials();
+  async getInactiveAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/inactive", this.httpOptions);
   }
 
-  giveAccess(accessId: bigint) {
-    this.getCredentials();
+  async giveAccess(accessId: bigint) {
+    await this.getCredentials();
 
     return this.http.post(this.baseUrl + '/drivers/' + this.id +
       "/accesses/" + accessId, null, this.httpOptions);
   }
 
-  stopAccess(accessId: bigint) {
-    this.getCredentials();
+  async stopAccess(accessId: bigint) {
+    await this.getCredentials();
 
     return this.http.patch(this.baseUrl + '/drivers/' + this.id +
       "/accesses/" + accessId + "/stop", null, this.httpOptions);
   }
 
-  private getCredentials() {
-    this.token = this.loginService.getToken();
-    this.id = this.loginService.getUserId();
+  private async getCredentials() {
+    this.token = await this.loginService.getToken().then();
+    this.id = await this.loginService.getUserId().then();
 
-    if (this.token == null || this.id == null) {
-      LoginService.logout();
+    if (!this.token || !this.id) {
+      await LoginService.logout();
+      throw new Error("Something went wrong!")
     }
 
     this.httpOptions = {

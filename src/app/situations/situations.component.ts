@@ -54,9 +54,9 @@ export class SituationsComponent implements OnInit {
       return "";
     }
 
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].period == period) {
-        return elements[i].amount.toString();
+    for (const element of elements) {
+      if (element.period == period) {
+        return element.amount.toString();
       }
     }
 
@@ -70,9 +70,9 @@ export class SituationsComponent implements OnInit {
       return 0;
     }
 
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].period == period) {
-        return (elements[i].amount * 100) / amountOfSituations;
+    for (const element of elements) {
+      if (element.period == period) {
+        return (element.amount * 100) / amountOfSituations;
       }
     }
 
@@ -80,46 +80,53 @@ export class SituationsComponent implements OnInit {
   }
 
   private getYearStatistics() {
-    this.driverService.getYearSituationStatistic().subscribe(
-      response => {
-        this.yearStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getYearSituationStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.yearStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getMonthStatistics() {
-    this.driverService.getMonthSituationStatistic().subscribe(
-      response => {
-        this.monthStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getMonthSituationStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.monthStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getWeekStatistics() {
-    this.driverService.getWeekSituationStatistic().subscribe(
-      response => {
-        this.weekStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getWeekSituationStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.weekStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getSituationInfo() {
-    this.driverService.getSituationInfo()
-      .subscribe(response => {
+    this.driverService.getSituationInfo().then((r) => {
+      r.subscribe(response => {
           this.situations = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private displayError(error: any) {

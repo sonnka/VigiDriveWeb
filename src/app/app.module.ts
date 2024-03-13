@@ -17,7 +17,7 @@ import {DriverAccessesComponent} from './driver-accesses/driver-accesses.compone
 import {ManagerAccessesComponent} from './manager-accesses/manager-accesses.component';
 import {FormsModule} from "@angular/forms";
 import {ChatsComponent} from './chats/chats.component';
-import { EditDriverProfileComponent } from './edit-driver-profile/edit-driver-profile.component';
+import {EditProfileComponent} from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { EditDriverProfileComponent } from './edit-driver-profile/edit-driver-pr
     DriverAccessesComponent,
     ManagerAccessesComponent,
     ChatsComponent,
-    EditDriverProfileComponent
+    EditProfileComponent
   ],
   imports: [
     BrowserModule,

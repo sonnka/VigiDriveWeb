@@ -32,28 +32,30 @@ export class DriverProfileComponent {
   }
 
   private getDriver() {
-    this.driverService.getDriver()
-      .subscribe(response => {
+    this.driverService.getDriver().then((r) => {
+      r.subscribe(response => {
           this.driverResponse = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getHealthInfo() {
-    this.driverService.getHealthInfo()
-      .subscribe(response => {
+    this.driverService.getHealthInfo().then((r) => {
+      r.subscribe(response => {
           this.healthInfo = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getSituationInfo() {
-    this.driverService.getSituationInfo()
-      .subscribe(response => {
+    this.driverService.getSituationInfo().then((r) => {
+      r.subscribe(response => {
           this.situations = response;
 
           let monday = this.getMonday();
@@ -69,6 +71,7 @@ export class DriverProfileComponent {
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getMonday() {
@@ -83,11 +86,11 @@ export class DriverProfileComponent {
       LoginService.logout()
       this.router.navigate(['/login']);
     }
-    if (error.error != null) {
-      console.log(error.error)
+    if (error.message) {
+      AppComponent.showError(error.message)
+    } else if (error.error) {
       AppComponent.showError(error.error.errorMessage)
     } else {
-      console.log(error)
       AppComponent.showError(error.message)
     }
   }

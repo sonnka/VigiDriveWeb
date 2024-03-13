@@ -11,14 +11,14 @@ import {DriverInfoComponent} from "./driver-info/driver-info.component";
 import {DriverAccessesComponent} from "./driver-accesses/driver-accesses.component";
 import {ManagerAccessesComponent} from "./manager-accesses/manager-accesses.component";
 import {ChatsComponent} from "./chats/chats.component";
-import {EditDriverProfileComponent} from "./edit-driver-profile/edit-driver-profile.component";
+import {EditProfileComponent} from "./edit-profile/edit-profile.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'driver-profile', component: DriverProfileComponent},
-  {path: 'edit-profile', component: EditDriverProfileComponent},
+  {path: 'edit-profile', component: EditProfileComponent},
   {path: 'health-info', component: HealthInfoComponent},
   {path: 'situations', component: SituationsComponent},
   {path: 'manager-profile', component: ManagerProfileComponent},

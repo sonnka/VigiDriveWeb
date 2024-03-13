@@ -20,7 +20,13 @@
       <p style="color: #41c2bd; font-size: 15px">Amount of drivers:  {{ managerResponse?.amountOfDrivers || '0' }}</p>
     </div>
   </div>
-  <br><br><br>
+  <br>
+  <div class="row">
+    <a href="/edit-profile" style="color: #696e6e; font-style: italic; cursor: pointer"><i class="fa fa-edit"
+                                                                                           style="font-size:24px"></i>Edit
+      profile</a>
+  </div>
+  <br>
   <div class="row">
     <table border="1" class="table table-condensed table-responsive-md" id="ordersTable">
       <thead>
@@ -44,7 +50,6 @@
       </thead>
       <tbody *ngFor="let driver of managerResponse?.drivers">
       <tr>
-
         <td><img alt="img" class="rounded-circle" height="60"
                  ngSrc="{{driver?.avatar || 'https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png'}}"
                  width="60"/>
@@ -52,16 +57,10 @@
         <td>{{ driver.firstName }}</td>
         <td>{{ driver.lastName }}</td>
         <td>{{ driver.email }}</td>
-
         <td class="actions" data-th="">
           <a (click)="getDriverInfo(driver.id)" class="resendLetter" title="more info" type="button">
             <i class="material-icons green">&#xe88e;</i></a>&emsp;
-          <!--          <a class="makeAdmin" title="make admin" type="button">-->
-          <!--            <i class="material-icons admin">&#xe7fd;</i></a>&emsp;-->
-          <!--          <a class="deleteCustomer" title="delete" type="button">-->
-          <!--            <i class="material-icons">&#xE872;</i></a>-->
         </td>
-
       </tr>
       </tbody>
     </table>

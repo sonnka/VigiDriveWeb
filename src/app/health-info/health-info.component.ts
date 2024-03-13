@@ -48,9 +48,9 @@ export class HealthInfoComponent implements OnInit {
       return 0;
     }
 
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].period == period) {
-        return elements[i].amount;
+    for (const element of elements) {
+      if (element.period == period) {
+        return element.amount;
       }
     }
 
@@ -68,47 +68,54 @@ export class HealthInfoComponent implements OnInit {
   }
 
   private getHealthInfo() {
-    this.driverService.getHealthInfo()
-      .subscribe((response) => {
+    this.driverService.getHealthInfo().then((r) => {
+      r.subscribe((response) => {
           this.healthInfo = response;
         },
         (error) => {
           this.displayError(error)
         }
       );
+    })
   }
 
   private getYearStatistics() {
-    this.driverService.getYearHealthStatistic().subscribe(
-      response => {
-        this.yearStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getYearHealthStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.yearStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getMonthStatistics() {
-    this.driverService.getMonthHealthStatistic().subscribe(
-      response => {
-        this.monthStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getMonthHealthStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.monthStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getWeekStatistics() {
-    this.driverService.getWeekHealthStatistic().subscribe(
-      response => {
-        this.weekStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getWeekHealthStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.weekStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private displayError(error: any) {

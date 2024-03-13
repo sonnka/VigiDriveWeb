@@ -31,22 +31,26 @@ export class ManagerAccessesComponent {
   }
 
   protected requestAccess(driverEmail: string, duration: string) {
-    this.managerService.requestAccess(new AccessRequest(driverEmail, duration)).subscribe(() => {
-      location.reload();
-    }, (error) => {
-      this.displayError(error)
-    });
+    this.managerService.requestAccess(new AccessRequest(driverEmail, duration)).then((r) => {
+      r.subscribe(() => {
+        location.reload();
+      }, (error) => {
+        this.displayError(error)
+      });
+    })
   }
 
   protected extendAccess(accessId: bigint) {
     let duration = (document.getElementById("duration") as HTMLInputElement).value;
     console.log(duration)
     if (duration != "") {
-      this.managerService.extendAccess(accessId, new AccessDuration(duration)).subscribe(() => {
-        location.reload();
-      }, (error) => {
-        this.displayError(error)
-      });
+      this.managerService.extendAccess(accessId, new AccessDuration(duration)).then((r) => {
+        r.subscribe(() => {
+          location.reload();
+        }, (error) => {
+          this.displayError(error)
+        });
+      })
     }
   }
 
@@ -59,33 +63,36 @@ export class ManagerAccessesComponent {
   }
 
   private getSentAccesses() {
-    this.managerService.getSentAccesses()
-      .subscribe(response => {
+    this.managerService.getSentAccesses().then((r) => {
+      r.subscribe(response => {
           this.sentAccesses = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getActiveAccesses() {
-    this.managerService.getActiveAccesses()
-      .subscribe(response => {
+    this.managerService.getActiveAccesses().then((r) => {
+      r.subscribe(response => {
           this.activeAccesses = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getInactiveAccesses() {
-    this.managerService.getInactiveAccesses()
-      .subscribe(response => {
+    this.managerService.getInactiveAccesses().then((r) => {
+      r.subscribe(response => {
           this.inactiveAccesses = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private displayError(error: any) {

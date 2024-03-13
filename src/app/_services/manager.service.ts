@@ -7,6 +7,7 @@ import {DriverResponse} from "../_models/driver.response";
 import {AccessDto} from "../_models/access.dto";
 import {AccessDuration} from "../_models/access.duration";
 import {AccessRequest} from "../_models/access.request";
+import {ManagerRequest} from "../_models/manager.request";
 
 @Injectable({
   providedIn: 'root'
@@ -30,60 +31,67 @@ export class ManagerService {
     return this.http.post(this.baseUrl + '/register/manager', data, httpOptions);
   }
 
-  getManager() {
-    this.getCredentials()
+  async getManager() {
+    await this.getCredentials()
 
     return this.http.get<ManagerResponse>(this.baseUrl + '/managers/' + this.id, this.httpOptions);
   }
 
-  getDriverInfo(driverId: string) {
-    this.getCredentials()
+  async updateManager(managerRequest: ManagerRequest) {
+    await this.getCredentials()
+    console.log("6")
+    return await this.http.patch<void>(this.baseUrl + "/managers/" + this.id, managerRequest, this.httpOptions).toPromise()
+  }
+
+  async getDriverInfo(driverId: string) {
+    await this.getCredentials()
 
     return this.http.get<DriverResponse>(this.baseUrl + '/managers/' + this.id + '/drivers/' + driverId,
       this.httpOptions);
   }
 
-  getSentAccesses() {
-    this.getCredentials();
+  async getSentAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/managers/' + this.id +
       "/accesses/sent", this.httpOptions);
   }
 
-  getActiveAccesses() {
-    this.getCredentials();
+  async getActiveAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/managers/' + this.id +
       "/accesses/active", this.httpOptions);
   }
 
-  getInactiveAccesses() {
-    this.getCredentials();
+  async getInactiveAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/managers/' + this.id +
       "/accesses/inactive", this.httpOptions);
   }
 
-  extendAccess(accessId: bigint, accessDuration: AccessDuration) {
-    this.getCredentials();
+  async extendAccess(accessId: bigint, accessDuration: AccessDuration) {
+    await this.getCredentials();
 
     return this.http.patch(this.baseUrl + '/managers/' + this.id +
       "/accesses/" + accessId + "/extend", accessDuration, this.httpOptions);
   }
 
-  requestAccess(accessRequest: AccessRequest) {
-    this.getCredentials();
+  async requestAccess(accessRequest: AccessRequest) {
+    await this.getCredentials();
 
     return this.http.post(this.baseUrl + '/managers/' + this.id +
       "/accesses", accessRequest, this.httpOptions);
   }
 
-  private getCredentials() {
-    this.token = this.loginService.getToken();
-    this.id = this.loginService.getUserId();
+  private async getCredentials() {
+    this.token = await this.loginService.getToken().then();
+    this.id = await this.loginService.getUserId().then();
 
-    if (this.token == null || this.id == null) {
-      LoginService.logout();
+    if (!this.token || !this.id) {
+      await LoginService.logout();
+      throw new Error("Something went wrong!")
     }
 
     this.httpOptions = {

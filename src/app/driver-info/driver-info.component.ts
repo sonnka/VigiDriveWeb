@@ -46,30 +46,36 @@ export class DriverInfoComponent {
   }
 
   private getDriverInfo(): void {
-    this.managerService.getDriverInfo(this.driverId!).subscribe(response => {
-        this.driverInfoResponse = response;
-      },
-      (error) => {
-        this.displayError(error)
-      })
+    this.managerService.getDriverInfo(this.driverId!).then((r) => {
+      r.subscribe(response => {
+          this.driverInfoResponse = response;
+        },
+        (error) => {
+          this.displayError(error)
+        })
+    })
   }
 
   private getDriverHealthInfo() {
-    this.driverService.getDriverHealthInfo(this.driverId!).subscribe(response => {
-        this.healthInfo = response;
-      },
-      (error) => {
-        this.displayError(error)
-      })
+    this.driverService.getDriverHealthInfo(this.driverId!).then((r) => {
+      r.subscribe(response => {
+          this.healthInfo = response;
+        },
+        (error) => {
+          this.displayError(error)
+        })
+    })
   }
 
   private getWeekSituations() {
-    this.driverService.getDriverSituationInfo(this.driverId!).subscribe(response => {
-        this.weekSituations = response;
-      },
-      (error) => {
-        this.displayError(error)
-      })
+    this.driverService.getDriverSituationInfo(this.driverId!).then((r) => {
+      r.subscribe(response => {
+          this.weekSituations = response;
+        },
+        (error) => {
+          this.displayError(error)
+        })
+    })
   }
 
   private displayError(error: any) {

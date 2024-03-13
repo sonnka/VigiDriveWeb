@@ -34,13 +34,14 @@ export class ChatsComponent {
   }
 
   getChats() {
-    this.messageService.getChats()
-      .subscribe(response => {
+    this.messageService.getChats().then((r) => {
+      r.subscribe(response => {
           this.chats = response;
         }, error => {
           this.displayError(error)
         }
       );
+    })
   }
 
   async connectToWebsocket() {
@@ -73,11 +74,13 @@ export class ChatsComponent {
   }
 
   async getChatHistory(receiverId: bigint) {
-    try {
-      this.chatHistory = await this.messageService.getChatHistory(receiverId).toPromise();
-    } catch (error) {
-      this.displayError(error);
-    }
+    await this.messageService.getChatHistory(receiverId).then((r) => {
+      r.subscribe((response) => {
+        this.chatHistory = response;
+      }, (error) => {
+        this.displayError(error)
+      })
+    })
   }
 
   scrollDiv() {

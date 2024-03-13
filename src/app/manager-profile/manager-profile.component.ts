@@ -27,8 +27,8 @@ export class ManagerProfileComponent {
   }
 
   private getManagerProfile() {
-    this.managerService.getManager()
-      .subscribe(response => {
+    this.managerService.getManager().then((r) => {
+      r.subscribe(response => {
         this.managerResponse = response;
       }, (error) => {
         if (error.status == 401) {
@@ -41,5 +41,6 @@ export class ManagerProfileComponent {
           AppComponent.showError(error.message)
         }
       });
+    })
   }
 }

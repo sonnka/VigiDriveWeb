@@ -37,69 +37,78 @@ export class DriverAccessesComponent {
   }
 
   protected getAccess(accessId: bigint) {
-    this.driverService.getAccess(accessId)
-      .subscribe(response => {
+    this.driverService.getAccess(accessId).then((r) => {
+      r.subscribe(response => {
           this.accessResponse = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   protected giveAccess(accessId: bigint) {
-    this.driverService.giveAccess(accessId).subscribe(() => {
-      location.reload();
-    }, (error) => {
-      this.displayError(error)
-    });
+    this.driverService.giveAccess(accessId).then((r) => {
+      r.subscribe(() => {
+        location.reload();
+      }, (error) => {
+        this.displayError(error)
+      });
+    })
   }
 
   protected stopAccess(accessId: bigint) {
-    this.driverService.stopAccess(accessId).subscribe(() => {
-      location.reload();
-    }, (error) => {
-      this.displayError(error)
-    });
+    this.driverService.stopAccess(accessId).then((r) => {
+      r.subscribe(() => {
+        location.reload();
+      }, (error) => {
+        this.displayError(error)
+      });
+    })
   }
 
   private getManager() {
-    this.driverService.getManager()
-      .subscribe(response => {
+    this.driverService.getManager().then((r) => {
+      r.subscribe(response => {
           this.managerResponse = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getAccessRequests() {
-    this.driverService.getAccessRequests()
-      .subscribe(response => {
+    this.driverService.getAccessRequests().then((r) => {
+      r.subscribe(response => {
           this.accessRequests = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getActiveAccesses() {
-    this.driverService.getActiveAccesses()
-      .subscribe(response => {
+    this.driverService.getActiveAccesses().then((r) => {
+      r.subscribe(response => {
           this.activeAccesses = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getInactiveAccesses() {
-    this.driverService.getInactiveAccesses()
-      .subscribe(response => {
+    this.driverService.getInactiveAccesses().then((r) => {
+      r.subscribe(response => {
           this.inactiveAccesses = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private displayError(error: any) {
