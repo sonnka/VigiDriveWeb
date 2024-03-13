@@ -45,6 +45,14 @@ export class DriverInfoComponent {
     this.getWeekSituations();
   }
 
+  protected setDestination(destination: string) {
+    try {
+      this.managerService.updateDestination(this.driverId!, destination)
+    } catch (error) {
+      this.displayError(error)
+    }
+  }
+
   private getDriverInfo(): void {
     this.managerService.getDriverInfo(this.driverId!).then((r) => {
       r.subscribe(response => {

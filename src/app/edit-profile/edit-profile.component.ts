@@ -43,11 +43,8 @@ export class EditProfileComponent {
   }
 
   protected async updateManagerProfile(avatar: string, firstName: string, lastName: string) {
-    console.log("1")
     await this.updateManager(new ManagerRequest(avatar, firstName, lastName))
-    console.log("2")
     await this.router.navigate(['/manager-profile']);
-    console.log("3")
   }
 
   private getManager() {
@@ -63,9 +60,7 @@ export class EditProfileComponent {
 
   private async updateManager(managerRequest: ManagerRequest) {
     try {
-      console.log("4")
       await this.managerService.updateManager(managerRequest);
-      console.log("5")
     } catch (error) {
       this.displayError(error)
     }
@@ -104,10 +99,8 @@ export class EditProfileComponent {
       this.router.navigate(['/login']);
     }
     if (error.error != null) {
-      console.log(error.error)
       AppComponent.showError(error.error.errorMessage)
     } else {
-      console.log(error)
       AppComponent.showError(error.message)
     }
   }

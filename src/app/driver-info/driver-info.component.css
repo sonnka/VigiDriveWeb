@@ -88,3 +88,21 @@ img {
   border-radius: 25px;
   border-bottom: 20px solid #ffffff;
 }
+
+
+.my-btn {
+  appearance: none;
+  font-size: 15px;
+  border: .2em solid darkslategray;
+  padding: .85em 1.5em;
+  color: #ffffff;
+  border-radius: 2em;
+  transition: 1s;
+  background: darkslategray;
+
+  &:hover, &:focus, &:active {
+    background: #93afaf;
+    border: .2em solid #93afaf;
+    color: #fff;
+  }
+}

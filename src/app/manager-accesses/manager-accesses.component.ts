@@ -42,8 +42,7 @@ export class ManagerAccessesComponent {
 
   protected extendAccess(accessId: bigint) {
     let duration = (document.getElementById("duration") as HTMLInputElement).value;
-    console.log(duration)
-    if (duration != "") {
+    if (duration) {
       this.managerService.extendAccess(accessId, new AccessDuration(duration)).then((r) => {
         r.subscribe(() => {
           location.reload();
@@ -101,10 +100,8 @@ export class ManagerAccessesComponent {
       this.router.navigate(['/login']);
     }
     if (error.error != null) {
-      console.log(error.error)
       AppComponent.showError(error.error.errorMessage)
     } else {
-      console.log(error.message)
       AppComponent.showError(error.message)
     }
   }

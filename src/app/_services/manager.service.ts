@@ -39,8 +39,15 @@ export class ManagerService {
 
   async updateManager(managerRequest: ManagerRequest) {
     await this.getCredentials()
-    console.log("6")
     return await this.http.patch<void>(this.baseUrl + "/managers/" + this.id, managerRequest, this.httpOptions).toPromise()
+  }
+
+  async updateDestination(driverId: string, destination: string) {
+    await this.getCredentials()
+
+    return await this.http.patch<void>(
+      this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/" + destination,
+      null, this.httpOptions).toPromise()
   }
 
   async getDriverInfo(driverId: string) {

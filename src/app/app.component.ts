@@ -26,7 +26,6 @@ export class AppComponent {
     if (date == null) {
       return null;
     }
-    console.log(getUserLocale() + " " + Intl.DateTimeFormat().resolvedOptions().timeZone)
     return this.formatter.transform(date, "dd.MM.YYYY HH:mm");
   }
 

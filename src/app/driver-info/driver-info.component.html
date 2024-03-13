@@ -48,6 +48,14 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-4" style="margin-top: 30px">
+        <input #destination placeholder="Destination" type="text" value="{{driverInfoResponse?.destination || ''}}">
+      </div>
+      <div class="col-8" style="margin-top: 15px">
+        <button (click)="setDestination(destination.value)" class="my-btn">Set destination</button>
+      </div>
+    </div>
   </div>
   <br>
   <hr>
