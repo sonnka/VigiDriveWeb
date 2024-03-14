@@ -83,12 +83,12 @@ export class DriverProfileComponent {
     if (error.status == 401) {
       LoginService.logout(this.router)
     }
-    if (error.message) {
+    if (error.message != null) {
       UtilService.showError(error.message)
-    } else if (error.error) {
+    } else if (error.error != null) {
       UtilService.showError(error.error.errorMessage)
     } else {
-      UtilService.showError(error.message)
+      UtilService.showError("Something went wrong!")
     }
   }
 }

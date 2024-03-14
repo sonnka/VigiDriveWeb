@@ -36,10 +36,12 @@ export class RegisterComponent {
   }
 
   private displayError(error: any) {
-    if (error.error != null) {
+    if (error.message != null) {
+      UtilService.showError(error.message)
+    } else if (error.error != null) {
       UtilService.showError(error.error.errorMessage)
     } else {
-      UtilService.showError(error.message)
+      UtilService.showError("Something went wrong!")
     }
   }
 }

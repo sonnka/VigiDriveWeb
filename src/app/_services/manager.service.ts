@@ -93,6 +93,38 @@ export class ManagerService {
       "/accesses", accessRequest, this.httpOptions);
   }
 
+  async generateHealthReport(driverId: string) {
+    await this.getCredentials();
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/pdf',
+        'Authorization': 'Bearer ' + this.token,
+        'Accept': 'application/pdf'
+      }),
+      responseType: 'arraybuffer' as 'arraybuffer'
+    };
+
+    return this.http.get(this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/health-report",
+      httpOptions)
+  }
+
+  async generateSituationReport(driverId: string) {
+    await this.getCredentials();
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/pdf',
+        'Authorization': 'Bearer ' + this.token,
+        'Accept': 'application/pdf'
+      }),
+      responseType: 'arraybuffer' as 'arraybuffer'
+    };
+
+    return this.http.get(this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/situation-report",
+      httpOptions)
+  }
+
   private async getCredentials() {
     this.token = await this.loginService.getToken().then();
     this.id = await this.loginService.getUserId().then();

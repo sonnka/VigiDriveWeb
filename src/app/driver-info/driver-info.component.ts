@@ -51,6 +51,27 @@ export class DriverInfoComponent {
     }
   }
 
+  protected generateHealthReport() {
+    this.managerService.generateHealthReport(this.driverId!).then((r) => {
+      r.subscribe(response => {
+        },
+        (error) => {
+          this.displayError(error)
+        })
+    })
+  }
+
+  protected generateSituationReport() {
+    this.managerService.generateSituationReport(this.driverId!).then((r) => {
+      r.subscribe(response => {
+        },
+        (error) => {
+          this.displayError(error)
+        })
+    })
+  }
+
+
   private getDriverInfo(): void {
     this.managerService.getDriverInfo(this.driverId!).then((r) => {
       r.subscribe(response => {
@@ -85,13 +106,16 @@ export class DriverInfoComponent {
   }
 
   private displayError(error: any) {
+    console.log(error)
     if (error.status == 401) {
       LoginService.logout(this.router)
     }
-    if (error.error != null) {
+    if (error.message != null) {
+      UtilService.showError(error.message)
+    } else if (error.error != null) {
       UtilService.showError(error.error.errorMessage)
     } else {
-      UtilService.showError(error.message)
+      UtilService.showError("Something went wrong!")
     }
   }
 }
