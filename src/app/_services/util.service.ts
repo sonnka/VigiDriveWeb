@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {AppComponent} from "../app.component";
 import {DatePipe} from "@angular/common";
 import getUserLocale from "get-user-locale";
 
@@ -10,6 +9,7 @@ export class UtilService {
 
   static readonly week = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   static readonly year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  static readonly formatter = new DatePipe(getUserLocale(), Intl.DateTimeFormat().resolvedOptions().timeZone);
 
   static getTodayDate(): string {
     let formatter: DatePipe = new DatePipe(getUserLocale(), Intl.DateTimeFormat().resolvedOptions().timeZone);
@@ -63,7 +63,7 @@ export class UtilService {
     }
     let date = new Date();
     date.setDate(number);
-    return AppComponent.formatDate(date) ?? "-";
+    return this.formatDate(date) ?? "-";
   }
 
   static getWeekPeriod(number: number | undefined): string {
@@ -103,5 +103,43 @@ export class UtilService {
       return 'red';
     }
     return 'yellow';
+  }
+
+  public static formatDate(date: Date | undefined): string | null {
+    if (date == null) {
+      return null;
+    }
+    return this.formatter.transform(date, "mediumDate");
+  }
+
+  public static formatDateTime(date: Date | undefined): string | null {
+    if (date == null) {
+      return null;
+    }
+    return this.formatter.transform(date, "dd.MM.YYYY HH:mm");
+  }
+
+  public static formatFullDateTime(date: Date | undefined): string | null {
+    if (date == null) {
+      return null;
+    }
+    return this.formatter.transform(date, "HH:mm:ss, dd.MM.YYYY");
+  }
+
+  public static formatLicenseDate(date: Date | undefined): string | null {
+    if (date == null) {
+      return null;
+    }
+    return this.formatter.transform(date, "MM/YY");
+  }
+
+  public static showError(message: string) {
+    let div = document.getElementById("alert");
+    div!.textContent = message
+    div!.style.display = "block";
+    setTimeout(function () {
+      div!.style.opacity = "0";
+      div!.style.display = "none";
+    }, 6000);
   }
 }

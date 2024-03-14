@@ -19,7 +19,7 @@
       </div>
       <p style="color: #99a2a2; font-size: 13px">{{ driverResponse?.email || 'Email' }}</p>
       <br>
-      <p style="font-size: 13px">{{ AppComponent.formatDate(driverResponse?.dateOfBirth) || 'Date of birth' }}</p>
+      <p style="font-size: 13px">{{ UtilService.formatDate(driverResponse?.dateOfBirth) || 'Date of birth' }}</p>
     </div>
     <div class="col-5">
       <div class="license-container">
@@ -39,7 +39,7 @@
               <div>
                 <p>{{ (driverResponse?.firstName + ' ' + driverResponse?.lastName) || 'Name Surname' }}</p>
                 <p>{{ driverResponse?.license?.number || '0000000000' }}</p>
-                <p>{{ AppComponent.formatLicenseDate(driverResponse?.license?.dateTo) || '00/00' }}</p>
+                <p>{{ UtilService.formatLicenseDate(driverResponse?.license?.dateTo) || '00/00' }}</p>
               </div>
             </div>
           </div>
@@ -138,8 +138,8 @@
       </thead>
       <tbody *ngFor="let situation of situations">
       <tr>
-        <td>{{ AppComponent.formatDateTime(situation.start) }}</td>
-        <td>{{ AppComponent.formatDateTime(situation.end) }}</td>
+        <td>{{ UtilService.formatDateTime(situation.start) }}</td>
+        <td>{{ UtilService.formatDateTime(situation.end) }}</td>
         <td>{{ situation.type }}</td>
         <td>{{ situation.description }}</td>
       </tr>

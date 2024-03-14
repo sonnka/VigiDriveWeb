@@ -31,8 +31,8 @@
     <div *ngIf="LoginService.isDriver()">
       <a class="link" href="/chats">Chats</a>
     </div>
-    <div (click)="LoginService.logout()" *ngIf="LoginService.isAuthorize()">
-      <a class="link" href="/">Logout</a>
+    <div (click)="logout()" *ngIf="LoginService.isAuthorize()">
+      <a class="link" href="/login">Logout</a>
     </div>
   </div>
 </header>

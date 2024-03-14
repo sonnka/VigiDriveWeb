@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
 import {SituationStatistics} from "../_models/situation.statistics";
-import {AppComponent} from "../app.component";
 import {SituationResponse} from "../_models/situation.response";
 import {UtilService} from "../_services/util.service";
 import {LoginService} from "../_services/login.service";
@@ -20,7 +19,6 @@ export class SituationsComponent implements OnInit {
   protected situations: SituationResponse[] | undefined;
   protected startOfCurrentWeek = '00.00.0000'
   protected endOfCurrentWeek = '00.00.0000'
-  protected readonly AppComponent = AppComponent;
   protected readonly UtilService = UtilService;
 
   constructor(private driverService: DriverService, private router: Router) {
@@ -29,9 +27,9 @@ export class SituationsComponent implements OnInit {
   ngOnInit() {
     let date = new Date()
     date.setDate(date.getDate() - date.getDay() + 1)
-    this.startOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    this.startOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
     date.setDate(date.getDate() + 6)
-    this.endOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    this.endOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
 
     this.getSituationInfo()
     this.getYearStatistics();
@@ -131,13 +129,12 @@ export class SituationsComponent implements OnInit {
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
     if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError(error.message)
     }
   }
 }

@@ -3,7 +3,6 @@ import {UtilService} from "../_services/util.service";
 import {DriverService} from "../_services/driver.service";
 import {ManagerDto} from "../_models/manager.dto";
 import {AccessDto} from "../_models/access.dto";
-import {AppComponent} from "../app.component";
 import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 
@@ -20,7 +19,6 @@ export class DriverAccessesComponent {
   protected accessRequests: AccessDto[] | undefined;
   protected activeAccesses: AccessDto[] | undefined;
   protected inactiveAccesses: AccessDto[] | undefined;
-  protected readonly AppComponent = AppComponent;
 
   constructor(private driverService: DriverService, private router: Router) {
   }
@@ -113,13 +111,12 @@ export class DriverAccessesComponent {
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
     if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError(error.message)
     }
   }
 }

@@ -11,6 +11,7 @@ import {ManagerDto} from "../_models/manager.dto";
 import {AccessDto} from "../_models/access.dto";
 import {DriverRequest} from "../_models/driver.request";
 import {DriverLicenseRequest} from "../_models/driver-license.request";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class DriverService {
   private id: string | undefined;
   private httpOptions: { headers: HttpHeaders } | undefined;
 
-  constructor(private http: HttpClient, private loginService: LoginService) {
+  constructor(private http: HttpClient, private loginService: LoginService, private router: Router) {
   }
 
   register(data: RegisterRequest) {
@@ -187,7 +188,7 @@ export class DriverService {
     this.id = await this.loginService.getUserId().then();
 
     if (!this.token || !this.id) {
-      await LoginService.logout();
+      await LoginService.logout(this.router);
       throw new Error("Something went wrong!")
     }
 

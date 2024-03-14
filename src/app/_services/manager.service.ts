@@ -8,6 +8,7 @@ import {AccessDto} from "../_models/access.dto";
 import {AccessDuration} from "../_models/access.duration";
 import {AccessRequest} from "../_models/access.request";
 import {ManagerRequest} from "../_models/manager.request";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ManagerService {
   private id: string | undefined;
   private httpOptions: { headers: HttpHeaders } | undefined;
 
-  constructor(private http: HttpClient, private loginService: LoginService) {
+  constructor(private http: HttpClient, private loginService: LoginService, private router: Router) {
   }
 
   register(data: RegisterRequest) {
@@ -97,7 +98,7 @@ export class ManagerService {
     this.id = await this.loginService.getUserId().then();
 
     if (!this.token || !this.id) {
-      await LoginService.logout();
+      await LoginService.logout(this.router);
       throw new Error("Something went wrong!")
     }
 

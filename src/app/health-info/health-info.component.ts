@@ -32,9 +32,9 @@ export class HealthInfoComponent implements OnInit {
   ngOnInit() {
     let date = new Date()
     date.setDate(date.getDate() - date.getDay() + 1)
-    this.startOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    this.startOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
     date.setDate(date.getDate() + 6)
-    this.endOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    this.endOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
 
     this.getHealthInfo();
     this.getYearStatistics();
@@ -120,13 +120,12 @@ export class HealthInfoComponent implements OnInit {
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
     if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError(error.message)
     }
   }
 }

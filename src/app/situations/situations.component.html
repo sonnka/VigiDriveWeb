@@ -24,8 +24,8 @@
     </thead>
     <tbody *ngFor="let situation of situations">
     <tr>
-      <td>{{ AppComponent.formatDateTime(situation.start) }}</td>
-      <td>{{ AppComponent.formatDateTime(situation.end) }}</td>
+      <td>{{ UtilService.formatDateTime(situation.start) }}</td>
+      <td>{{ UtilService.formatDateTime(situation.end) }}</td>
       <td>{{ situation.type }}</td>
       <td>{{ situation.description }}</td>
     </tr>

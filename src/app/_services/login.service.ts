@@ -4,6 +4,7 @@ import {LoginRequest} from "../_models/login.request";
 import {LoginResponse} from "../_models/login.response";
 import {jwtDecode} from "jwt-decode";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -60,8 +61,9 @@ export class LoginService {
     return role == 'manager';
   }
 
-  public static async logout() {
+  public static async logout(router: Router) {
     localStorage.clear();
+    await router.navigate(["/login"])
   }
 
   private static getRole(): string | null {

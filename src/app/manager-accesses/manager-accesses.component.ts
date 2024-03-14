@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 import {ManagerService} from "../_services/manager.service";
-import {AppComponent} from "../app.component";
 import {AccessDto} from "../_models/access.dto";
 import {AccessRequest} from "../_models/access.request";
 import {UtilService} from "../_services/util.service";
@@ -19,7 +18,6 @@ export class ManagerAccessesComponent {
   protected activeAccesses: AccessDto[] | undefined;
   protected inactiveAccesses: AccessDto[] | undefined;
   protected readonly UtilService = UtilService;
-  protected readonly AppComponent = AppComponent;
 
   constructor(private managerService: ManagerService, private router: Router) {
   }
@@ -96,13 +94,12 @@ export class ManagerAccessesComponent {
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
     if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError(error.message)
     }
   }
 }

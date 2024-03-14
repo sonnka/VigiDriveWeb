@@ -3,12 +3,12 @@ import {DriverService} from "../_services/driver.service";
 import {Router} from "@angular/router";
 import {DriverResponse} from "../_models/driver.response";
 import {LoginService} from "../_services/login.service";
-import {AppComponent} from "../app.component";
 import {DriverRequest} from "../_models/driver.request";
 import {DriverLicenseRequest} from "../_models/driver-license.request";
 import {ManagerRequest} from "../_models/manager.request";
 import {ManagerResponse} from "../_models/manager.response";
 import {ManagerService} from "../_services/manager.service";
+import {UtilService} from "../_services/util.service";
 
 @Component({
   selector: 'app-edit-profile',
@@ -30,8 +30,7 @@ export class EditProfileComponent {
     } else if (LoginService.isManager()) {
       this.getManager();
     } else {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
   }
 
@@ -104,13 +103,12 @@ export class EditProfileComponent {
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
     if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError(error.message)
     }
   }
 }

@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
 import {MessageRequest} from "../_models/message.request";
+import {UtilService} from "../_services/util.service";
 
 @Component({
   selector: 'app-chats',
@@ -20,6 +21,7 @@ export class ChatsComponent {
   protected chats: UserResponse[] | undefined;
   protected isSelected = false;
   protected readonly AppComponent = AppComponent;
+  protected readonly UtilService = UtilService;
   private webSocketEndPoint: string = 'http://localhost:8080/websocket';
   private topic: string = "/broker";
   private stompClient: any;
@@ -110,7 +112,7 @@ export class ChatsComponent {
       input = document.getElementById("messageText") as HTMLInputElement;
       input.value = ""
     } else {
-      AppComponent.showError("Something went wrong during message sending.")
+      UtilService.showError("Something went wrong during message sending.")
     }
   }
 
@@ -124,13 +126,12 @@ export class ChatsComponent {
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
     if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError(error.message)
     }
   }
 }

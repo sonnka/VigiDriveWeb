@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {LoginService} from "../_services/login.service";
 import {LoginRequest} from "../_models/login.request";
 import {Router} from "@angular/router";
-import {AppComponent} from "../app.component";
+import {UtilService} from "../_services/util.service";
 
 @Component({
   selector: 'app-login',
@@ -21,8 +21,7 @@ export class LoginComponent {
         let id = response.id
 
         if (!token || !id) {
-          await LoginService.logout()
-          await this.router.navigate(['/login']);
+          await LoginService.logout(this.router)
         }
 
         if (response.role == 'driver') {
@@ -40,7 +39,7 @@ export class LoginComponent {
       },
       (error) => {
         if (this.loginService.errorMessage != "") {
-          AppComponent.showError(this.loginService.errorMessage)
+          UtilService.showError(this.loginService.errorMessage)
         }
       }
     );

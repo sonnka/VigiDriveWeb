@@ -78,8 +78,8 @@
     <tr>
       <td>{{ access.managerEmail }}</td>
       <td>{{ access.accessDuration.toLowerCase() }}</td>
-      <td>{{ AppComponent.formatDateTime(access.startDateOfAccess) }}</td>
-      <td>{{ AppComponent.formatDateTime(access.endDateOfAccess) }}</td>
+      <td>{{ UtilService.formatDateTime(access.startDateOfAccess) }}</td>
+      <td>{{ UtilService.formatDateTime(access.endDateOfAccess) }}</td>
       <td class="actions" data-th="">
         <a (click)="stopAccess(access.id)" class="stopAccess" title="Stop access" type="button">
           <i class="material-icons red">&#xf230;</i></a>&emsp;
@@ -110,8 +110,8 @@
     <tr>
       <td>{{ access.managerEmail }}</td>
       <td>{{ access.accessDuration.toLowerCase() }}</td>
-      <td>{{ AppComponent.formatDateTime(access.startDateOfAccess) }}</td>
-      <td>{{ AppComponent.formatDateTime(access.endDateOfAccess) }}</td>
+      <td>{{ UtilService.formatDateTime(access.startDateOfAccess) }}</td>
+      <td>{{ UtilService.formatDateTime(access.endDateOfAccess) }}</td>
     </tr>
     </tbody>
   </table>

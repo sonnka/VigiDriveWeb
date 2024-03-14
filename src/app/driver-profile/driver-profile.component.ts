@@ -3,7 +3,6 @@ import {DriverService} from "../_services/driver.service";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
-import {AppComponent} from "../app.component";
 import {UtilService} from "../_services/util.service";
 import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
@@ -19,7 +18,6 @@ export class DriverProfileComponent {
   healthInfo: HealthInfoResponse | undefined;
   situations: SituationResponse[] | undefined;
   situationPeriod: string | undefined;
-  protected readonly AppComponent = AppComponent;
   protected readonly UtilService = UtilService;
 
   constructor(private driverService: DriverService, private router: Router) {
@@ -65,7 +63,7 @@ export class DriverProfileComponent {
           sunday.setDate(sunday.getDate() + (7 - day));
 
           if (monday != null && sunday != null) {
-            this.situationPeriod = AppComponent.formatDate(monday) + ' - ' + AppComponent.formatDate(sunday);
+            this.situationPeriod = UtilService.formatDate(monday) + ' - ' + UtilService.formatDate(sunday);
           }
         },
         (error) => {
@@ -83,15 +81,14 @@ export class DriverProfileComponent {
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
     if (error.message) {
-      AppComponent.showError(error.message)
+      UtilService.showError(error.message)
     } else if (error.error) {
-      AppComponent.showError(error.error.errorMessage)
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError(error.message)
     }
   }
 }

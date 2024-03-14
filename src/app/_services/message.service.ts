@@ -4,6 +4,7 @@ import {LoginService} from "./login.service";
 import {MessagesResponse} from "../_models/messages.response";
 import {UserResponse} from "../_models/user.response";
 import {MessageRequest} from "../_models/message.request";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class MessageService {
   private id: string | undefined;
   private httpOptions: { headers: HttpHeaders } | undefined;
 
-  constructor(private http: HttpClient, private loginService: LoginService) {
+  constructor(private http: HttpClient, private loginService: LoginService, private router: Router) {
   }
 
   async getChatHistory(receiverId: bigint) {
@@ -50,7 +51,7 @@ export class MessageService {
     this.id = await this.loginService.getUserId().then();
 
     if (!this.token || !this.id) {
-      await LoginService.logout();
+      await LoginService.logout(this.router);
       throw new Error("Something went wrong!")
     }
 

@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {ManagerService} from "../_services/manager.service";
 import {ManagerResponse} from "../_models/manager.response";
-import {AppComponent} from "../app.component";
 import {Router} from "@angular/router";
 import {LoginService} from "../_services/login.service";
+import {UtilService} from "../_services/util.service";
 
 @Component({
   selector: 'app-manager-profile',
@@ -13,7 +13,6 @@ import {LoginService} from "../_services/login.service";
 export class ManagerProfileComponent {
 
   protected managerResponse: ManagerResponse | undefined;
-  protected readonly AppComponent = AppComponent;
 
   constructor(private managerService: ManagerService, private router: Router) {
   }
@@ -32,13 +31,12 @@ export class ManagerProfileComponent {
         this.managerResponse = response;
       }, (error) => {
         if (error.status == 401) {
-          LoginService.logout()
-          this.router.navigate(['/login']);
+          LoginService.logout(this.router)
         }
         if (error.error != null) {
-          AppComponent.showError(error.error.errorMessage)
+          UtilService.showError(error.error.errorMessage)
         } else {
-          AppComponent.showError(error.message)
+          UtilService.showError(error.message)
         }
       });
     })
