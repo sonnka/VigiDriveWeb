@@ -183,6 +183,12 @@ export class DriverService {
       "/accesses/" + accessId + "/stop", null, this.httpOptions);
   }
 
+  async deleteDriver() {
+    await this.getCredentials();
+
+    return await this.http.delete(this.baseUrl + '/drivers/' + this.id, this.httpOptions).toPromise();
+  }
+
   private async getCredentials() {
     this.token = await this.loginService.getToken().then();
     this.id = await this.loginService.getUserId().then();

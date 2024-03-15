@@ -49,9 +49,27 @@
   </div>
   <br>
   <div class="row">
-    <a href="/edit-profile" style="color: #696e6e; font-style: italic; cursor: pointer"><i class="fa fa-edit"
-                                                                                           style="font-size:24px"></i>Edit
-      profile</a>
+    <div class="col-6">
+      <a href="/edit-profile" style="color: #696e6e; font-style: italic; cursor: pointer">
+        <i class="fa fa-edit" style="font-size:24px"></i>
+        Edit profile</a>
+    </div>
+    <div class="col-6 text-end">
+      <a (click)="showPopup()" style="color: #cb0606; font-style: italic; cursor: pointer;">
+        <i class="fa fa-trash" style="font-size:24px"></i>
+        Delete profile</a>
+    </div>
+    <div class="overlay" id="popup" style="display: none">
+      <div class="popup">
+        <p>Do you really want to delete your account?</p>
+        <div class="text-right">
+          <button (click)="hidePopup()" class="btn btn-cancel">Cancel</button>
+          <button (click)="deleteProfile()" class="btn btn-primary"
+                  style="background: #cb1a2b; border-color: #cb1a2b">Ok
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   <hr>
   <br>

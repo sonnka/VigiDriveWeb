@@ -29,6 +29,24 @@ export class DriverProfileComponent {
     this.getSituationInfo();
   }
 
+  protected showPopup() {
+    document.getElementById("popup")!.style.display = "flex";
+  }
+
+  protected hidePopup() {
+    document.getElementById("popup")!.style.display = "none";
+  }
+
+  protected async deleteProfile() {
+    document.getElementById("popup")!.style.display = "none";
+    try {
+      await this.driverService.deleteDriver()
+      await LoginService.logout(this.router)
+    } catch (error) {
+      this.displayError(error)
+    }
+  }
+
   private getDriver() {
     this.driverService.getDriver().then((r) => {
       r.subscribe(response => {
@@ -83,9 +101,9 @@ export class DriverProfileComponent {
     if (error.status == 401) {
       LoginService.logout(this.router)
     }
-    if (error.message != null) {
+    if (error.error) {
       UtilService.showError(error.message)
-    } else if (error.error != null) {
+    } else if (error.message) {
       UtilService.showError(error.error.errorMessage)
     } else {
       UtilService.showError("Something went wrong!")

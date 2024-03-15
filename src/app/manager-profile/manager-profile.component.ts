@@ -25,22 +25,44 @@ export class ManagerProfileComponent {
     this.router.navigate(['/driver-info'], {state: {driverId: driverId}});
   }
 
+  protected showPopup() {
+    document.getElementById("popup")!.style.display = "flex";
+  }
+
+  protected hidePopup() {
+    document.getElementById("popup")!.style.display = "none";
+  }
+
+  protected async deleteProfile() {
+    document.getElementById("popup")!.style.display = "none";
+    try {
+      await this.managerService.deleteManager()
+      await LoginService.logout(this.router)
+    } catch (error) {
+      this.displayError(error)
+    }
+  }
+
   private getManagerProfile() {
     this.managerService.getManager().then((r) => {
       r.subscribe(response => {
         this.managerResponse = response;
       }, (error) => {
-        if (error.status == 401) {
-          LoginService.logout(this.router)
-        }
-        if (error.message != null) {
-          UtilService.showError(error.message)
-        } else if (error.error != null) {
-          UtilService.showError(error.error.errorMessage)
-        } else {
-          UtilService.showError("Something went wrong!")
-        }
+        this.displayError(error)
       });
     })
+  }
+
+  private displayError(error: any) {
+    if (error.status == 401) {
+      LoginService.logout(this.router)
+    }
+    if (error.error) {
+      UtilService.showError(error.message)
+    } else if (error.message) {
+      UtilService.showError(error.error.errorMessage)
+    } else {
+      UtilService.showError("Something went wrong!")
+    }
   }
 }
