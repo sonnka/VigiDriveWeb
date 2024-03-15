@@ -51,6 +51,26 @@ export class DriverInfoComponent {
     }
   }
 
+  protected async generateGeneralReport() {
+    try {
+      await this.managerService.generateGeneralReport(this.driverId!).then(res => {
+          res.subscribe(
+            response => {
+              const file = new Blob([response], {type: "application/pdf"});
+              const fileUrl = URL.createObjectURL(file);
+              window.open(fileUrl);
+            },
+            error => {
+              this.displayError(error)
+            }
+          )
+        }
+      )
+    } catch (error) {
+      this.displayError(error);
+    }
+  }
+
   protected async generateHealthReport() {
     try {
       await this.managerService.generateHealthReport(this.driverId!).then(res => {

@@ -94,6 +94,22 @@ export class ManagerService {
       "/accesses", accessRequest, this.httpOptions);
   }
 
+  async generateGeneralReport(driverId: string) {
+    await this.getCredentials();
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "text",
+        Accept: "application/pdf",
+        'Authorization': 'Bearer ' + this.token
+      }),
+      responseType: 'arraybuffer' as const
+    };
+
+    return this.http.get(this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/general-report",
+      httpOptions)
+  }
+
   async generateHealthReport(driverId: string) {
     await this.getCredentials();
 
