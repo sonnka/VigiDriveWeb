@@ -40,7 +40,8 @@ export class ManagerService {
 
   async updateManager(managerRequest: ManagerRequest) {
     await this.getCredentials()
-    return await this.http.patch<void>(this.baseUrl + "/managers/" + this.id, managerRequest, this.httpOptions).toPromise()
+    return await this.http.patch<void>(this.baseUrl + "/managers/" + this.id, managerRequest,
+      this.httpOptions).toPromise()
   }
 
   async updateDestination(driverId: string, destination: string) {
@@ -98,11 +99,11 @@ export class ManagerService {
 
     let httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/pdf',
-        'Authorization': 'Bearer ' + this.token,
-        'Accept': 'application/pdf'
+        "Content-Type": "text",
+        Accept: "application/pdf",
+        'Authorization': 'Bearer ' + this.token
       }),
-      responseType: 'arraybuffer' as 'arraybuffer'
+      responseType: 'arraybuffer' as const
     };
 
     return this.http.get(this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/health-report",
@@ -114,11 +115,11 @@ export class ManagerService {
 
     let httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/pdf',
-        'Authorization': 'Bearer ' + this.token,
-        'Accept': 'application/pdf'
+        "Content-Type": "text",
+        Accept: "application/pdf",
+        'Authorization': 'Bearer ' + this.token
       }),
-      responseType: 'arraybuffer' as 'arraybuffer'
+      responseType: 'arraybuffer' as const
     };
 
     return this.http.get(this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/situation-report",

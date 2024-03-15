@@ -43,32 +43,48 @@ export class DriverInfoComponent {
     this.getWeekSituations();
   }
 
-  protected setDestination(destination: string) {
+  protected async setDestination(destination: string) {
     try {
-      this.managerService.updateDestination(this.driverId!, destination)
+      await this.managerService.updateDestination(this.driverId!, destination)
     } catch (error) {
       this.displayError(error)
     }
   }
 
-  protected generateHealthReport() {
-    this.managerService.generateHealthReport(this.driverId!).then((r) => {
-      r.subscribe(response => {
-        },
-        (error) => {
-          this.displayError(error)
-        })
-    })
+  protected async generateHealthReport() {
+    try {
+      await this.managerService.generateHealthReport(this.driverId!).then(res => {
+        res.subscribe(
+          response => {
+            const file = new Blob([response], {type: "application/pdf"});
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+          },
+          error => {
+            this.displayError(error)
+          })
+      })
+    } catch (error) {
+      this.displayError(error)
+    }
   }
 
-  protected generateSituationReport() {
-    this.managerService.generateSituationReport(this.driverId!).then((r) => {
-      r.subscribe(response => {
-        },
-        (error) => {
-          this.displayError(error)
-        })
-    })
+  protected async generateSituationReport() {
+    try {
+      await this.managerService.generateSituationReport(this.driverId!).then(res => {
+        res.subscribe(
+          response => {
+            const file = new Blob([response], {type: "application/pdf"});
+            const fileURL = URL.createObjectURL(file);
+            window.open(fileURL);
+          },
+          error => {
+            this.displayError(error)
+          })
+      })
+    } catch (error) {
+      this.displayError(error)
+    }
   }
 
 
