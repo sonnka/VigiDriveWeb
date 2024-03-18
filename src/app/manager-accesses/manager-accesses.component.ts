@@ -2,10 +2,10 @@ import {Component} from '@angular/core';
 import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 import {ManagerService} from "../_services/manager.service";
-import {AccessDto} from "../_models/access.dto";
-import {AccessRequest} from "../_models/access.request";
+import {AccessDto} from "../_models/response/access.dto";
+import {AccessRequest} from "../_models/request/access.request";
 import {UtilService} from "../_services/util.service";
-import {AccessDuration} from "../_models/access.duration";
+import {AccessDuration} from "../_models/response/access.duration";
 
 @Component({
   selector: 'app-manager-accesses',

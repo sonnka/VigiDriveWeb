@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {RegisterRequest} from "../_models/register.request";
-import {DriverResponse} from "../_models/driver.response";
-import {HealthInfoResponse} from "../_models/health-info.response";
-import {SituationResponse} from "../_models/situation.response";
+import {RegisterRequest} from "../_models/request/register.request";
+import {DriverResponse} from "../_models/response/driver.response";
+import {HealthInfoResponse} from "../_models/response/health-info.response";
+import {SituationResponse} from "../_models/response/situation.response";
 import {LoginService} from "./login.service";
-import {SituationStatistics} from "../_models/situation.statistics";
-import {HealthStatistics} from "../_models/health.statistics";
-import {ManagerDto} from "../_models/manager.dto";
-import {AccessDto} from "../_models/access.dto";
-import {DriverRequest} from "../_models/driver.request";
-import {DriverLicenseRequest} from "../_models/driver-license.request";
+import {SituationStatistics} from "../_models/response/situation.statistics";
+import {HealthStatistics} from "../_models/response/health.statistics";
+import {ManagerDto} from "../_models/response/manager.dto";
+import {AccessDto} from "../_models/response/access.dto";
+import {DriverRequest} from "../_models/request/driver.request";
+import {DriverLicenseRequest} from "../_models/request/driver-license.request";
 import {Router} from "@angular/router";
 
 @Injectable({

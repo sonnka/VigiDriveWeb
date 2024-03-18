@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
 import {MessageService} from "../_services/message.service";
-import {MessagesResponse} from "../_models/messages.response";
-import {UserResponse} from "../_models/user.response";
+import {MessagesResponse} from "../_models/response/messages.response";
+import {UserResponse} from "../_models/response/user.response";
 import {LoginService} from "../_services/login.service";
 import {AppComponent} from "../app.component";
 import {Router} from "@angular/router";
 import SockJS from "sockjs-client";
 import * as Stomp from "stompjs";
-import {MessageRequest} from "../_models/message.request";
+import {MessageRequest} from "../_models/request/message.request";
 import {UtilService} from "../_services/util.service";
 
 @Component({

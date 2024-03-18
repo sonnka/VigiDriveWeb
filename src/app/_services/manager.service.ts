@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {RegisterRequest} from "../_models/register.request";
+import {RegisterRequest} from "../_models/request/register.request";
 import {LoginService} from "./login.service";
-import {ManagerResponse} from "../_models/manager.response";
-import {DriverResponse} from "../_models/driver.response";
-import {AccessDto} from "../_models/access.dto";
-import {AccessDuration} from "../_models/access.duration";
-import {AccessRequest} from "../_models/access.request";
-import {ManagerRequest} from "../_models/manager.request";
+import {ManagerResponse} from "../_models/response/manager.response";
+import {DriverResponse} from "../_models/response/driver.response";
+import {AccessDto} from "../_models/response/access.dto";
+import {AccessDuration} from "../_models/response/access.duration";
+import {AccessRequest} from "../_models/request/access.request";
+import {ManagerRequest} from "../_models/request/manager.request";
 import {Router} from "@angular/router";
 
 @Injectable({

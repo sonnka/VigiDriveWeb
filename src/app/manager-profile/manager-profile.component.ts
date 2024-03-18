@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ManagerService} from "../_services/manager.service";
-import {ManagerResponse} from "../_models/manager.response";
+import {ManagerResponse} from "../_models/response/manager.response";
 import {Router} from "@angular/router";
 import {LoginService} from "../_services/login.service";
 import {UtilService} from "../_services/util.service";

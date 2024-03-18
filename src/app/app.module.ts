@@ -18,6 +18,7 @@ import {ManagerAccessesComponent} from './manager-accesses/manager-accesses.comp
 import {FormsModule} from "@angular/forms";
 import {ChatsComponent} from './chats/chats.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {EditProfileComponent} from './edit-profile/edit-profile.component';
     DriverAccessesComponent,
     ManagerAccessesComponent,
     ChatsComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    AdminProfileComponent
   ],
   imports: [
     BrowserModule,

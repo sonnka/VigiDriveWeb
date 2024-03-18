@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {HealthInfoResponse} from "../_models/health-info.response";
+import {HealthInfoResponse} from "../_models/response/health-info.response";
 import {DriverService} from "../_services/driver.service";
 import {DriverProfileComponent} from "../driver-profile/driver-profile.component";
 import {AppComponent} from "../app.component";
-import {HealthStatistics} from "../_models/health.statistics";
+import {HealthStatistics} from "../_models/response/health.statistics";
 import {UtilService} from "../_services/util.service";
 import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";

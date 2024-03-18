@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {LoginRequest} from "../_models/login.request";
-import {LoginResponse} from "../_models/login.response";
+import {LoginRequest} from "../_models/request/login.request";
+import {LoginResponse} from "../_models/response/login.response";
 import {jwtDecode} from "jwt-decode";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";

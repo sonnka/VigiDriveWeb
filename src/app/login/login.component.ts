@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LoginService} from "../_services/login.service";
-import {LoginRequest} from "../_models/login.request";
+import {LoginRequest} from "../_models/request/login.request";
 import {Router} from "@angular/router";
 import {UtilService} from "../_services/util.service";
 

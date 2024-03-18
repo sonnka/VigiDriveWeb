@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {ManagerService} from "../_services/manager.service";
 import {Router} from "@angular/router";
-import {DriverResponse} from "../_models/driver.response";
+import {DriverResponse} from "../_models/response/driver.response";
 import {DriverService} from "../_services/driver.service";
-import {HealthInfoResponse} from "../_models/health-info.response";
-import {SituationResponse} from "../_models/situation.response";
+import {HealthInfoResponse} from "../_models/response/health-info.response";
+import {SituationResponse} from "../_models/response/situation.response";
 import {UtilService} from "../_services/util.service";
 import {LoginService} from "../_services/login.service";
 

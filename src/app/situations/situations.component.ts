@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
-import {SituationStatistics} from "../_models/situation.statistics";
-import {SituationResponse} from "../_models/situation.response";
+import {SituationStatistics} from "../_models/response/situation.statistics";
+import {SituationResponse} from "../_models/response/situation.response";
 import {UtilService} from "../_services/util.service";
 import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";

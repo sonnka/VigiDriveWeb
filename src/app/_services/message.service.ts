@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LoginService} from "./login.service";
-import {MessagesResponse} from "../_models/messages.response";
-import {UserResponse} from "../_models/user.response";
-import {MessageRequest} from "../_models/message.request";
+import {MessagesResponse} from "../_models/response/messages.response";
+import {UserResponse} from "../_models/response/user.response";
+import {MessageRequest} from "../_models/request/message.request";
 import {Router} from "@angular/router";
 
 @Injectable({

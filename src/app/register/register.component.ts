@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
 import {ManagerService} from "../_services/manager.service";
-import {RegisterRequest} from "../_models/register.request";
+import {RegisterRequest} from "../_models/request/register.request";
 import {Router} from "@angular/router";
 import {UtilService} from "../_services/util.service";
 

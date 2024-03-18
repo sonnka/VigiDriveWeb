@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {UtilService} from "../_services/util.service";
 import {DriverService} from "../_services/driver.service";
-import {ManagerDto} from "../_models/manager.dto";
-import {AccessDto} from "../_models/access.dto";
+import {ManagerDto} from "../_models/response/manager.dto";
+import {AccessDto} from "../_models/response/access.dto";
 import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 

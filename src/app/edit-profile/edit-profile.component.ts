@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
 import {Router} from "@angular/router";
-import {DriverResponse} from "../_models/driver.response";
+import {DriverResponse} from "../_models/response/driver.response";
 import {LoginService} from "../_services/login.service";
-import {DriverRequest} from "../_models/driver.request";
-import {DriverLicenseRequest} from "../_models/driver-license.request";
-import {ManagerRequest} from "../_models/manager.request";
-import {ManagerResponse} from "../_models/manager.response";
+import {DriverRequest} from "../_models/request/driver.request";
+import {DriverLicenseRequest} from "../_models/request/driver-license.request";
+import {ManagerRequest} from "../_models/request/manager.request";
+import {ManagerResponse} from "../_models/response/manager.response";
 import {ManagerService} from "../_services/manager.service";
 import {UtilService} from "../_services/util.service";
 
