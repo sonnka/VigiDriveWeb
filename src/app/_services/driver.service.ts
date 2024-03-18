@@ -9,6 +9,9 @@ import {SituationStatistics} from "../_models/situation.statistics";
 import {HealthStatistics} from "../_models/health.statistics";
 import {ManagerDto} from "../_models/manager.dto";
 import {AccessDto} from "../_models/access.dto";
+import {DriverRequest} from "../_models/driver.request";
+import {DriverLicenseRequest} from "../_models/driver-license.request";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +24,7 @@ export class DriverService {
   private id: string | undefined;
   private httpOptions: { headers: HttpHeaders } | undefined;
 
-  constructor(private http: HttpClient, private loginService: LoginService) {
+  constructor(private http: HttpClient, private loginService: LoginService, private router: Router) {
   }
 
   register(data: RegisterRequest) {
@@ -33,137 +36,166 @@ export class DriverService {
     return this.http.post(this.baseUrl + '/register/driver', data, httpOptions);
   }
 
-  getDriver() {
-    this.getCredentials()
+  async getDriver() {
+    await this.getCredentials()
 
     return this.http.get<DriverResponse>(this.baseUrl + '/drivers/' + this.id, this.httpOptions);
   }
 
-  getHealthInfo() {
-    this.getCredentials()
+  async updateDriver(driverRequest: DriverRequest) {
+    await this.getCredentials()
+
+    return await this.http.patch<DriverResponse>(this.baseUrl + "/drivers/" + this.id,
+      driverRequest, this.httpOptions).toPromise()
+  }
+
+  async updateDriverLicense(driverLicenseRequest: DriverLicenseRequest) {
+    await this.getCredentials()
+
+    return await this.http.post<void>(this.baseUrl + "/drivers/" + this.id + "/driver-license", driverLicenseRequest,
+      this.httpOptions).toPromise()
+  }
+
+  async updateEmergencyContact(emergencyContact: string) {
+    await this.getCredentials()
+
+    return await this.http.patch<void>(
+      this.baseUrl + "/drivers/" + this.id + "/emergency-number/" + emergencyContact,
+      null, this.httpOptions).toPromise()
+  }
+
+  async getHealthInfo() {
+    await this.getCredentials()
 
     return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + this.id + "/health-info",
       this.httpOptions);
   }
 
-  getDriverHealthInfo(driverId: string) {
-    this.getCredentials();
+  async getDriverHealthInfo(driverId: string) {
+    await this.getCredentials();
 
     return this.http.get<HealthInfoResponse>(this.baseUrl + '/drivers/' + driverId + "/health-info",
       this.httpOptions);
   }
 
-  getSituationInfo() {
-    this.getCredentials()
+  async getSituationInfo() {
+    await this.getCredentials()
 
     return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + this.id + "/situations/week",
       this.httpOptions);
   }
 
-  getDriverSituationInfo(driverId: string) {
-    this.getCredentials();
+  async getDriverSituationInfo(driverId: string) {
+    await this.getCredentials();
 
     return this.http.get<SituationResponse[]>(this.baseUrl + '/drivers/' + driverId + "/situations/week",
       this.httpOptions);
   }
 
-  getWeekSituationStatistic() {
-    this.getCredentials();
+  async getWeekSituationStatistic() {
+    await this.getCredentials();
 
     return this.http.get<SituationStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/situations/statistics/week", this.httpOptions);
   }
 
-  getMonthSituationStatistic() {
-    this.getCredentials();
+  async getMonthSituationStatistic() {
+    await this.getCredentials();
 
     return this.http.get<SituationStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/situations/statistics/month", this.httpOptions);
   }
 
-  getYearSituationStatistic() {
-    this.getCredentials();
+  async getYearSituationStatistic() {
+    await this.getCredentials();
 
     return this.http.get<SituationStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/situations/statistics/year", this.httpOptions);
   }
 
-  getWeekHealthStatistic() {
-    this.getCredentials();
+  async getWeekHealthStatistic() {
+    await this.getCredentials();
 
     return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/health-info/statistics/week", this.httpOptions);
   }
 
-  getMonthHealthStatistic() {
-    this.getCredentials();
+  async getMonthHealthStatistic() {
+    await this.getCredentials();
 
     return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/health-info/statistics/month", this.httpOptions);
   }
 
-  getYearHealthStatistic() {
-    this.getCredentials();
+  async getYearHealthStatistic() {
+    await this.getCredentials();
 
     return this.http.get<HealthStatistics>(this.baseUrl + '/drivers/' + this.id +
       "/health-info/statistics/year", this.httpOptions);
   }
 
-  getManager() {
-    this.getCredentials();
+  async getManager() {
+    await this.getCredentials();
 
     return this.http.get<ManagerDto>(this.baseUrl + '/drivers/' + this.id +
       "/manager", this.httpOptions);
   }
 
-  getAccess(accessId: bigint) {
-    this.getCredentials();
+  async getAccess(accessId: bigint) {
+    await this.getCredentials();
 
     return this.http.get<AccessDto>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/" + accessId, this.httpOptions);
   }
 
-  getAccessRequests() {
-    this.getCredentials();
+  async getAccessRequests() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/requests", this.httpOptions);
   }
 
-  getActiveAccesses() {
-    this.getCredentials();
+  async getActiveAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/active", this.httpOptions);
   }
 
-  getInactiveAccesses() {
-    this.getCredentials();
+  async getInactiveAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/drivers/' + this.id +
       "/accesses/inactive", this.httpOptions);
   }
 
-  giveAccess(accessId: bigint) {
-    this.getCredentials();
+  async giveAccess(accessId: bigint) {
+    await this.getCredentials();
 
     return this.http.post(this.baseUrl + '/drivers/' + this.id +
       "/accesses/" + accessId, null, this.httpOptions);
   }
 
-  stopAccess(accessId: bigint) {
-    this.getCredentials();
+  async stopAccess(accessId: bigint) {
+    await this.getCredentials();
 
     return this.http.patch(this.baseUrl + '/drivers/' + this.id +
       "/accesses/" + accessId + "/stop", null, this.httpOptions);
   }
 
-  private getCredentials() {
-    this.token = this.loginService.getToken();
-    this.id = this.loginService.getUserId();
+  async deleteDriver() {
+    await this.getCredentials();
 
-    if (this.token == null || this.id == null) {
-      LoginService.logout();
+    return await this.http.delete(this.baseUrl + '/drivers/' + this.id, this.httpOptions).toPromise();
+  }
+
+  private async getCredentials() {
+    this.token = await this.loginService.getToken().then();
+    this.id = await this.loginService.getUserId().then();
+
+    if (!this.token || !this.id) {
+      await LoginService.logout(this.router);
+      throw new Error("Something went wrong!")
     }
 
     this.httpOptions = {

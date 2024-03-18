@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {LoginService} from "../_services/login.service";
 import {LoginRequest} from "../_models/login.request";
 import {Router} from "@angular/router";
-import {AppComponent} from "../app.component";
+import {UtilService} from "../_services/util.service";
 
 @Component({
   selector: 'app-login',
@@ -16,24 +16,30 @@ export class LoginComponent {
   login(email: string, password: string): void {
     let data = new LoginRequest(email, password);
 
-    this.loginService.login(data).subscribe((response) => {
+    this.loginService.login(data).subscribe(async (response) => {
         let token = response.token;
+        let id = response.id
+
+        if (!token || !id) {
+          await LoginService.logout(this.router)
+        }
+
         if (response.role == 'driver') {
-          this.loginService.setToken(token)
-          this.router.navigate(['/driver-profile']);
+          await this.loginService.setCredentials(token, id)
+          await this.router.navigate(['/driver-profile']);
         } else if (response.role == 'manager') {
-          this.loginService.setToken(token)
-          this.router.navigate(['/manager-profile']);
+          await this.loginService.setCredentials(token, id)
+          await this.router.navigate(['/manager-profile']);
         } else if (response.role == 'admin') {
-          this.loginService.setToken(token)
-          this.router.navigate(['/admin-profile']);
+          await this.loginService.setCredentials(token, id)
+          await this.router.navigate(['/admin-profile']);
         } else {
-          this.router.navigate(['/login']);
+          await this.router.navigate(['/login']);
         }
       },
       (error) => {
         if (this.loginService.errorMessage != "") {
-          AppComponent.showError(this.loginService.errorMessage)
+          UtilService.showError(this.loginService.errorMessage)
         }
       }
     );

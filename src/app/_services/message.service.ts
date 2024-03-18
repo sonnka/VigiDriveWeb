@@ -4,6 +4,7 @@ import {LoginService} from "./login.service";
 import {MessagesResponse} from "../_models/messages.response";
 import {UserResponse} from "../_models/user.response";
 import {MessageRequest} from "../_models/message.request";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +17,24 @@ export class MessageService {
   private id: string | undefined;
   private httpOptions: { headers: HttpHeaders } | undefined;
 
-  constructor(private http: HttpClient, private loginService: LoginService) {
+  constructor(private http: HttpClient, private loginService: LoginService, private router: Router) {
   }
 
-  getChatHistory(receiverId: bigint) {
-    this.getCredentials();
+  async getChatHistory(receiverId: bigint) {
+    await this.getCredentials();
 
     return this.http.get<MessagesResponse>(this.baseUrl + '/users/' + this.id +
       "/chats/" + receiverId, this.httpOptions);
   }
 
-  getChats() {
-    this.getCredentials()
+  async getChats() {
+    await this.getCredentials()
 
     return this.http.get<UserResponse[]>(this.baseUrl + "/users/" + this.id + "/chats", this.httpOptions);
   }
 
-  sendMessage(stompClient: any, message: MessageRequest, receiverId: bigint) {
-    this.getCredentials()
+  async sendMessage(stompClient: any, message: MessageRequest, receiverId: bigint) {
+    await this.getCredentials()
 
     let header = {
       'Content-Type': 'application/json',
@@ -45,12 +46,13 @@ export class MessageService {
       JSON.stringify(message));
   }
 
-  private getCredentials() {
-    this.token = this.loginService.getToken();
-    this.id = this.loginService.getUserId();
+  private async getCredentials() {
+    this.token = await this.loginService.getToken().then();
+    this.id = await this.loginService.getUserId().then();
 
-    if (this.token == null || this.id == null) {
-      LoginService.logout();
+    if (!this.token || !this.id) {
+      await LoginService.logout(this.router);
+      throw new Error("Something went wrong!")
     }
 
     this.httpOptions = {

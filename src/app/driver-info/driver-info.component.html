@@ -7,6 +7,7 @@
       <div>
         <img alt="avatar" class="rounded-circle" height="150" id="thumbnail"
              ngSrc="{{driverInfoResponse?.avatar || 'https://i.imgur.com/b08hxPY.png'}}"
+             style="object-fit: cover"
              width="150"/>
       </div>
     </div>
@@ -19,7 +20,7 @@
       </div>
       <p style="color: #99a2a2; font-size: 13px">{{ driverInfoResponse?.email || 'Email' }}</p>
       <br>
-      <p style="font-size: 13px">{{ AppComponent.formatDate(driverInfoResponse?.dateOfBirth) || 'Date of birth' }}</p>
+      <p style="font-size: 13px">{{ UtilService.formatDate(driverInfoResponse?.dateOfBirth) || 'Date of birth' }}</p>
       <br>
       <p style="font-size: 13px">Current health status: {{ healthInfo?.generalStatus || '0' }} %</p>
     </div>
@@ -41,11 +42,19 @@
               <div>
                 <p>{{ (driverInfoResponse?.firstName + ' ' + driverInfoResponse?.lastName) || 'Name Surname' }}</p>
                 <p>{{ driverInfoResponse?.license?.number || '0000000000' }}</p>
-                <p>{{ AppComponent.formatLicenseDate(driverInfoResponse?.license?.dateTo) || '00/00' }}</p>
+                <p>{{ UtilService.formatLicenseDate(driverInfoResponse?.license?.dateTo) || '00/00' }}</p>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4" style="margin-top: 30px">
+        <input #destination placeholder="Destination" type="text" value="{{driverInfoResponse?.destination || ''}}">
+      </div>
+      <div class="col-8" style="margin-top: 15px">
+        <button (click)="setDestination(destination.value)" class="my-btn">Set destination</button>
       </div>
     </div>
   </div>
@@ -74,8 +83,8 @@
     </thead>
     <tbody *ngFor="let situation of weekSituations">
     <tr>
-      <td>{{ AppComponent.formatDateTime(situation.start) }}</td>
-      <td>{{ AppComponent.formatDateTime(situation.end) }}</td>
+      <td>{{ UtilService.formatDateTime(situation.start) }}</td>
+      <td>{{ UtilService.formatDateTime(situation.end) }}</td>
       <td>{{ situation.type }}</td>
       <td>{{ situation.description }}</td>
     </tr>
@@ -84,15 +93,15 @@
   <br>
   <div class="row">
     <div class="col-4" style="text-align: center;">
-      <input type="button" value="Generate general report">
+      <input (click)="generateGeneralReport()" type="button" value="Generate general report">
     </div>
 
     <div class="col-4" style="text-align: center;">
-      <input type="button" value="Generate health report">
+      <input (click)="generateHealthReport()" type="button" value="Generate health report">
     </div>
 
     <div class="col-4" style="text-align: center;">
-      <input type="button" value="Generate situation report">
+      <input (click)="generateSituationReport()" type="button" value="Generate situation report">
     </div>
   </div>
 </div>

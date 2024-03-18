@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
 import {SituationStatistics} from "../_models/situation.statistics";
-import {AppComponent} from "../app.component";
 import {SituationResponse} from "../_models/situation.response";
 import {UtilService} from "../_services/util.service";
 import {LoginService} from "../_services/login.service";
@@ -20,7 +19,6 @@ export class SituationsComponent implements OnInit {
   protected situations: SituationResponse[] | undefined;
   protected startOfCurrentWeek = '00.00.0000'
   protected endOfCurrentWeek = '00.00.0000'
-  protected readonly AppComponent = AppComponent;
   protected readonly UtilService = UtilService;
 
   constructor(private driverService: DriverService, private router: Router) {
@@ -29,9 +27,9 @@ export class SituationsComponent implements OnInit {
   ngOnInit() {
     let date = new Date()
     date.setDate(date.getDate() - date.getDay() + 1)
-    this.startOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    this.startOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
     date.setDate(date.getDate() + 6)
-    this.endOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    this.endOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
 
     this.getSituationInfo()
     this.getYearStatistics();
@@ -54,9 +52,9 @@ export class SituationsComponent implements OnInit {
       return "";
     }
 
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].period == period) {
-        return elements[i].amount.toString();
+    for (const element of elements) {
+      if (element.period == period) {
+        return element.amount.toString();
       }
     }
 
@@ -70,9 +68,9 @@ export class SituationsComponent implements OnInit {
       return 0;
     }
 
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].period == period) {
-        return (elements[i].amount * 100) / amountOfSituations;
+    for (const element of elements) {
+      if (element.period == period) {
+        return (element.amount * 100) / amountOfSituations;
       }
     }
 
@@ -80,57 +78,65 @@ export class SituationsComponent implements OnInit {
   }
 
   private getYearStatistics() {
-    this.driverService.getYearSituationStatistic().subscribe(
-      response => {
-        this.yearStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getYearSituationStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.yearStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getMonthStatistics() {
-    this.driverService.getMonthSituationStatistic().subscribe(
-      response => {
-        this.monthStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getMonthSituationStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.monthStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getWeekStatistics() {
-    this.driverService.getWeekSituationStatistic().subscribe(
-      response => {
-        this.weekStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getWeekSituationStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.weekStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getSituationInfo() {
-    this.driverService.getSituationInfo()
-      .subscribe(response => {
+    this.driverService.getSituationInfo().then((r) => {
+      r.subscribe(response => {
           this.situations = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
-    if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+    if (error.message != null) {
+      UtilService.showError(error.message)
+    } else if (error.error != null) {
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError("Something went wrong!")
     }
   }
 }

@@ -54,8 +54,8 @@
     <tr>
       <td>{{ access.driverEmail }}</td>
       <td>{{ access.accessDuration.toLowerCase() }}</td>
-      <td>{{ AppComponent.formatDateTime(access.startDateOfAccess) }}</td>
-      <td>{{ AppComponent.formatDateTime(access.endDateOfAccess) }}</td>
+      <td>{{ UtilService.formatDateTime(access.startDateOfAccess) }}</td>
+      <td>{{ UtilService.formatDateTime(access.endDateOfAccess) }}</td>
       <td *ngIf="access.isExpiring" class="actions" data-th="" style="text-align: center; margin: auto">
         <select id="duration" name="blockUnits">
           <option selected="selected" value="">Choose duration</option>
@@ -78,7 +78,7 @@
     <thead>
     <tr>
       <th style="width:30%">
-        <a>Manager email</a>
+        <a>Driver email</a>
       </th>
       <th style="width:20%">
         <a>Access duration</a>
@@ -93,10 +93,10 @@
     </thead>
     <tbody *ngFor="let access of inactiveAccesses">
     <tr>
-      <td>{{ access.managerEmail }}</td>
+      <td>{{ access.driverEmail }}</td>
       <td>{{ access.accessDuration.toLowerCase() }}</td>
-      <td>{{ AppComponent.formatDateTime(access.startDateOfAccess) }}</td>
-      <td>{{ AppComponent.formatDateTime(access.endDateOfAccess) }}</td>
+      <td>{{ UtilService.formatDateTime(access.startDateOfAccess) }}</td>
+      <td>{{ UtilService.formatDateTime(access.endDateOfAccess) }}</td>
     </tr>
     </tbody>
   </table>

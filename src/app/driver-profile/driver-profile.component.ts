@@ -3,7 +3,6 @@ import {DriverService} from "../_services/driver.service";
 import {DriverResponse} from "../_models/driver.response";
 import {HealthInfoResponse} from "../_models/health-info.response";
 import {SituationResponse} from "../_models/situation.response";
-import {AppComponent} from "../app.component";
 import {UtilService} from "../_services/util.service";
 import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
@@ -19,7 +18,6 @@ export class DriverProfileComponent {
   healthInfo: HealthInfoResponse | undefined;
   situations: SituationResponse[] | undefined;
   situationPeriod: string | undefined;
-  protected readonly AppComponent = AppComponent;
   protected readonly UtilService = UtilService;
 
   constructor(private driverService: DriverService, private router: Router) {
@@ -31,29 +29,49 @@ export class DriverProfileComponent {
     this.getSituationInfo();
   }
 
+  protected showPopup() {
+    document.getElementById("popup")!.style.display = "flex";
+  }
+
+  protected hidePopup() {
+    document.getElementById("popup")!.style.display = "none";
+  }
+
+  protected async deleteProfile() {
+    document.getElementById("popup")!.style.display = "none";
+    try {
+      await this.driverService.deleteDriver()
+      await LoginService.logout(this.router)
+    } catch (error) {
+      this.displayError(error)
+    }
+  }
+
   private getDriver() {
-    this.driverService.getDriver()
-      .subscribe(response => {
+    this.driverService.getDriver().then((r) => {
+      r.subscribe(response => {
           this.driverResponse = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getHealthInfo() {
-    this.driverService.getHealthInfo()
-      .subscribe(response => {
+    this.driverService.getHealthInfo().then((r) => {
+      r.subscribe(response => {
           this.healthInfo = response;
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getSituationInfo() {
-    this.driverService.getSituationInfo()
-      .subscribe(response => {
+    this.driverService.getSituationInfo().then((r) => {
+      r.subscribe(response => {
           this.situations = response;
 
           let monday = this.getMonday();
@@ -63,12 +81,13 @@ export class DriverProfileComponent {
           sunday.setDate(sunday.getDate() + (7 - day));
 
           if (monday != null && sunday != null) {
-            this.situationPeriod = AppComponent.formatDate(monday) + ' - ' + AppComponent.formatDate(sunday);
+            this.situationPeriod = UtilService.formatDate(monday) + ' - ' + UtilService.formatDate(sunday);
           }
         },
         (error) => {
           this.displayError(error)
         });
+    })
   }
 
   private getMonday() {
@@ -80,15 +99,14 @@ export class DriverProfileComponent {
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
-    if (error.error != null) {
-      console.log(error.error)
-      AppComponent.showError(error.error.errorMessage)
+    if (error.error) {
+      UtilService.showError(error.message)
+    } else if (error.message) {
+      UtilService.showError(error.error.errorMessage)
     } else {
-      console.log(error)
-      AppComponent.showError(error.message)
+      UtilService.showError("Something went wrong!")
     }
   }
 }

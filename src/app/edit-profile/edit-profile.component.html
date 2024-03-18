@@ -1,0 +1,82 @@
+<br><br>
+<div *ngIf="LoginService.isDriver()">
+  <div>
+    <label>Avatar:
+      <input #avatar id="avatar" placeholder="Avatar" type="text" value="{{driverResponse?.avatar || ''}}">
+    </label>
+  </div>
+  <hr>
+  <div>
+    <label>Firstname:
+      <input #firstName id="firstName" placeholder="First name" type="text" value="{{driverResponse?.firstName}}">
+    </label>
+  </div>
+  <div>
+    <label>Lastname:
+      <input #lastName id="lastName" placeholder="Last name" type="text" value="{{driverResponse?.lastName}}">
+    </label>
+  </div>
+  <div>
+    <label>Date of birth:
+      <input #dateOfBirth id="dateOfBirth" placeholder="Date of birth" type="date"
+             value="{{driverResponse?.dateOfBirth}}">
+    </label>
+  </div>
+  <div>
+    <label>Phone:
+      <input #phone id="phone" placeholder="Phone" type="text" value="{{driverResponse?.phoneNumber || ''}}">
+    </label>
+  </div>
+  <hr>
+  <div>
+    <label>License number:
+      <input #number id="number" minlength="6" placeholder="License number" type="text"
+             value="{{driverResponse?.license?.number || ''}}">
+    </label>
+  </div>
+  <div>
+    <label>License due date:
+      <input #dateTo id="dateTo" placeholder="License date" type="date"
+             value="{{driverResponse?.license?.dateTo || ''}}">
+    </label>
+  </div>
+  <hr>
+  <div>
+    <label>Emergency contact:
+      <input #emergencyContact id="emergencyContact" placeholder="Emergency contact" type="text"
+             value="{{driverResponse?.emergencyContact || ''}}">
+    </label>
+  </div>
+  <div style="text-align: center">
+    <button (click)="updateDriverProfile(avatar.value, firstName.value, lastName.value, dateOfBirth.value,
+  phone.value, number.value, dateTo.value, emergencyContact.value)" class="my-btn">Update
+    </button>
+  </div>
+</div>
+
+<div *ngIf="LoginService.isManager()">
+  <div>
+    <label>Avatar:
+      <input #managerAvatar id="managerAvatar" placeholder="Avatar" type="text"
+             value="{{managerResponse?.avatar || ''}}">
+    </label>
+  </div>
+  <hr>
+  <div>
+    <label>Firstname:
+      <input #managerFirstName id="managerFirstName" placeholder="First name" type="text"
+             value="{{managerResponse?.firstName}}">
+    </label>
+  </div>
+  <div>
+    <label>Lastname:
+      <input #managerLastName id="managerLastName" placeholder="Last name" type="text"
+             value="{{managerResponse?.lastName}}">
+    </label>
+  </div>
+  <div style="text-align: center">
+    <button (click)="updateManagerProfile(managerAvatar.value, managerFirstName.value, managerLastName.value)"
+            class="my-btn">Update
+    </button>
+  </div>
+</div>

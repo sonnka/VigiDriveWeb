@@ -3,7 +3,7 @@ import {DriverService} from "../_services/driver.service";
 import {ManagerService} from "../_services/manager.service";
 import {RegisterRequest} from "../_models/register.request";
 import {Router} from "@angular/router";
-import {AppComponent} from "../app.component";
+import {UtilService} from "../_services/util.service";
 
 @Component({
   selector: 'app-register',
@@ -36,10 +36,12 @@ export class RegisterComponent {
   }
 
   private displayError(error: any) {
-    if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+    if (error.message != null) {
+      UtilService.showError(error.message)
+    } else if (error.error != null) {
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError("Something went wrong!")
     }
   }
 }

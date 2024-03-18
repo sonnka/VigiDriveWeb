@@ -32,9 +32,9 @@ export class HealthInfoComponent implements OnInit {
   ngOnInit() {
     let date = new Date()
     date.setDate(date.getDate() - date.getDay() + 1)
-    this.startOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    this.startOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
     date.setDate(date.getDate() + 6)
-    this.endOfCurrentWeek = AppComponent.formatDate(date) || '00.00.0000';
+    this.endOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
 
     this.getHealthInfo();
     this.getYearStatistics();
@@ -48,9 +48,9 @@ export class HealthInfoComponent implements OnInit {
       return 0;
     }
 
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].period == period) {
-        return elements[i].amount;
+    for (const element of elements) {
+      if (element.period == period) {
+        return element.amount;
       }
     }
 
@@ -68,58 +68,66 @@ export class HealthInfoComponent implements OnInit {
   }
 
   private getHealthInfo() {
-    this.driverService.getHealthInfo()
-      .subscribe((response) => {
+    this.driverService.getHealthInfo().then((r) => {
+      r.subscribe((response) => {
           this.healthInfo = response;
         },
         (error) => {
           this.displayError(error)
         }
       );
+    })
   }
 
   private getYearStatistics() {
-    this.driverService.getYearHealthStatistic().subscribe(
-      response => {
-        this.yearStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getYearHealthStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.yearStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getMonthStatistics() {
-    this.driverService.getMonthHealthStatistic().subscribe(
-      response => {
-        this.monthStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getMonthHealthStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.monthStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private getWeekStatistics() {
-    this.driverService.getWeekHealthStatistic().subscribe(
-      response => {
-        this.weekStatistics = response;
-      },
-      (error) => {
-        this.displayError(error)
-      }
-    )
+    this.driverService.getWeekHealthStatistic().then((r) => {
+      r.subscribe(
+        response => {
+          this.weekStatistics = response;
+        },
+        (error) => {
+          this.displayError(error)
+        }
+      )
+    })
   }
 
   private displayError(error: any) {
     if (error.status == 401) {
-      LoginService.logout()
-      this.router.navigate(['/login']);
+      LoginService.logout(this.router)
     }
-    if (error.error != null) {
-      AppComponent.showError(error.error.errorMessage)
+    if (error.message != null) {
+      UtilService.showError(error.message)
+    } else if (error.error != null) {
+      UtilService.showError(error.error.errorMessage)
     } else {
-      AppComponent.showError(error.message)
+      UtilService.showError("Something went wrong!")
     }
   }
 }

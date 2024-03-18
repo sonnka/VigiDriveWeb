@@ -7,6 +7,8 @@ import {DriverResponse} from "../_models/driver.response";
 import {AccessDto} from "../_models/access.dto";
 import {AccessDuration} from "../_models/access.duration";
 import {AccessRequest} from "../_models/access.request";
+import {ManagerRequest} from "../_models/manager.request";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class ManagerService {
   private id: string | undefined;
   private httpOptions: { headers: HttpHeaders } | undefined;
 
-  constructor(private http: HttpClient, private loginService: LoginService) {
+  constructor(private http: HttpClient, private loginService: LoginService, private router: Router) {
   }
 
   register(data: RegisterRequest) {
@@ -30,60 +32,129 @@ export class ManagerService {
     return this.http.post(this.baseUrl + '/register/manager', data, httpOptions);
   }
 
-  getManager() {
-    this.getCredentials()
+  async getManager() {
+    await this.getCredentials()
 
     return this.http.get<ManagerResponse>(this.baseUrl + '/managers/' + this.id, this.httpOptions);
   }
 
-  getDriverInfo(driverId: string) {
-    this.getCredentials()
+  async updateManager(managerRequest: ManagerRequest) {
+    await this.getCredentials()
+    return await this.http.patch<void>(this.baseUrl + "/managers/" + this.id, managerRequest,
+      this.httpOptions).toPromise()
+  }
+
+  async updateDestination(driverId: string, destination: string) {
+    await this.getCredentials()
+
+    return await this.http.patch<void>(
+      this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/" + destination,
+      null, this.httpOptions).toPromise()
+  }
+
+  async getDriverInfo(driverId: string) {
+    await this.getCredentials()
 
     return this.http.get<DriverResponse>(this.baseUrl + '/managers/' + this.id + '/drivers/' + driverId,
       this.httpOptions);
   }
 
-  getSentAccesses() {
-    this.getCredentials();
+  async getSentAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/managers/' + this.id +
       "/accesses/sent", this.httpOptions);
   }
 
-  getActiveAccesses() {
-    this.getCredentials();
+  async getActiveAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/managers/' + this.id +
       "/accesses/active", this.httpOptions);
   }
 
-  getInactiveAccesses() {
-    this.getCredentials();
+  async getInactiveAccesses() {
+    await this.getCredentials();
 
     return this.http.get<AccessDto[]>(this.baseUrl + '/managers/' + this.id +
       "/accesses/inactive", this.httpOptions);
   }
 
-  extendAccess(accessId: bigint, accessDuration: AccessDuration) {
-    this.getCredentials();
+  async extendAccess(accessId: bigint, accessDuration: AccessDuration) {
+    await this.getCredentials();
 
     return this.http.patch(this.baseUrl + '/managers/' + this.id +
       "/accesses/" + accessId + "/extend", accessDuration, this.httpOptions);
   }
 
-  requestAccess(accessRequest: AccessRequest) {
-    this.getCredentials();
+  async requestAccess(accessRequest: AccessRequest) {
+    await this.getCredentials();
 
     return this.http.post(this.baseUrl + '/managers/' + this.id +
       "/accesses", accessRequest, this.httpOptions);
   }
 
-  private getCredentials() {
-    this.token = this.loginService.getToken();
-    this.id = this.loginService.getUserId();
+  async generateGeneralReport(driverId: string) {
+    await this.getCredentials();
 
-    if (this.token == null || this.id == null) {
-      LoginService.logout();
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "text",
+        Accept: "application/pdf",
+        'Authorization': 'Bearer ' + this.token
+      }),
+      responseType: 'arraybuffer' as const
+    };
+
+    return this.http.get(this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/general-report",
+      httpOptions)
+  }
+
+  async generateHealthReport(driverId: string) {
+    await this.getCredentials();
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "text",
+        Accept: "application/pdf",
+        'Authorization': 'Bearer ' + this.token
+      }),
+      responseType: 'arraybuffer' as const
+    };
+
+    return this.http.get(this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/health-report",
+      httpOptions)
+  }
+
+  async generateSituationReport(driverId: string) {
+    await this.getCredentials();
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "text",
+        Accept: "application/pdf",
+        'Authorization': 'Bearer ' + this.token
+      }),
+      responseType: 'arraybuffer' as const
+    };
+
+    return this.http.get(this.baseUrl + "/managers/" + this.id + "/drivers/" + driverId + "/situation-report",
+      httpOptions)
+  }
+
+  async deleteManager() {
+    await this.getCredentials();
+
+    return await this.http.delete(this.baseUrl + '/managers/' + this.id, this.httpOptions).toPromise();
+  }
+
+  private async getCredentials() {
+    this.token = await this.loginService.getToken().then();
+    this.id = await this.loginService.getUserId().then();
+
+    if (!this.token || !this.id) {
+      await LoginService.logout(this.router);
+      throw new Error("Something went wrong!")
     }
 
     this.httpOptions = {
