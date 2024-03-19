@@ -6,6 +6,7 @@ import {DriverDto} from "../_models/response/driver.dto";
 import {ManagerDto} from "../_models/response/manager.dto";
 import {AdminRequest} from "../_models/request/admin.request";
 import {AdminDto} from "../_models/response/admin.dto";
+import {DatabaseHistoryDto} from "../_models/response/database.history.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -24,21 +25,21 @@ export class AdminService {
   async addAdmin(email: string) {
     await this.getCredentials()
 
-    return this.http.post(this.baseUrl + '/admins/' + email, null, this.httpOptions);
+    return this.http.post(this.baseUrl + '/admins/' + this.id + "/add/" + email, null, this.httpOptions);
   }
 
-  async approveAdmin(adminId: bigint) {
+  async approveAdmin(newAdminId: bigint) {
     await this.getCredentials()
 
-    return this.http.post(this.baseUrl + '/admins/' + adminId +
-      "/approve", null, this.httpOptions);
+    return this.http.post(this.baseUrl + '/admins/' + this.id +
+      "/approve/" + newAdminId, null, this.httpOptions);
   }
 
-  async declineAdmin(adminId: bigint) {
+  async declineAdmin(newAdminId: bigint) {
     await this.getCredentials()
 
-    return this.http.post(this.baseUrl + '/admins/' + adminId +
-      "/decline", null, this.httpOptions);
+    return this.http.post(this.baseUrl + '/admins/' + this.id +
+      "/decline/" + newAdminId, null, this.httpOptions);
   }
 
   async updateAdmin(updatedAdmin: AdminRequest) {
@@ -85,6 +86,45 @@ export class AdminService {
 
     return await this.http.delete(this.baseUrl + '/admins/' + this.id +
       "/managers/" + managerId, this.httpOptions).toPromise();
+  }
+
+  async getWeekDatabaseHistory() {
+    await this.getCredentials()
+
+    return this.http.get<DatabaseHistoryDto>(this.baseUrl + '/admins/' + this.id +
+      "/db-history", this.httpOptions);
+  }
+
+  async generateWeekDatabaseReport() {
+    await this.getCredentials();
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "text",
+        Accept: "application/pdf",
+        'Authorization': 'Bearer ' + this.token
+      }),
+      responseType: 'arraybuffer' as const
+    };
+
+    return this.http.get(this.baseUrl + "/admins/" + this.id + "/db-report/week",
+      httpOptions)
+  }
+
+  async generateMonthDatabaseReport() {
+    await this.getCredentials();
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "text",
+        Accept: "application/pdf",
+        'Authorization': 'Bearer ' + this.token
+      }),
+      responseType: 'arraybuffer' as const
+    };
+
+    return this.http.get(this.baseUrl + "/admins/" + this.id + "/db-report/month",
+      httpOptions)
   }
 
   private async getCredentials() {
