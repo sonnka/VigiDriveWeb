@@ -5,13 +5,13 @@ import {LoginResponse} from "../_models/response/login.response";
 import {jwtDecode} from "jwt-decode";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
+import {UtilService} from "./util.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  public errorMessage = "";
   private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {
@@ -118,14 +118,9 @@ export class LoginService {
 
     response.subscribe((r) => {
         this.setUserId(r.id)
-        this.errorMessage = ""
       },
       (error) => {
-        if (error.error != null) {
-          this.errorMessage = error.error.errorMessage
-        } else {
-          this.errorMessage = error.message
-        }
+        UtilService.displayAuthError(error)
       });
     return response;
   }

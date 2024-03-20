@@ -25,7 +25,7 @@ export class AdminService {
   async getAdmin() {
     await this.getCredentials()
 
-    return this.http.get<AdminDto>(this.baseUrl + '/admins/' + this.id, this.httpOptions);
+    return await this.http.get<AdminDto>(this.baseUrl + '/admins/' + this.id, this.httpOptions).toPromise();
   }
 
   async addAdmin(email: string) {
@@ -51,7 +51,7 @@ export class AdminService {
   async updateAdmin(updatedAdmin: AdminRequest) {
     await this.getCredentials()
 
-    return this.http.post(this.baseUrl + '/admins/' + this.id, updatedAdmin, this.httpOptions);
+    return await this.http.patch(this.baseUrl + '/admins/' + this.id, updatedAdmin, this.httpOptions).toPromise();
   }
 
   async getApprovedAdmins() {

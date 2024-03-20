@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {MessageService} from "../_services/message.service";
 import {MessagesResponse} from "../_models/response/messages.response";
 import {UserResponse} from "../_models/response/user.response";
-import {LoginService} from "../_services/login.service";
 import {AppComponent} from "../app.component";
 import {Router} from "@angular/router";
 import SockJS from "sockjs-client";
@@ -40,7 +39,7 @@ export class ChatsComponent {
       r.subscribe(response => {
           this.chats = response;
         }, error => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       );
     })
@@ -71,7 +70,7 @@ export class ChatsComponent {
       await this.getChatHistory(receiverId)
       this.scrollDiv()
     } catch (error) {
-      this.displayError(error);
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -80,7 +79,7 @@ export class ChatsComponent {
       r.subscribe((response) => {
         this.chatHistory = response;
       }, (error) => {
-        this.displayError(error)
+        UtilService.displayError(error, this.router)
       })
     })
   }
@@ -121,19 +120,6 @@ export class ChatsComponent {
       if (document.getElementById(element.userId.toString())!.classList.contains("active")) {
         document.getElementById(element.userId.toString())!.classList.remove("active");
       }
-    }
-  }
-
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
     }
   }
 }

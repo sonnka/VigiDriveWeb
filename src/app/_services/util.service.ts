@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {DatePipe} from "@angular/common";
 import getUserLocale from "get-user-locale";
+import {LoginService} from "./login.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -141,5 +143,28 @@ export class UtilService {
       div!.style.opacity = "0";
       div!.style.display = "none";
     }, 6000);
+  }
+
+  public static displayError(error: any, router: Router) {
+    if (error.status == 401) {
+      LoginService.logout(router)
+    }
+    if (error.error) {
+      UtilService.showError(error.error.errorMessage)
+    } else if (error.message) {
+      UtilService.showError(error.message)
+    } else {
+      UtilService.showError("Something went wrong!")
+    }
+  }
+
+  public static displayAuthError(error: any) {
+    if (error.error) {
+      UtilService.showError(error.error.errorMessage)
+    } else if (error.message) {
+      UtilService.showError(error.message)
+    } else {
+      UtilService.showError("Something went wrong!")
+    }
   }
 }

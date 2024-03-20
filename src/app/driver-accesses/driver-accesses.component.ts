@@ -3,7 +3,6 @@ import {UtilService} from "../_services/util.service";
 import {DriverService} from "../_services/driver.service";
 import {ManagerDto} from "../_models/response/manager.dto";
 import {AccessDto} from "../_models/response/access.dto";
-import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -40,7 +39,7 @@ export class DriverAccessesComponent {
           this.accessResponse = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -50,7 +49,7 @@ export class DriverAccessesComponent {
       r.subscribe(() => {
         location.reload();
       }, (error) => {
-        this.displayError(error)
+        UtilService.displayError(error, this.router)
       });
     })
   }
@@ -60,7 +59,7 @@ export class DriverAccessesComponent {
       r.subscribe(() => {
         location.reload();
       }, (error) => {
-        this.displayError(error)
+        UtilService.displayError(error, this.router)
       });
     })
   }
@@ -71,7 +70,7 @@ export class DriverAccessesComponent {
           this.managerResponse = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -82,7 +81,7 @@ export class DriverAccessesComponent {
           this.accessRequests = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -93,7 +92,7 @@ export class DriverAccessesComponent {
           this.activeAccesses = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -104,21 +103,8 @@ export class DriverAccessesComponent {
           this.inactiveAccesses = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
-  }
-
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }

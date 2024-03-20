@@ -23,12 +23,12 @@ export class AdminProfileComponent {
   }
 
   ngOnInit() {
-    this.getAdminProfile();
-    if (this.adminResponse?.newAccount) {
-      this.router.navigate(["/admin-profile/update"])
-    }
-    this.getApprovedAdmins();
-    this.getNotApprovedAdmins();
+    this.getAdminProfile().then(() => {
+      if (!this.adminResponse?.newAccount) {
+        this.getApprovedAdmins();
+        this.getNotApprovedAdmins();
+      }
+    })
   }
 
   protected onFileSelected(event: any) {
@@ -44,7 +44,7 @@ export class AdminProfileComponent {
       r.subscribe(() => {
         location.reload();
       }, (error) => {
-        this.displayError(error)
+        UtilService.displayError(error, this.router)
       });
     })
   }
@@ -54,49 +54,35 @@ export class AdminProfileComponent {
       r.subscribe(() => {
         location.reload();
       }, (error) => {
-        this.displayError(error)
+        UtilService.displayError(error, this.router)
       });
     })
   }
 
-  private getAdminProfile() {
-    this.adminService.getAdmin().then((r) => {
-      r.subscribe(response => {
-        this.adminResponse = response;
-      }, (error) => {
-        this.displayError(error)
-      });
-    })
+  private async getAdminProfile() {
+    try {
+      this.adminResponse = await this.adminService.getAdmin();
+      if (this.adminResponse!.newAccount) {
+        await this.router.navigate(["/admin-profile/update"])
+      }
+    } catch (error) {
+      UtilService.displayError(error, this.router)
+    }
   }
 
   private async getApprovedAdmins() {
     try {
       this.approvedAdmins = await this.adminService.getApprovedAdmins();
-      console.log("Approved: " + this.approvedAdmins)
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
   private async getNotApprovedAdmins() {
     try {
       this.notApprovedAdmins = await this.adminService.getNotApprovedAdmins();
-      console.log("Not approved: " + this.notApprovedAdmins)
     } catch (error) {
-      this.displayError(error)
-    }
-  }
-
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.error) {
-      UtilService.showError(error.message)
-    } else if (error.message) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
+      UtilService.displayError(error, this.router)
     }
   }
 }

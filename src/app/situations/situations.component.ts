@@ -3,7 +3,6 @@ import {DriverService} from "../_services/driver.service";
 import {SituationStatistics} from "../_models/response/situation.statistics";
 import {SituationResponse} from "../_models/response/situation.response";
 import {UtilService} from "../_services/util.service";
-import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -84,7 +83,7 @@ export class SituationsComponent implements OnInit {
           this.yearStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
@@ -97,7 +96,7 @@ export class SituationsComponent implements OnInit {
           this.monthStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
@@ -110,7 +109,7 @@ export class SituationsComponent implements OnInit {
           this.weekStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
@@ -122,21 +121,8 @@ export class SituationsComponent implements OnInit {
           this.situations = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
-  }
-
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }

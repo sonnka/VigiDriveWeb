@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 import {ManagerService} from "../_services/manager.service";
 import {AccessDto} from "../_models/response/access.dto";
@@ -33,7 +32,7 @@ export class ManagerAccessesComponent {
       r.subscribe(() => {
         location.reload();
       }, (error) => {
-        this.displayError(error)
+        UtilService.displayError(error, this.router)
       });
     })
   }
@@ -45,7 +44,7 @@ export class ManagerAccessesComponent {
         r.subscribe(() => {
           location.reload();
         }, (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
       })
     }
@@ -65,7 +64,7 @@ export class ManagerAccessesComponent {
           this.sentAccesses = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -76,7 +75,7 @@ export class ManagerAccessesComponent {
           this.activeAccesses = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -87,21 +86,9 @@ export class ManagerAccessesComponent {
           this.inactiveAccesses = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
 
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
-  }
 }

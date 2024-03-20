@@ -53,7 +53,7 @@ export class EditProfileComponent {
           this.managerResponse = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -62,7 +62,7 @@ export class EditProfileComponent {
     try {
       await this.managerService.updateManager(managerRequest);
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -70,7 +70,7 @@ export class EditProfileComponent {
     try {
       await this.driverService.updateEmergencyContact(emergencyContact);
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -80,7 +80,7 @@ export class EditProfileComponent {
           this.driverResponse = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -89,7 +89,7 @@ export class EditProfileComponent {
     try {
       await this.driverService.updateDriver(driverRequest);
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -97,20 +97,8 @@ export class EditProfileComponent {
     try {
       await this.driverService.updateDriverLicense(driverLicenseRequest)
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
-  }
 }

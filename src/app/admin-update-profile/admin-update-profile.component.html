@@ -1,0 +1,30 @@
+<br><br>
+<div style="text-align: center;">
+  <h1>Update your account</h1>
+</div>
+<br>
+<div style="text-align: center;">
+  <div class="row">
+    <div>
+      <input #avatar id="avatar" placeholder="Avatar" type="url">
+    </div>
+    <div>
+      <input #firstName id="firstName" placeholder="First name" type="text">
+    </div>
+    <div>
+      <input #lastName id="lastName" placeholder="Last name" type="text">
+    </div>
+    <div>
+      <input #password id="password" placeholder="New password" type="password">
+    </div>
+  </div>
+</div>
+<div style="text-align: center; margin-top: 75px">
+  <div>
+    <h5 style="color: #a2a4a4; font-style: italic">Please note that you will no longer be able to change your data.</h5>
+  </div>
+  <div>
+    <input (click)="updateAdmin(avatar.value, firstName.value, lastName.value, password.value)"
+           type="button" value="Save">
+  </div>
+</div>

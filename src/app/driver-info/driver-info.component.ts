@@ -6,7 +6,6 @@ import {DriverService} from "../_services/driver.service";
 import {HealthInfoResponse} from "../_models/response/health-info.response";
 import {SituationResponse} from "../_models/response/situation.response";
 import {UtilService} from "../_services/util.service";
-import {LoginService} from "../_services/login.service";
 
 @Component({
   selector: 'app-driver-info',
@@ -47,7 +46,7 @@ export class DriverInfoComponent {
     try {
       await this.managerService.updateDestination(this.driverId!, destination)
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -61,13 +60,13 @@ export class DriverInfoComponent {
               window.open(fileUrl);
             },
             error => {
-              this.displayError(error)
+              UtilService.displayError(error, this.router)
             }
           )
         }
       )
     } catch (error) {
-      this.displayError(error);
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -81,11 +80,11 @@ export class DriverInfoComponent {
             window.open(fileURL);
           },
           error => {
-            this.displayError(error)
+            UtilService.displayError(error, this.router)
           })
       })
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -99,11 +98,11 @@ export class DriverInfoComponent {
             window.open(fileURL);
           },
           error => {
-            this.displayError(error)
+            UtilService.displayError(error, this.router)
           })
       })
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -114,7 +113,7 @@ export class DriverInfoComponent {
           this.driverInfoResponse = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         })
     })
   }
@@ -125,7 +124,7 @@ export class DriverInfoComponent {
           this.healthInfo = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         })
     })
   }
@@ -136,22 +135,8 @@ export class DriverInfoComponent {
           this.weekSituations = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         })
     })
-  }
-
-  private displayError(error: any) {
-    console.log(error)
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }

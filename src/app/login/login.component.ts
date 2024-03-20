@@ -38,9 +38,7 @@ export class LoginComponent {
         }
       },
       (error) => {
-        if (this.loginService.errorMessage != "") {
-          UtilService.showError(this.loginService.errorMessage)
-        }
+        UtilService.displayAuthError(error)
       }
     );
   }

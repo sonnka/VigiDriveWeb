@@ -39,7 +39,7 @@ export class ManagerProfileComponent {
       await this.managerService.deleteManager()
       await LoginService.logout(this.router)
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -48,21 +48,9 @@ export class ManagerProfileComponent {
       r.subscribe(response => {
         this.managerResponse = response;
       }, (error) => {
-        this.displayError(error)
+        UtilService.displayError(error, this.router)
       });
     })
   }
 
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.error) {
-      UtilService.showError(error.message)
-    } else if (error.message) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
-  }
 }

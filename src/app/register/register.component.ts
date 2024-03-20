@@ -20,7 +20,7 @@ export class RegisterComponent {
     this.driverService.register(data).subscribe(response => {
       },
       (error) => {
-        this.displayError(error)
+        UtilService.displayAuthError(error)
       });
     this.router.navigate(['/login']);
   }
@@ -30,18 +30,8 @@ export class RegisterComponent {
     this.managerService.register(data).subscribe(response => {
       },
       (error) => {
-        this.displayError(error)
+        UtilService.displayAuthError(error)
       });
     this.router.navigate(['/login']);
-  }
-
-  private displayError(error: any) {
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }

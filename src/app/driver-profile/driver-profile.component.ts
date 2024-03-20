@@ -43,7 +43,7 @@ export class DriverProfileComponent {
       await this.driverService.deleteDriver()
       await LoginService.logout(this.router)
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -53,7 +53,7 @@ export class DriverProfileComponent {
           this.driverResponse = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -64,7 +64,7 @@ export class DriverProfileComponent {
           this.healthInfo = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -85,7 +85,7 @@ export class DriverProfileComponent {
           }
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -95,18 +95,5 @@ export class DriverProfileComponent {
     let day = today.getDay();
     today.setDate(today.getDate() - day + 1)
     return today;
-  }
-
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.error) {
-      UtilService.showError(error.message)
-    } else if (error.message) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }

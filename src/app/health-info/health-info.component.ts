@@ -5,7 +5,6 @@ import {DriverProfileComponent} from "../driver-profile/driver-profile.component
 import {AppComponent} from "../app.component";
 import {HealthStatistics} from "../_models/response/health.statistics";
 import {UtilService} from "../_services/util.service";
-import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -73,7 +72,7 @@ export class HealthInfoComponent implements OnInit {
           this.healthInfo = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       );
     })
@@ -86,7 +85,7 @@ export class HealthInfoComponent implements OnInit {
           this.yearStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
@@ -99,7 +98,7 @@ export class HealthInfoComponent implements OnInit {
           this.monthStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
@@ -112,22 +111,9 @@ export class HealthInfoComponent implements OnInit {
           this.weekStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
-  }
-
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }

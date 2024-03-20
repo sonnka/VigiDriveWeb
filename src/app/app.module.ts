@@ -22,6 +22,7 @@ import {AdminProfileComponent} from './admin-profile/admin-profile.component';
 import {MatIcon} from "@angular/material/icon";
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MatMiniFabButton} from "@angular/material/button";
+import { AdminUpdateProfileComponent } from './admin-update-profile/admin-update-profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {MatMiniFabButton} from "@angular/material/button";
     ManagerAccessesComponent,
     ChatsComponent,
     EditProfileComponent,
-    AdminProfileComponent
+    AdminProfileComponent,
+    AdminUpdateProfileComponent
   ],
   imports: [
     BrowserModule,
