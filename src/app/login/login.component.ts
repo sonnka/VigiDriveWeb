@@ -30,7 +30,7 @@ export class LoginComponent {
         } else if (response.role == 'manager') {
           await this.loginService.setCredentials(token, id)
           await this.router.navigate(['/manager-profile']);
-        } else if (response.role == 'admin') {
+        } else if (response.role == 'admin' || response.role == 'chief_admin') {
           await this.loginService.setCredentials(token, id)
           await this.router.navigate(['/admin-profile']);
         } else {

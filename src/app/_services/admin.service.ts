@@ -22,6 +22,12 @@ export class AdminService {
   constructor(private http: HttpClient, private loginService: LoginService, private router: Router) {
   }
 
+  async getAdmin() {
+    await this.getCredentials()
+
+    return this.http.get<AdminDto>(this.baseUrl + '/admins/' + this.id, this.httpOptions);
+  }
+
   async addAdmin(email: string) {
     await this.getCredentials()
 
@@ -51,13 +57,13 @@ export class AdminService {
   async getApprovedAdmins() {
     await this.getCredentials()
 
-    return this.http.get<AdminDto>(this.baseUrl + '/admins/approved', this.httpOptions);
+    return await this.http.get<AdminDto[]>(this.baseUrl + '/admins/approved', this.httpOptions).toPromise();
   }
 
   async getNotApprovedAdmins() {
     await this.getCredentials()
 
-    return this.http.get<AdminDto>(this.baseUrl + '/admins/not-approved', this.httpOptions);
+    return await this.http.get<AdminDto[]>(this.baseUrl + '/admins/not-approved', this.httpOptions).toPromise();
   }
 
   async getDrivers() {
@@ -92,7 +98,7 @@ export class AdminService {
     await this.getCredentials()
 
     return this.http.get<DatabaseHistoryDto>(this.baseUrl + '/admins/' + this.id +
-      "/db-history", this.httpOptions);
+      "/db/history", this.httpOptions);
   }
 
   async generateWeekDatabaseReport() {
@@ -107,7 +113,7 @@ export class AdminService {
       responseType: 'arraybuffer' as const
     };
 
-    return this.http.get(this.baseUrl + "/admins/" + this.id + "/db-report/week",
+    return this.http.get(this.baseUrl + "/admins/" + this.id + "/db/week-report",
       httpOptions)
   }
 
@@ -123,7 +129,39 @@ export class AdminService {
       responseType: 'arraybuffer' as const
     };
 
-    return this.http.get(this.baseUrl + "/admins/" + this.id + "/db-report/month",
+    return this.http.get(this.baseUrl + "/admins/" + this.id + "/db/month-report",
+      httpOptions)
+  }
+
+  async exportDatabase() {
+    await this.getCredentials();
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        "Content-Type": "text",
+        Accept: "application/zip",
+        'Authorization': 'Bearer ' + this.token
+      }),
+      responseType: 'arraybuffer' as const
+    };
+
+    return this.http.get(this.baseUrl + "/admins/" + this.id + "/db/export",
+      httpOptions)
+  }
+
+  async importDatabase(file: File) {
+    await this.getCredentials();
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.token
+      })
+    };
+
+    return this.http.post(this.baseUrl + "/admins/" + this.id + "/db/import", formData,
       httpOptions)
   }
 

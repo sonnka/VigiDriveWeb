@@ -40,7 +40,7 @@ export class LoginService {
 
     let role = this.getRole();
 
-    if (role == null || role == '') {
+    if (!role) {
       return false
     }
 
@@ -54,11 +54,39 @@ export class LoginService {
 
     let role = this.getRole();
 
-    if (role == null || role == '') {
+    if (!role) {
       return false
     }
 
     return role == 'manager';
+  }
+
+  public static isAdmin(): boolean {
+    if (!this.isAuthorize()) {
+      return false;
+    }
+
+    let role = this.getRole();
+
+    if (!role) {
+      return false
+    }
+
+    return role == 'admin' || role == 'chief_admin';
+  }
+
+  public static isChiefAdmin(): boolean {
+    if (!this.isAuthorize()) {
+      return false;
+    }
+
+    let role = this.getRole();
+
+    if (!role) {
+      return false
+    }
+
+    return role == 'chief_admin';
   }
 
   public static async logout(router: Router) {

@@ -18,7 +18,10 @@ import {ManagerAccessesComponent} from './manager-accesses/manager-accesses.comp
 import {FormsModule} from "@angular/forms";
 import {ChatsComponent} from './chats/chats.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
-import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import {AdminProfileComponent} from './admin-profile/admin-profile.component';
+import {MatIcon} from "@angular/material/icon";
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {MatMiniFabButton} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -42,9 +45,13 @@ import { AdminProfileComponent } from './admin-profile/admin-profile.component';
     AppRoutingModule,
     HttpClientModule,
     NgOptimizedImage,
-    FormsModule
+    FormsModule,
+    MatIcon,
+    MatMiniFabButton
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
