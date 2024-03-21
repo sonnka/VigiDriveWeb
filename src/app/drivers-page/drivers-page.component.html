@@ -1,0 +1,47 @@
+<br><br>
+<div class="container" style="width: 850px">
+  <p>Last update: {{ UtilService.getTodayDate() || '00.00.0000 00:00' }} </p>
+  <div>
+    <h1 style="margin-top: 40px; margin-bottom: 30px; text-align: center;">Drivers</h1>
+  </div>
+  <table border="1" class="table table-condensed table-responsive-md">
+    <thead>
+    <tr>
+      <th style="width:10%">
+      </th>
+      <th style="width:40%">
+        <a>Fullname</a>
+      </th>
+      <th style="width:30%">
+        <a>Email</a>
+      </th>
+      <th style="width:20%">
+        <a>Actions</a>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let driver of drivers">
+    <tr>
+      <td><img alt="img" class="rounded-circle" height="60"
+               ngSrc="{{driver.avatar || 'https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png'}}"
+               style="object-fit: cover" width="60"/></td>
+      <td>{{ (driver.firstName || "") + " " + (driver.lastName || "") }}</td>
+      <td>{{ driver.email || "" }}</td>
+      <td><a (click)="showPopup(driver.id)" class="delete" title="Delete" type="button">
+        <i class="material-icons red">&#xe872;</i></a>&emsp;
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="overlay" id="popup" style="display: none">
+  <div class="popup">
+    <p>Do you really want to delete driver account?</p>
+    <div class="text-right">
+      <button (click)="hidePopup()" class="btn btn-cancel">Cancel</button>
+      <button (click)="deleteDriver()" class="btn btn-primary"
+              style="background: #cb1a2b; border-color: #cb1a2b">Ok
+      </button>
+    </div>
+  </div>
+</div>

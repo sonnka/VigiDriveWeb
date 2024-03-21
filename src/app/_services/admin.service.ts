@@ -70,14 +70,14 @@ export class AdminService {
   async getDrivers() {
     await this.getCredentials()
 
-    return this.http.get<DriverDto>(this.baseUrl + '/admins/' + this.id +
-      "/drivers", this.httpOptions);
+    return await this.http.get<DriverDto[]>(this.baseUrl + '/admins/' + this.id +
+      "/drivers", this.httpOptions).toPromise();
   }
 
   async getManagers() {
     await this.getCredentials()
 
-    return this.http.get<ManagerDto>(this.baseUrl + '/admins/' + this.id +
+    return this.http.get<ManagerDto[]>(this.baseUrl + '/admins/' + this.id +
       "/managers", this.httpOptions);
   }
 

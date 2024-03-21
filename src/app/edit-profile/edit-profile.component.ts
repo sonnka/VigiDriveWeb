@@ -36,14 +36,22 @@ export class EditProfileComponent {
 
   protected async updateDriverProfile(avatar: string, firstName: string, lastName: string, dateOfBirth: string, phone: string,
                                       number: string, dateTo: string, emergencyContact: string) {
-    await this.updateDriver(new DriverRequest(avatar, firstName, lastName, dateOfBirth, phone))
-    await this.updateDriverLicense(new DriverLicenseRequest(number, dateTo))
-    await this.updateEmergencyContact(emergencyContact);
+    if (firstName && lastName && dateOfBirth && phone) {
+      await this.updateDriver(new DriverRequest(avatar, firstName, lastName, dateOfBirth, phone))
+    }
+    if (number && dateTo) {
+      await this.updateDriverLicense(new DriverLicenseRequest(number, dateTo))
+    }
+    if (emergencyContact) {
+      await this.updateEmergencyContact(emergencyContact);
+    }
     await this.router.navigate(['/driver-profile']);
   }
 
   protected async updateManagerProfile(avatar: string, firstName: string, lastName: string) {
-    await this.updateManager(new ManagerRequest(avatar, firstName, lastName))
+    if (firstName && lastName) {
+      await this.updateManager(new ManagerRequest(avatar, firstName, lastName))
+    }
     await this.router.navigate(['/manager-profile']);
   }
 

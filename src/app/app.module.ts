@@ -24,6 +24,7 @@ import {provideAnimationsAsync} from '@angular/platform-browser/animations/async
 import {MatMiniFabButton} from "@angular/material/button";
 import { AdminUpdateProfileComponent } from './admin-update-profile/admin-update-profile.component';
 import { DatabaseComponent } from './database/database.component';
+import { DriversPageComponent } from './drivers-page/drivers-page.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DatabaseComponent } from './database/database.component';
     EditProfileComponent,
     AdminProfileComponent,
     AdminUpdateProfileComponent,
-    DatabaseComponent
+    DatabaseComponent,
+    DriversPageComponent
   ],
   imports: [
     BrowserModule,

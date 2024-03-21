@@ -15,6 +15,7 @@ import {EditProfileComponent} from "./edit-profile/edit-profile.component";
 import {AdminProfileComponent} from "./admin-profile/admin-profile.component";
 import {AdminUpdateProfileComponent} from "./admin-update-profile/admin-update-profile.component";
 import {DatabaseComponent} from "./database/database.component";
+import {DriversPageComponent} from "./drivers-page/drivers-page.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -31,7 +32,8 @@ const routes: Routes = [
   {path: 'chats', component: ChatsComponent},
   {path: 'admin-profile', component: AdminProfileComponent},
   {path: 'admin-profile/update', component: AdminUpdateProfileComponent},
-  {path: 'database', component: DatabaseComponent}
+  {path: 'database', component: DatabaseComponent},
+  {path: 'drivers', component: DriversPageComponent}
 ];
 
 @NgModule({
