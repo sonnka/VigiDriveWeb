@@ -1,0 +1,64 @@
+<div class="container" style="width: 850px">
+  <p style="margin-top: 30px; margin-bottom: 30px; font-style: italic; font-size: 13px; color: gray">Export/Import
+    database</p>
+  <div class="row">
+    <div class="col-6">
+      <button (click)="exportDatabase()" class="my-btn">Export database</button>
+    </div>
+    <div class="col-6 float-right">
+      <div class="row">
+
+        <div class="col-6">
+          <input #fileUpload (change)="onFileSelected($event)"
+                 class="file-input" type="file">
+          <div class="file-upload">
+            {{ fileName || "No file uploaded yet." }}
+            <button (click)="fileUpload.click()" class="upload-btn" color="" mat-mini-fab>
+              <mat-icon>attach_file</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="col-6">
+          <button (click)="importDatabase()" class="my-btn">Import database</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <p style="margin-top: 30px; margin-bottom: 30px; font-style: italic; font-size: 13px; color: gray">
+    Generate week/month reports
+  </p>
+  <button (click)="generateWeekDatabaseReport()" class="my-btn">Generate week report</button>
+  <button (click)="generateMonthDatabaseReport()" class="my-btn">Generate month report</button>
+
+  <p style="margin-top: 50px; color: #1cbebe; font-style: italic">History of database operations</p>
+  <p style="margin-top: 30px; font-style: italic; font-size: 13px; color: gray">
+    {{ startOfCurrentWeek + ' - ' + endOfCurrentWeek }}</p>
+  <table border="1" class="table table-condensed table-responsive-md" style="width: 100%">
+    <thead>
+    <tr>
+      <th style="width:30%">
+        <a>Admin email</a>
+      </th>
+      <th style="width:25%">
+        <a>Date</a>
+      </th>
+      <th style="width:25%">
+        <a>Time</a>
+      </th>
+      <th style="width:20%">
+        <a>Operation</a>
+      </th>
+    </tr>
+    </thead>
+    <tbody *ngFor="let historyRecord of databaseHistory">
+    <tr>
+      <td>{{ historyRecord.adminEmail || ' ' }}</td>
+      <td>{{ UtilService.formatDate(historyRecord.time) || ' ' }}</td>
+      <td>{{ UtilService.formatTime(historyRecord.time) || ' ' }}</td>
+      <td>{{ historyRecord.operation.toLowerCase().replace("_", " ") || ' ' }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

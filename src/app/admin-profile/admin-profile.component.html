@@ -86,14 +86,3 @@
     </tbody>
   </table>
 </div>
-
-
-<input #fileUpload (change)="onFileSelected($event)"
-       class="file-input" type="file">
-
-<div class="file-upload">
-  {{ fileName || "No file uploaded yet." }}
-  <button (click)="fileUpload.click()" class="upload-btn" color="" mat-mini-fab>
-    <mat-icon>attach_file</mat-icon>
-  </button>
-</div>

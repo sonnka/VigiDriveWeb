@@ -15,7 +15,6 @@ export class AdminProfileComponent {
   protected approvedAdmins: AdminDto[] | undefined;
   protected notApprovedAdmins: AdminDto[] | undefined;
   protected adminResponse: AdminDto | undefined;
-  protected fileName = '';
   protected readonly LoginService = LoginService;
   protected readonly UtilService = UtilService;
 
@@ -29,14 +28,6 @@ export class AdminProfileComponent {
         this.getNotApprovedAdmins();
       }
     })
-  }
-
-  protected onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-
-    if (file) {
-      this.fileName = file.name;
-    }
   }
 
   protected approveAdmin(newAdminId: bigint) {

@@ -114,6 +114,13 @@ export class UtilService {
     return this.formatter.transform(date, "mediumDate");
   }
 
+  public static formatTime(date: Date | undefined): string | null {
+    if (date == null) {
+      return null;
+    }
+    return this.formatter.transform(date, "HH:mm:ss");
+  }
+
   public static formatDateTime(date: Date | undefined): string | null {
     if (date == null) {
       return null;
@@ -135,6 +142,42 @@ export class UtilService {
     return this.formatter.transform(date, "MM/YY");
   }
 
+  public static getStartOfCurrentWeek() {
+    let date = new Date()
+    date.setDate(date.getDate() - date.getDay() + 1)
+    return this.formatDate(date) || '00.00.0000';
+  }
+
+  public static getEndOfCurrentWeek() {
+    let date = new Date()
+    date.setDate(date.getDate() - date.getDay() + 1)
+    date.setDate(date.getDate() + 6)
+    return this.formatDate(date) || '00.00.0000';
+  }
+
+  public static displayError(error: any, router: Router) {
+    if (error.status == 401) {
+      LoginService.logout(router)
+    }
+    if (error.error) {
+      this.showError(error.error.errorMessage)
+    } else if (error.message) {
+      this.showError(error.message)
+    } else {
+      this.showError("Something went wrong!")
+    }
+  }
+
+  public static displayAuthError(error: any) {
+    if (error.error) {
+      this.showError(error.error.errorMessage)
+    } else if (error.message) {
+      this.showError(error.message)
+    } else {
+      this.showError("Something went wrong!")
+    }
+  }
+
   public static showError(message: string) {
     let div = document.getElementById("alert");
     div!.textContent = message
@@ -143,28 +186,5 @@ export class UtilService {
       div!.style.opacity = "0";
       div!.style.display = "none";
     }, 6000);
-  }
-
-  public static displayError(error: any, router: Router) {
-    if (error.status == 401) {
-      LoginService.logout(router)
-    }
-    if (error.error) {
-      UtilService.showError(error.error.errorMessage)
-    } else if (error.message) {
-      UtilService.showError(error.message)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
-  }
-
-  public static displayAuthError(error: any) {
-    if (error.error) {
-      UtilService.showError(error.error.errorMessage)
-    } else if (error.message) {
-      UtilService.showError(error.message)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }

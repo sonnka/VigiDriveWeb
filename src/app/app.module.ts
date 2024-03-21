@@ -23,6 +23,7 @@ import {MatIcon} from "@angular/material/icon";
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MatMiniFabButton} from "@angular/material/button";
 import { AdminUpdateProfileComponent } from './admin-update-profile/admin-update-profile.component';
+import { DatabaseComponent } from './database/database.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AdminUpdateProfileComponent } from './admin-update-profile/admin-update
     ChatsComponent,
     EditProfileComponent,
     AdminProfileComponent,
-    AdminUpdateProfileComponent
+    AdminUpdateProfileComponent,
+    DatabaseComponent
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,7 @@ import {ChatsComponent} from "./chats/chats.component";
 import {EditProfileComponent} from "./edit-profile/edit-profile.component";
 import {AdminProfileComponent} from "./admin-profile/admin-profile.component";
 import {AdminUpdateProfileComponent} from "./admin-update-profile/admin-update-profile.component";
+import {DatabaseComponent} from "./database/database.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path: 'manager-accesses', component: ManagerAccessesComponent},
   {path: 'chats', component: ChatsComponent},
   {path: 'admin-profile', component: AdminProfileComponent},
-  {path: 'admin-profile/update', component: AdminUpdateProfileComponent}
+  {path: 'admin-profile/update', component: AdminUpdateProfileComponent},
+  {path: 'database', component: DatabaseComponent}
 ];
 
 @NgModule({

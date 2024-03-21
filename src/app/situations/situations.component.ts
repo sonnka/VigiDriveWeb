@@ -16,20 +16,14 @@ export class SituationsComponent implements OnInit {
   protected monthStatistics: SituationStatistics | undefined;
   protected weekStatistics: SituationStatistics | undefined;
   protected situations: SituationResponse[] | undefined;
-  protected startOfCurrentWeek = '00.00.0000'
-  protected endOfCurrentWeek = '00.00.0000'
+  protected startOfCurrentWeek = UtilService.getStartOfCurrentWeek()
+  protected endOfCurrentWeek = UtilService.getEndOfCurrentWeek()
   protected readonly UtilService = UtilService;
 
   constructor(private driverService: DriverService, private router: Router) {
   }
 
   ngOnInit() {
-    let date = new Date()
-    date.setDate(date.getDate() - date.getDay() + 1)
-    this.startOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
-    date.setDate(date.getDate() + 6)
-    this.endOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
-
     this.getSituationInfo()
     this.getYearStatistics();
     this.getMonthStatistics();

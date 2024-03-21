@@ -98,8 +98,8 @@ export class AdminService {
   async getWeekDatabaseHistory() {
     await this.getCredentials()
 
-    return this.http.get<DatabaseHistoryDto>(this.baseUrl + '/admins/' + this.id +
-      "/db/history", this.httpOptions);
+    return await this.http.get<DatabaseHistoryDto[]>(this.baseUrl + '/admins/' + this.id +
+      "/db/history", this.httpOptions).toPromise();
   }
 
   async generateWeekDatabaseReport() {
@@ -147,7 +147,7 @@ export class AdminService {
     };
 
     return this.http.get(this.baseUrl + "/admins/" + this.id + "/db/export",
-      httpOptions)
+      httpOptions);
   }
 
   async importDatabase(file: File) {
@@ -162,8 +162,8 @@ export class AdminService {
       })
     };
 
-    return this.http.post(this.baseUrl + "/admins/" + this.id + "/db/import", formData,
-      httpOptions)
+    return await this.http.post(this.baseUrl + "/admins/" + this.id + "/db/import", formData,
+      httpOptions).toPromise();
   }
 
   private async getCredentials() {
