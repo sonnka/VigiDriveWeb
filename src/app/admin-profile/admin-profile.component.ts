@@ -59,6 +59,15 @@ export class AdminProfileComponent {
     })
   }
 
+  protected async addAdmin(email: string) {
+    try {
+      await this.adminService.addAdmin(email);
+      location.reload();
+    } catch (error) {
+      UtilService.displayError(error, this.router)
+    }
+  }
+
   private async getAdminProfile() {
     try {
       this.adminResponse = await this.adminService.getAdmin();

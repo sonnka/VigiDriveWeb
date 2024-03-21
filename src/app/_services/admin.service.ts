@@ -31,7 +31,8 @@ export class AdminService {
   async addAdmin(email: string) {
     await this.getCredentials()
 
-    return this.http.post(this.baseUrl + '/admins/' + this.id + "/add/" + email, null, this.httpOptions);
+    return await this.http.post(this.baseUrl + '/admins/' + this.id + "/add/" + email,
+      null, this.httpOptions).toPromise();
   }
 
   async approveAdmin(newAdminId: bigint) {

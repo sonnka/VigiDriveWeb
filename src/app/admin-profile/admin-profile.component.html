@@ -19,8 +19,12 @@
       <p style="color: #99a2a2; font-size: 13px">{{ adminResponse?.email || 'Email' }}</p>
     </div>
   </div>
+  <div class="float-right">
+    <input #email placeholder="Enter email" type="email">
+    <button (click)="addAdmin(email.value)" class="my-btn">Add new admin</button>
+  </div>
   <br>
-  <p style="margin-top: 40px; color: #1cbebe; font-style: italic">Not approved admins</p>
+  <p style="margin-top: 90px; color: #1cbebe; font-style: italic">Not approved admins</p>
   <table border="1" class="table table-condensed table-responsive-md" style="width: 100%">
     <thead>
     <tr>
