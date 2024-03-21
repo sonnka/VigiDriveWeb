@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LoginService} from "../_services/login.service";
-import {LoginRequest} from "../_models/login.request";
+import {LoginRequest} from "../_models/request/login.request";
 import {Router} from "@angular/router";
 import {UtilService} from "../_services/util.service";
 
@@ -30,7 +30,7 @@ export class LoginComponent {
         } else if (response.role == 'manager') {
           await this.loginService.setCredentials(token, id)
           await this.router.navigate(['/manager-profile']);
-        } else if (response.role == 'admin') {
+        } else if (response.role == 'admin' || response.role == 'chief_admin') {
           await this.loginService.setCredentials(token, id)
           await this.router.navigate(['/admin-profile']);
         } else {
@@ -38,9 +38,7 @@ export class LoginComponent {
         }
       },
       (error) => {
-        if (this.loginService.errorMessage != "") {
-          UtilService.showError(this.loginService.errorMessage)
-        }
+        UtilService.displayAuthError(error)
       }
     );
   }

@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
 import {Router} from "@angular/router";
-import {DriverResponse} from "../_models/driver.response";
+import {DriverResponse} from "../_models/response/driver.response";
 import {LoginService} from "../_services/login.service";
-import {DriverRequest} from "../_models/driver.request";
-import {DriverLicenseRequest} from "../_models/driver-license.request";
-import {ManagerRequest} from "../_models/manager.request";
-import {ManagerResponse} from "../_models/manager.response";
+import {DriverRequest} from "../_models/request/driver.request";
+import {DriverLicenseRequest} from "../_models/request/driver-license.request";
+import {ManagerRequest} from "../_models/request/manager.request";
+import {ManagerResponse} from "../_models/response/manager.response";
 import {ManagerService} from "../_services/manager.service";
 import {UtilService} from "../_services/util.service";
 
@@ -36,14 +36,22 @@ export class EditProfileComponent {
 
   protected async updateDriverProfile(avatar: string, firstName: string, lastName: string, dateOfBirth: string, phone: string,
                                       number: string, dateTo: string, emergencyContact: string) {
-    await this.updateDriver(new DriverRequest(avatar, firstName, lastName, dateOfBirth, phone))
-    await this.updateDriverLicense(new DriverLicenseRequest(number, dateTo))
-    await this.updateEmergencyContact(emergencyContact);
+    if (firstName && lastName && dateOfBirth && phone) {
+      await this.updateDriver(new DriverRequest(avatar, firstName, lastName, dateOfBirth, phone))
+    }
+    if (number && dateTo) {
+      await this.updateDriverLicense(new DriverLicenseRequest(number, dateTo))
+    }
+    if (emergencyContact) {
+      await this.updateEmergencyContact(emergencyContact);
+    }
     await this.router.navigate(['/driver-profile']);
   }
 
   protected async updateManagerProfile(avatar: string, firstName: string, lastName: string) {
-    await this.updateManager(new ManagerRequest(avatar, firstName, lastName))
+    if (firstName && lastName) {
+      await this.updateManager(new ManagerRequest(avatar, firstName, lastName))
+    }
     await this.router.navigate(['/manager-profile']);
   }
 
@@ -53,7 +61,7 @@ export class EditProfileComponent {
           this.managerResponse = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -62,7 +70,7 @@ export class EditProfileComponent {
     try {
       await this.managerService.updateManager(managerRequest);
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -70,7 +78,7 @@ export class EditProfileComponent {
     try {
       await this.driverService.updateEmergencyContact(emergencyContact);
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -80,7 +88,7 @@ export class EditProfileComponent {
           this.driverResponse = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
   }
@@ -89,7 +97,7 @@ export class EditProfileComponent {
     try {
       await this.driverService.updateDriver(driverRequest);
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
@@ -97,20 +105,8 @@ export class EditProfileComponent {
     try {
       await this.driverService.updateDriverLicense(driverLicenseRequest)
     } catch (error) {
-      this.displayError(error)
+      UtilService.displayError(error, this.router)
     }
   }
 
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
-  }
 }

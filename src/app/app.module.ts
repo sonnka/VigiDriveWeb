@@ -18,6 +18,14 @@ import {ManagerAccessesComponent} from './manager-accesses/manager-accesses.comp
 import {FormsModule} from "@angular/forms";
 import {ChatsComponent} from './chats/chats.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
+import {AdminProfileComponent} from './admin-profile/admin-profile.component';
+import {MatIcon} from "@angular/material/icon";
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {MatMiniFabButton} from "@angular/material/button";
+import { AdminUpdateProfileComponent } from './admin-update-profile/admin-update-profile.component';
+import { DatabaseComponent } from './database/database.component';
+import { DriversPageComponent } from './drivers-page/drivers-page.component';
+import { ManagersPageComponent } from './managers-page/managers-page.component';
 
 @NgModule({
   declarations: [
@@ -33,16 +41,25 @@ import {EditProfileComponent} from './edit-profile/edit-profile.component';
     DriverAccessesComponent,
     ManagerAccessesComponent,
     ChatsComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    AdminProfileComponent,
+    AdminUpdateProfileComponent,
+    DatabaseComponent,
+    DriversPageComponent,
+    ManagersPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgOptimizedImage,
-    FormsModule
+    FormsModule,
+    MatIcon,
+    MatMiniFabButton
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

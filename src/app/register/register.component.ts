@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
 import {ManagerService} from "../_services/manager.service";
-import {RegisterRequest} from "../_models/register.request";
+import {RegisterRequest} from "../_models/request/register.request";
 import {Router} from "@angular/router";
 import {UtilService} from "../_services/util.service";
 
@@ -20,7 +20,7 @@ export class RegisterComponent {
     this.driverService.register(data).subscribe(response => {
       },
       (error) => {
-        this.displayError(error)
+        UtilService.displayAuthError(error)
       });
     this.router.navigate(['/login']);
   }
@@ -30,18 +30,8 @@ export class RegisterComponent {
     this.managerService.register(data).subscribe(response => {
       },
       (error) => {
-        this.displayError(error)
+        UtilService.displayAuthError(error)
       });
     this.router.navigate(['/login']);
-  }
-
-  private displayError(error: any) {
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }

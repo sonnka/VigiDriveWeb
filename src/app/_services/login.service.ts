@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {LoginRequest} from "../_models/login.request";
-import {LoginResponse} from "../_models/login.response";
+import {LoginRequest} from "../_models/request/login.request";
+import {LoginResponse} from "../_models/response/login.response";
 import {jwtDecode} from "jwt-decode";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
+import {UtilService} from "./util.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  public errorMessage = "";
   private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {
@@ -40,7 +40,7 @@ export class LoginService {
 
     let role = this.getRole();
 
-    if (role == null || role == '') {
+    if (!role) {
       return false
     }
 
@@ -54,11 +54,39 @@ export class LoginService {
 
     let role = this.getRole();
 
-    if (role == null || role == '') {
+    if (!role) {
       return false
     }
 
     return role == 'manager';
+  }
+
+  public static isAdmin(): boolean {
+    if (!this.isAuthorize()) {
+      return false;
+    }
+
+    let role = this.getRole();
+
+    if (!role) {
+      return false
+    }
+
+    return role == 'admin' || role == 'chief_admin';
+  }
+
+  public static isChiefAdmin(): boolean {
+    if (!this.isAuthorize()) {
+      return false;
+    }
+
+    let role = this.getRole();
+
+    if (!role) {
+      return false
+    }
+
+    return role == 'chief_admin';
   }
 
   public static async logout(router: Router) {
@@ -90,14 +118,9 @@ export class LoginService {
 
     response.subscribe((r) => {
         this.setUserId(r.id)
-        this.errorMessage = ""
       },
       (error) => {
-        if (error.error != null) {
-          this.errorMessage = error.error.errorMessage
-        } else {
-          this.errorMessage = error.message
-        }
+        UtilService.displayAuthError(error)
       });
     return response;
   }

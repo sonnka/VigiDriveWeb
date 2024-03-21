@@ -10,11 +10,23 @@
     <div *ngIf="LoginService.isDriver()">
       <a class="link" href="/driver-profile">Profile</a>
     </div>
-    <div *ngIf="LoginService.isDriver()">
-      <a class="link" href="/driver-accesses">Accesses</a>
-    </div>
     <div *ngIf="LoginService.isManager()">
       <a class="link" href="/manager-profile">Profile</a>
+    </div>
+    <div *ngIf="LoginService.isAdmin()">
+      <a class="link" href="/admin-profile">Profile</a>
+    </div>
+    <div *ngIf="LoginService.isAdmin()">
+      <a class="link" href="/drivers">Drivers</a>
+    </div>
+    <div *ngIf="LoginService.isAdmin()">
+      <a class="link" href="/managers">Managers</a>
+    </div>
+    <div *ngIf="LoginService.isChiefAdmin()">
+      <a class="link" href="/database">Database</a>
+    </div>
+    <div *ngIf="LoginService.isDriver()">
+      <a class="link" href="/driver-accesses">Accesses</a>
     </div>
     <div *ngIf="LoginService.isManager()">
       <a class="link" href="/manager-accesses">Accesses</a>

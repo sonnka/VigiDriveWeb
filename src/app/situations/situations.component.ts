@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {DriverService} from "../_services/driver.service";
-import {SituationStatistics} from "../_models/situation.statistics";
-import {SituationResponse} from "../_models/situation.response";
+import {SituationStatistics} from "../_models/response/situation.statistics";
+import {SituationResponse} from "../_models/response/situation.response";
 import {UtilService} from "../_services/util.service";
-import {LoginService} from "../_services/login.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -17,20 +16,14 @@ export class SituationsComponent implements OnInit {
   protected monthStatistics: SituationStatistics | undefined;
   protected weekStatistics: SituationStatistics | undefined;
   protected situations: SituationResponse[] | undefined;
-  protected startOfCurrentWeek = '00.00.0000'
-  protected endOfCurrentWeek = '00.00.0000'
+  protected startOfCurrentWeek = UtilService.getStartOfCurrentWeek()
+  protected endOfCurrentWeek = UtilService.getEndOfCurrentWeek()
   protected readonly UtilService = UtilService;
 
   constructor(private driverService: DriverService, private router: Router) {
   }
 
   ngOnInit() {
-    let date = new Date()
-    date.setDate(date.getDate() - date.getDay() + 1)
-    this.startOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
-    date.setDate(date.getDate() + 6)
-    this.endOfCurrentWeek = UtilService.formatDate(date) || '00.00.0000';
-
     this.getSituationInfo()
     this.getYearStatistics();
     this.getMonthStatistics();
@@ -84,7 +77,7 @@ export class SituationsComponent implements OnInit {
           this.yearStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
@@ -97,7 +90,7 @@ export class SituationsComponent implements OnInit {
           this.monthStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
@@ -110,7 +103,7 @@ export class SituationsComponent implements OnInit {
           this.weekStatistics = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         }
       )
     })
@@ -122,21 +115,8 @@ export class SituationsComponent implements OnInit {
           this.situations = response;
         },
         (error) => {
-          this.displayError(error)
+          UtilService.displayError(error, this.router)
         });
     })
-  }
-
-  private displayError(error: any) {
-    if (error.status == 401) {
-      LoginService.logout(this.router)
-    }
-    if (error.message != null) {
-      UtilService.showError(error.message)
-    } else if (error.error != null) {
-      UtilService.showError(error.error.errorMessage)
-    } else {
-      UtilService.showError("Something went wrong!")
-    }
   }
 }
