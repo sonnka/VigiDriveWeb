@@ -25,6 +25,7 @@ import {MatMiniFabButton} from "@angular/material/button";
 import { AdminUpdateProfileComponent } from './admin-update-profile/admin-update-profile.component';
 import { DatabaseComponent } from './database/database.component';
 import { DriversPageComponent } from './drivers-page/drivers-page.component';
+import { ManagersPageComponent } from './managers-page/managers-page.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { DriversPageComponent } from './drivers-page/drivers-page.component';
     AdminProfileComponent,
     AdminUpdateProfileComponent,
     DatabaseComponent,
-    DriversPageComponent
+    DriversPageComponent,
+    ManagersPageComponent
   ],
   imports: [
     BrowserModule,

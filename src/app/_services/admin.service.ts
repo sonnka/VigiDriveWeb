@@ -77,8 +77,8 @@ export class AdminService {
   async getManagers() {
     await this.getCredentials()
 
-    return this.http.get<ManagerDto[]>(this.baseUrl + '/admins/' + this.id +
-      "/managers", this.httpOptions);
+    return await this.http.get<ManagerDto[]>(this.baseUrl + '/admins/' + this.id +
+      "/managers", this.httpOptions).toPromise();
   }
 
   async deleteDriver(driverId: bigint) {
