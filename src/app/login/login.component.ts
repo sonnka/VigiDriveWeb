@@ -10,10 +10,11 @@ import {UtilService} from "../_services/util.service";
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+
   constructor(private loginService: LoginService, private router: Router) {
   }
 
-  login(email: string, password: string): void {
+  protected login(email: string, password: string): void {
     let data = new LoginRequest(email, password);
 
     this.loginService.login(data).subscribe(async (response) => {
@@ -41,5 +42,9 @@ export class LoginComponent {
         UtilService.displayAuthError(error)
       }
     );
+  }
+
+  protected googleLogin() {
+    // this.loginService.googleLogin();
   }
 }

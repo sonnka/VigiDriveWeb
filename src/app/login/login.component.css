@@ -38,3 +38,26 @@ input[type=button] {
     color: #fff;
   }
 }
+
+.google-btn {
+  background: white;
+  margin-top: 35px;
+  border-radius: 30px;
+  border-color: #e8e8e8;
+  border-width: 1px;
+  height: 60px;
+  width: 220px;
+  border-style: solid;
+  text-align: center;
+  align-content: center;
+}
+
+.google-btn:hover {
+  background: #e8e8e8;
+  color: white;
+}
+
+.url-design {
+  color: black;
+  text-decoration: none;
+}

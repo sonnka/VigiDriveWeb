@@ -125,6 +125,26 @@ export class LoginService {
     return response;
   }
 
+  public googleLogin(): void {
+
+    let response = this.http.get<any>(this.baseUrl +
+      '/oauth2/authorization/google', {});
+
+    console.log(response)
+
+    // let response = this.http.get<LoginResponse>(this.baseUrl +
+    //   '/oauth2/authorization/google', {});
+    //
+    // response.subscribe((r) => {
+    //     this.setUserId(r.id)
+    //   },
+    //   (error) => {
+    //     UtilService.displayAuthError(error)
+    //   });
+    //
+    // return response;
+  }
+
   public async setCredentials(token: string, id: bigint) {
     await this.setToken(token)
     await this.setUserId(id)
