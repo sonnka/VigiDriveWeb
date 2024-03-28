@@ -2,7 +2,7 @@
   <div class="my-navbar">
     <a class="link" href="/">Home</a>
     <div *ngIf="!LoginService.isAuthorize()">
-      <a class="link" href="/login">Login</a>
+      <a class="link" href="/login?first=true">Login</a>
     </div>
     <div *ngIf="!LoginService.isAuthorize()">
       <a class="link" href="/register">Register</a>

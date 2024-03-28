@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HomeComponent} from './home/home.component';
 import {DriverProfileComponent} from './driver-profile/driver-profile.component';
 import {HealthInfoComponent} from './health-info/health-info.component';
@@ -20,12 +20,13 @@ import {ChatsComponent} from './chats/chats.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 import {AdminProfileComponent} from './admin-profile/admin-profile.component';
 import {MatIcon} from "@angular/material/icon";
-import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MatMiniFabButton} from "@angular/material/button";
-import { AdminUpdateProfileComponent } from './admin-update-profile/admin-update-profile.component';
-import { DatabaseComponent } from './database/database.component';
-import { DriversPageComponent } from './drivers-page/drivers-page.component';
-import { ManagersPageComponent } from './managers-page/managers-page.component';
+import {AdminUpdateProfileComponent} from './admin-update-profile/admin-update-profile.component';
+import {DatabaseComponent} from './database/database.component';
+import {DriversPageComponent} from './drivers-page/drivers-page.component';
+import {ManagersPageComponent} from './managers-page/managers-page.component';
+import {RedirectInterceptor} from "./redirect.interceptor";
+import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ManagersPageComponent } from './managers-page/managers-page.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     HttpClientModule,
     NgOptimizedImage,
@@ -58,7 +60,8 @@ import { ManagersPageComponent } from './managers-page/managers-page.component';
     MatMiniFabButton
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    {provide: HTTP_INTERCEPTORS, useClass: RedirectInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

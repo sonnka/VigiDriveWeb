@@ -1,11 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {LoginRequest} from "../_models/request/login.request";
-import {LoginResponse} from "../_models/response/login.response";
 import {jwtDecode} from "jwt-decode";
-import {Observable} from "rxjs";
 import {Router} from "@angular/router";
-import {UtilService} from "./util.service";
 
 @Injectable({
   providedIn: 'root'
@@ -108,41 +104,48 @@ export class LoginService {
     return decodedToken['role'];
   }
 
-  public login(data: LoginRequest): Observable<LoginResponse> {
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
-      })
-    };
-    let response = this.http.post<LoginResponse>(this.baseUrl + '/login', '', httpOptions);
+  // public login(data: LoginRequest): Observable<LoginResponse> {
+  //   let httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)
+  //     })
+  //   };
+  //   let response = this.http.post<LoginResponse>(this.baseUrl + '/login', '', httpOptions);
+  //
+  //   response.subscribe((r) => {
+  //       this.setUserId(r.id)
+  //     },
+  //     (error) => {
+  //       UtilService.displayAuthError(error)
+  //     });
+  //   return response;
+  // }
 
-    response.subscribe((r) => {
-        this.setUserId(r.id)
-      },
-      (error) => {
-        UtilService.displayAuthError(error)
-      });
-    return response;
+  public async login(email: string, password: string) {
+    const formData: FormData = new FormData();
+    formData.append('username', email);
+    formData.append('password', password);
+    let t = await this.http.post(this.baseUrl +
+      '/login', formData, {}).toPromise();
+    return t;
   }
 
-  public googleLogin(): void {
+  public getCode() {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      })
+    };
 
-    let response = this.http.get<any>(this.baseUrl +
-      '/oauth2/authorization/google', {});
-
-    console.log(response)
-
-    // let response = this.http.get<LoginResponse>(this.baseUrl +
-    //   '/oauth2/authorization/google', {});
-    //
-    // response.subscribe((r) => {
-    //     this.setUserId(r.id)
-    //   },
-    //   (error) => {
-    //     UtilService.displayAuthError(error)
-    //   });
-    //
-    // return response;
+    let response;
+    this.http.get<any>("http://127.0.0.1:8080/oauth2/authorize?response_type=code&client_id=oidcclient&redirect_uri=http://127.0.0.1:8080/auth", httpOptions)
+      .subscribe(
+        (res) => {
+          response = res
+        }
+      )
+    return response;
   }
 
   public async setCredentials(token: string, id: bigint) {
@@ -160,7 +163,7 @@ export class LoginService {
 
   private async setToken(token: string) {
     let t = JSON.parse(atob(token.split('.')[1]));
-    let expireDate = new Date(t.exp * 1000);
+    let expireDate = new Date(t.exp);
     localStorage.setItem('token', token);
     localStorage.setItem('expires_at', expireDate.toISOString())
   }

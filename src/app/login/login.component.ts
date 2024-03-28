@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {LoginService} from "../_services/login.service";
-import {LoginRequest} from "../_models/request/login.request";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UtilService} from "../_services/util.service";
 
 @Component({
@@ -11,40 +10,34 @@ import {UtilService} from "../_services/util.service";
 })
 export class LoginComponent {
 
-  constructor(private loginService: LoginService, private router: Router) {
+  public isLoggedIn = false;
+
+  constructor(private loginService: LoginService, private router: Router, private route: ActivatedRoute) {
   }
 
-  protected login(email: string, password: string): void {
-    let data = new LoginRequest(email, password);
-
-    this.loginService.login(data).subscribe(async (response) => {
-        let token = response.token;
-        let id = response.id
-
-        if (!token || !id) {
-          await LoginService.logout(this.router)
-        }
-
-        if (response.role == 'driver') {
-          await this.loginService.setCredentials(token, id)
-          await this.router.navigate(['/driver-profile']);
-        } else if (response.role == 'manager') {
-          await this.loginService.setCredentials(token, id)
-          await this.router.navigate(['/manager-profile']);
-        } else if (response.role == 'admin' || response.role == 'chief_admin') {
-          await this.loginService.setCredentials(token, id)
-          await this.router.navigate(['/admin-profile']);
-        } else {
-          await this.router.navigate(['/login']);
-        }
-      },
-      (error) => {
-        UtilService.displayAuthError(error)
-      }
-    );
+  ngOnInit() {
+    // this.route.queryParams.subscribe(params => {
+    //   const first = params['first'];
+    //   if (first) {
+    //     window.location.href = "http://127.0.0.1:8080/oauth2/authorize?response_type=code&client_id=oidcclient&redirect_uri=http://127.0.0.1:8080/auth";
+    //   }
+    // });
   }
 
-  protected googleLogin() {
-    // this.loginService.googleLogin();
+
+  protected async googleLogin(email: string, password: string) {
+    try {
+      await this.loginService.login(email, password);
+      console.log("---")
+
+      let token = this.loginService.getCode()
+
+      console.log("Token=" + token)
+      console.log("---")
+
+    } catch (e) {
+      UtilService.displayError(e, this.router)
+    }
   }
+
 }
